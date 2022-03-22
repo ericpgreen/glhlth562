@@ -162,9 +162,9 @@ create_theme(name = "theme")
 Then add `theme: theme.css` to your YAML in `_site.yml`:
 
 ```
-output: 
-  distill::distill_article
-    css: theme.css
+name: "distill"
+title: "My Website"
+theme: theme.css
 ```
 
 ---

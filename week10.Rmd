@@ -21,7 +21,7 @@ output:
   
 ## During Class
 
-[Deck](https://ericpgreen.github.io/glhlth562/materials/communicating2_deck.html) / Materials ([zip](https://www.dropbox.com/s/jnot6io5q77ermi/communicating2.zip?dl=1))
+[Deck](https://ericpgreen.github.io/glhlth562/materials/communicating2/communicating2_deck.html) / Materials ([zip](https://www.dropbox.com/s/jnot6io5q77ermi/communicating2.zip?dl=1))
 
 ## After Class (Optional)
 
