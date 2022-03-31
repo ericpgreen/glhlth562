@@ -1,0 +1,26 @@
+---
+title: "Week 11"
+subtitle: "Chef's Choice"
+description: |
+  Textmining and mapping
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 2
+---
+
+```{r, include=FALSE}
+  library(emo)
+```
+
+# Mar 29: Dashboards
+  
+## During Class
+
+Bring your static plot and we'll make it interactive!
+
+# Mar 31: Textmining and mapping
+
+## During Class
+
+Materials ([zip](https://www.dropbox.com/s/qbw26htfm5lpma6/chefschoice.zip?dl=1))
