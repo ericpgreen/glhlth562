@@ -1,0 +1,159 @@
+---
+title: "More DPS COVID"
+css: custom_report.css
+output: 
+  bookdown::html_document2:
+    toc: true
+    toc_float: true
+    toc_depth: 1
+    code_folding: show
+    theme: default
+    highlight: tango
+    fig_captions: no
+    number_sections: false
+---
+
+
+```{r setup, include=FALSE, warning = FALSE, message = FALSE}
+  knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+  options(scipen=999) # turns off scientific notation
+
+# define colors
+  glhlth562_colors <- c(
+    `blue`       = "#1f9ac9",
+    `yellow`     = "#ffd966",
+    `black`      = "#000000",
+    `lightgrey`  = "#D3D3D3",
+    `darkgrey`   = "#444444",
+    `grey`       = "#808080"
+  )
+```
+
+# Step 1
+
+## Import
+
+And drop cumulative total columns
+
+```{r}
+library(tidyverse)
+library(googlesheets4)
+gs4_deauth()
+
+raw <- read_sheet("https://docs.google.com/spreadsheets/d/1kQ35JKpk3vNaM7ZfFK2DFb1B9kQIQ4IODr7lOM394nQ/edit#gid=769268401") %>%
+  select(-c(3:5))
+```
+# Step 2
+
+## Create a vector of column names
+
+```{r}
+# google "r vector from row"
+# https://stackoverflow.com/a/55262815/841405
+  raw %>%
+    slice(2) %>%
+    unlist(use.names = FALSE)
+```
+
+This is a start, but this is only a vector of 28 elements, and currently we have 80 columns in raw (these counts will change as DPS adds more data). I'd like you to think about three things:
+
+1. Can we use information about the spreadsheet structure to get from 28 to 80? Even if you can't figure out the code, can you describe the approach? If so you will have the start of a good google search.
+
+2. We don't need "Positive COVID-19 Cases\n". How can we get rid of it?
+
+3. If you manage to drop this text, check out the remaining text in the vector. We don't have consistent date formats. Does it matter? (hint: there's an approach to working with the date information where we can just work with the starting dates)
+
+```{r, eval=FALSE}
+  start_date <- raw %>%
+    slice(2) %>%
+    unlist(use.names = FALSE) %>%
+    as_tibble() %>% 
+    mutate(value = str_remove(value, "Positive COVID-19 Cases\n")) %>%
+    mutate(value = str_trim(value, "both")) %>%
+    mutate(value = str_replace(value, "\\,.*", "")) %>%
+    mutate(value = str_replace(value, "\\-.*", "")) %>%
+    slice(3:n())
+
+  dates <- rep(start_date$value, each = 3)  
+  
+  labels <- rep(c("students", "staff", "clusters"), nrow(start_date))
+
+  dates_labels <- paste(dates, labels, sep = "_")
+```
+
+
+# Step 3
+
+## Set column names from our vector
+
+```{r, eval=FALSE}
+  raw %>%
+    setNames(c("code", "site_name", dates_labels))
+```
+
+# Step 4
+
+## Drop more rows we don't need
+
+Hint: some slicing, some filtering
+
+```{r, eval=FALSE}
+# you can use this (we don't need these, right???)
+  school_levels <- c("Central Services Total",
+                     "Elementary Total",
+                     "Middle Total",
+                     "High/Secondary Total",
+                     "GRAND TOTAL")
+
+  raw %>%
+    setNames(c("code", "site_name", dates_labels))
+```
+
+
+# Step 5
+
+## Some cleanup
+
+```{r}
+# a few helpers
+  elem <- c("320304", "320308", "320374", "320318",
+              "320319", "320363", "320313", "320310",
+              "320315", "320344", "320332", "320347",
+              "320320", "320324", "320328", "320327",
+              "320339", "320340", "320348", "320352",
+              "320354", "320360", "320362", "320364",
+              "320367", "320369", "320372", "320376",
+              "320388", "320400", "320289")
+
+  middle <- c("320306", "320316", "320338", "320342",
+              "320346", "320343", "320355",  "320370",
+              "320366")
+
+  high <- c("320312", "320317", "320323", "320322",
+            "320309", "320325", "320701", "320341",
+            "320353", "320356", "320365", "320368",
+            "320314", "320401")
+  
+  
+```
+
+
+# Step 6
+
+## Pivot
+
+```{r}
+
+```
+
+
+
+# Step 7
+
+## Fix dates
+
+```{r}
+
+```
+
+

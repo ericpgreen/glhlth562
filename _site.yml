@@ -1,7 +1,7 @@
 name: "GLHLTH562"
 title: "GLHLTH562: Data Science and Visualization with R"
 description: |
-  Duke University, Spring, 2022
+  Duke University, Spring, 2023
 output_dir: "docs"
 navbar:
   left:
@@ -13,30 +13,8 @@ navbar:
           href: week00.html
         - text: "Week 1"
           href: week01.html
-        - text: "Week 2"
-          href: week02.html
-        - text: "Week 3"
-          href: week03.html
-        - text: "Week 4"
-          href: week04.html
-        - text: "Week 5"
-          href: week05.html
-        - text: "Week 6"
-          href: week06.html
-        - text: "Week 7"
-          href: week07.html
-        - text: "Week 8"
-          href: week08.html
-        - text: "Week 9"
-          href: week09.html
-        - text: "Week 10"
-          href: week10.html
-        - text: "Week 11"
-          href: week11.html
 
   right:
-    - text: "The Method Section"
-      href: "https://themethodsection.com/"
     - icon: fa-github
       href: "https://github.com/ericpgreen/glhlth562"
     - icon: ion-social-twitter

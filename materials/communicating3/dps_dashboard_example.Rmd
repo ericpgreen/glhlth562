@@ -1,0 +1,158 @@
+---
+title: "DPS COVID-19 Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+  library(flexdashboard)
+  library(shiny)
+
+# ** STEP 1 **
+# add packages here and runtime: shiny in the YAML to enable Shiny reactivity
+```
+
+```{r global, include=FALSE}
+# global chunk is important for Shiny
+# https://pkgs.rstudio.com/flexdashboard/articles/shiny.html#loading-data
+
+# import and process the DPS COVID data
+  source("dps.R")
+```
+
+<!-- # ** STEP 2 **
+
+Create at least one static plot that you will make reactive
+You will eventually copy/paste this chart to a different chunk in your layout
+Leave the next chunk to eval=FALSE so it does not run when knit
+-->
+
+```{r static, eval=FALSE}
+  dps %>%
+    filter(level=="High") %>%
+    ggplot(aes(x=start_date, y=students, group = site_name)) +
+      geom_line()
+```
+
+
+<!-- # ** STEP 3 **
+
+Add a sidebar column below this comment section before STEP 4
+https://pkgs.rstudio.com/flexdashboard/articles/shiny.html#input-sidebar
+-->
+
+Column {.sidebar}
+-------------------------------------------------------------------------------
+
+<!-- # ** STEP 4 **
+
+Decide on inputs to make your plot reactive
+https://pkgs.rstudio.com/flexdashboard/articles/shiny.html#input-sidebar
+-->
+
+```{r inputs}
+
+schools_levels <- dps %>%
+  filter(level != "Central Services") %>%
+  distinct(level) %>%
+  pull(level)
+
+selectInput(
+  "id_level",
+  "Select a level:",
+  choices = schools_levels,
+  selected = "Elementary",
+  multiple = FALSE
+)
+```
+
+<!-- # ** STEP 5 **
+
+Decide on the remaining layout for your dashboard
+https://pkgs.rstudio.com/flexdashboard/articles/using.html#layout
+-->
+
+Column
+-------------------------------------------------------------------------------
+
+
+<!-- # ** STEP 6 **
+
+Move the code chunk below to the appropriate place in your layout
+Paste your static plot code inside renderPlot({ })
+Connect your plot to the inputs you created in Step 4 with input$id
+Set to eval=TRUE or remove eval
+-->
+
+```{r reactiveplot, eval=TRUE}
+  renderPlot({
+    
+    dps %>%
+      filter(level==input$id_level) %>%
+      ggplot(aes(x=start_date, y=students, group = site_name)) +
+        geom_line()
+    
+  })
+```
+
+
+
+
+<!-- # ** STEP 7 **
+
+Time permitting, change the theme
+https://pkgs.rstudio.com/flexdashboard/articles/theme.html#bootswatch-themes
+
+Run:
+install.packages("bslib")
+
+Pick from options here:
+https://bootswatch.com/
+
+Edit your YAML with the name of the theme you would like:
+
+---
+output:
+  flexdashboard::flex_dashboard:
+    theme: 
+      version: 4
+      bootswatch: minty
+---
+
+
+Alternatively, create a custom theme:
+https://pkgs.rstudio.com/flexdashboard/articles/theme.html#custom-themes
+
+Run: 
+install.packages("bslib")
+install.packages("sass")
+
+Edit your YAML with custom colors and Google Fonts:
+
+---
+output:
+  flexdashboard::flex_dashboard:
+    theme:
+      version: 4
+      bg: "#101010"
+      fg: "#FDF7F7" 
+      primary: "#ED79F9"
+      navbar-bg: "#3ADAC6"
+      base_font: 
+        google: Prompt
+      heading_font:
+        google: Sen
+      code_font:
+        google: 
+          # arguments to sass::font_google() 
+          family: JetBrains Mono
+          local: false
+---
+
+-->
+
+
+

@@ -2159,21 +2159,10 @@ Content
 <div class="nav-dropdown-content">
 <a href="week00.html">Week 0</a>
 <a href="week01.html">Week 1</a>
-<a href="week02.html">Week 2</a>
-<a href="week03.html">Week 3</a>
-<a href="week04.html">Week 4</a>
-<a href="week05.html">Week 5</a>
-<a href="week06.html">Week 6</a>
-<a href="week07.html">Week 7</a>
-<a href="week08.html">Week 8</a>
-<a href="week09.html">Week 9</a>
-<a href="week10.html">Week 10</a>
-<a href="week11.html">Week 11</a>
 </div>
 </div>
 </div>
 <div class="nav-right">
-<a href="https://themethodsection.com/">The Method Section</a>
 <a href="https://github.com/ericpgreen/glhlth562">
 <i class="fa fa-github" aria-hidden="true"></i>
 </a>
@@ -2195,7 +2184,8 @@ Content
 <h1>Week 1</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>The grammar of graphics and ggplot2 API and designing effective plots</p></p>
+<p><p>The grammar of graphics and ggplot2 API and designing effective
+plots</p></p>
 </div>
 
 
@@ -2204,67 +2194,113 @@ Content
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#resource-roundup">Resource Roundup</a></li>
-<li><a href="#jan-11-the-grammar-of-graphics-and-ggplot2-api">Jan 11: The grammar of graphics and ggplot2 API</a>
+<li><a href="#resource-roundup" id="toc-resource-roundup">Resource
+Roundup</a></li>
+<li><a href="#jan-17-the-grammar-of-graphics-and-ggplot2-api"
+id="toc-jan-17-the-grammar-of-graphics-and-ggplot2-api">Jan 17: The
+grammar of graphics and ggplot2 API</a>
 <ul>
-<li><a href="#prepare">Prepare</a></li>
-<li><a href="#during-class">During Class</a></li>
-<li><a href="#after-class-optional">After Class (Optional)</a></li>
+<li><a href="#prepare" id="toc-prepare">Prepare</a></li>
+<li><a href="#during-class" id="toc-during-class">During Class</a></li>
+<li><a href="#after-class-optional" id="toc-after-class-optional">After
+Class (Optional)</a></li>
 </ul></li>
-<li><a href="#jan-13-designing-effective-plots">Jan 13: Designing effective plots</a>
+<li><a href="#jan-19-designing-effective-plots"
+id="toc-jan-19-designing-effective-plots">Jan 19: Designing effective
+plots</a>
 <ul>
-<li><a href="#prepare-1">Prepare</a></li>
-<li><a href="#during-class-1">During Class</a></li>
-<li><a href="#after-class-optional-1">After Class (Optional)</a></li>
-<li><a href="#tidytuesday">TidyTuesday</a></li>
+<li><a href="#prepare-1" id="toc-prepare-1">Prepare</a></li>
+<li><a href="#during-class-1" id="toc-during-class-1">During
+Class</a></li>
+<li><a href="#after-class-optional-1"
+id="toc-after-class-optional-1">After Class (Optional)</a></li>
+<li><a href="#tidytuesday" id="toc-tidytuesday">TidyTuesday</a></li>
 </ul></li>
 </ul>
 </nav>
 </div>
 <h1 id="resource-roundup">Resource Roundup</h1>
-<p>We’ll work our way through most of <a href="https://r4ds.had.co.nz/index.html"><em>R for Data Science</em></a> by Hadley Wickham and Garrett Grolemund (R4DS). You can use the free online version or order a physical copy from <a href="http://amzn.to/2aHLAQ1">Amazon</a>.</p>
-<p>We’ll also read several chapters in Professor Kieran Healy’s book <a href="https://socviz.co/"><em>Data Visualization</em></a> (SOCVIZ). You can use the free online version or order a physical copy from <a href="https://www.amazon.com/gp/product/0691181624/ref=as_li_tl?ie=UTF8&amp;tag=kieranhealysw-20&amp;camp=1789&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=0691181624&amp;linkId=16d53b3cc1ec3bc3aac60b27c29b92e8">Amazon</a> (it’s a beautiful book that should probably be on your bookshelf at some point).</p>
-<p>It’s important that you read the chapters AND run the code as you go. If you read without coding you are likely to trick yourself into thinking you’ve learned more than you have. This type of material requires most of us to be active learners. <code>Read/Type/Run</code> &gt; <code>Read/Copy/Paste/Run</code> &gt; <code>Read only</code>.</p>
-<h1 id="jan-11-the-grammar-of-graphics-and-ggplot2-api">Jan 11: The grammar of graphics and ggplot2 API</h1>
+<p>We’ll work our way through most of <a
+href="https://r4ds.had.co.nz/index.html"><em>R for Data Science</em></a>
+by Hadley Wickham and Garrett Grolemund (R4DS). You can use the free
+online version or order a physical copy from <a
+href="http://amzn.to/2aHLAQ1">Amazon</a>.</p>
+<p>We’ll also read several chapters in Professor Kieran Healy’s book <a
+href="https://socviz.co/"><em>Data Visualization</em></a> (SOCVIZ). You
+can use the free online version or order a physical copy from <a
+href="https://www.amazon.com/gp/product/0691181624/ref=as_li_tl?ie=UTF8&amp;tag=kieranhealysw-20&amp;camp=1789&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=0691181624&amp;linkId=16d53b3cc1ec3bc3aac60b27c29b92e8">Amazon</a>
+(it’s a beautiful book that should probably be on your bookshelf at some
+point).</p>
+<p>It’s important that you read the chapters AND run the code as you go.
+If you read without coding you are likely to trick yourself into
+thinking you’ve learned more than you have. This type of material
+requires most of us to be active learners. <code>Read/Type/Run</code>
+&gt; <code>Read/Copy/Paste/Run</code> &gt; <code>Read only</code>.</p>
+<h1 id="jan-17-the-grammar-of-graphics-and-ggplot2-api">Jan 17: The
+grammar of graphics and ggplot2 API</h1>
 <h2 id="prepare">Prepare</h2>
 <ul>
-<li>⬇️: <a href="https://github.com/rstudio/cheatsheets/raw/main/rstudio-ide.pdf">RStudio IDE cheatsheet</a></li>
-<li>📖: <a href="https://socviz.co/index.html#install">SOCVIZ Preface (Before you begin)</a></li>
-<li>📖: <a href="https://socviz.co/lookatdata.html#lookatdata">SOCVIZ Chapter 1</a></li>
-<li>📖: <a href="https://socviz.co/gettingstarted.html#gettingstarted">SOCVIZ Chapter 2</a></li>
-<li>📖: <a href="https://r4ds.had.co.nz/introduction.html">R4DS Chapter 1</a></li>
+<li>⬇️: <a
+href="https://github.com/rstudio/cheatsheets/raw/main/rstudio-ide.pdf">RStudio
+IDE cheatsheet</a></li>
+<li>📖: <a href="https://socviz.co/index.html#install">SOCVIZ Preface
+(Before you begin)</a></li>
+<li>📖: <a href="https://socviz.co/lookatdata.html#lookatdata">SOCVIZ
+Chapter 1</a></li>
+<li>📖: <a
+href="https://socviz.co/gettingstarted.html#gettingstarted">SOCVIZ
+Chapter 2</a></li>
+<li>📖: <a href="https://r4ds.had.co.nz/introduction.html">R4DS Chapter
+1</a></li>
 </ul>
 <h2 id="during-class">During Class</h2>
-<p><a href="https://ericpgreen.github.io/glhlth562/materials/dataviz1/dataviz1_deck.html">Deck</a> / Materials (<a href="https://www.dropbox.com/s/m1vkvenokyftpa9/dataviz1.zip?dl=1">zip</a> or <a href="https://github.com/ericpgreen/glhlth562/tree/main/materials/dataviz1">github</a>)</p>
+<p><a
+href="https://ericpgreen.github.io/glhlth562/materials/dataviz1/dataviz1_deck.html">Deck</a>
+/ Materials (<a
+href="https://www.dropbox.com/s/m1vkvenokyftpa9/dataviz1.zip?dl=1">zip</a>
+or <a
+href="https://github.com/ericpgreen/glhlth562/tree/main/materials/dataviz1">github</a>)</p>
 <h2 id="after-class-optional">After Class (Optional)</h2>
 <ul>
-<li>📖: <a href="https://moderndive.netlify.app/1-getting-started.html">ModernDive Chapter 1</a>, provides a nice intro to R, RStudio, and packages if you’re feeling a bit shaky.</li>
-<li>💻: {<code>learnr</code>} tutorial on <a href="https://aosmith.shinyapps.io/part1_rbasics_getting_started/">getting started with R/RStudio</a></li>
+<li>📖: <a
+href="https://moderndive.netlify.app/1-getting-started.html">ModernDive
+Chapter 1</a>, provides a nice intro to R, RStudio, and packages if
+you’re feeling a bit shaky.</li>
+<li>💻: {<code>learnr</code>} tutorial on <a
+href="https://aosmith.shinyapps.io/part1_rbasics_getting_started/">getting
+started with R/RStudio</a></li>
 </ul>
-<h1 id="jan-13-designing-effective-plots">Jan 13: Designing effective plots</h1>
+<h1 id="jan-19-designing-effective-plots">Jan 19: Designing effective
+plots</h1>
 <h2 id="prepare-1">Prepare</h2>
 <ul>
-<li>📺: Reporting on and visualising the pandemic (<a href="https://www.rstudio.com/resources/rstudioglobal-2021/reporting-on-and-visualising-the-pandemic/">video</a> 50 min)</li>
-<li>⬇️: <a href="https://github.com/rstudio/cheatsheets/raw/main/data-visualization-2.1.pdf">Data visualization cheatsheet</a></li>
-<li>📖: <a href="https://r4ds.had.co.nz/data-visualisation.html">R4DS Chapter 3</a></li>
-<li>📖: <a href="https://socviz.co/workgeoms.html#workgeoms">SOCVIZ Chapter 5</a></li>
+<li>📺: Reporting on and visualising the pandemic (<a
+href="https://www.rstudio.com/resources/rstudioglobal-2021/reporting-on-and-visualising-the-pandemic/">video</a>
+50 min)</li>
+<li>⬇️: <a
+href="https://github.com/rstudio/cheatsheets/raw/main/data-visualization-2.1.pdf">Data
+visualization cheatsheet</a></li>
+<li>📖: <a href="https://r4ds.had.co.nz/data-visualisation.html">R4DS
+Chapter 3</a></li>
+<li>📖: <a href="https://socviz.co/workgeoms.html#workgeoms">SOCVIZ
+Chapter 5</a></li>
 </ul>
 <h2 id="during-class-1">During Class</h2>
-<p><a href="https://ericpgreen.github.io/glhlth562/materials/dataviz2/dataviz2_deck.html">Deck</a> / Materials (<a href="https://www.dropbox.com/s/bl45y3gs9amy3ou/dataviz2.zip?dl=1">zip</a> or <a href="https://github.com/ericpgreen/glhlth562/tree/main/materials/dataviz2">github</a>)</p>
+<p><a
+href="https://ericpgreen.github.io/glhlth562/materials/dataviz2/dataviz2_deck.html">Deck</a>
+/ Materials (<a
+href="https://www.dropbox.com/s/bl45y3gs9amy3ou/dataviz2.zip?dl=1">zip</a>
+or <a
+href="https://github.com/ericpgreen/glhlth562/tree/main/materials/dataviz2">github</a>)</p>
 <h2 id="after-class-optional-1">After Class (Optional)</h2>
 <ul>
-<li>💻: Tutorials: <a href="https://rstudio.cloud/learn/primers/3">Visualize Data</a></li>
+<li>💻: Tutorials: <a
+href="https://rstudio.cloud/learn/primers/3">Visualize Data</a></li>
 </ul>
 <h2 id="tidytuesday">TidyTuesday</h2>
-<blockquote class="twitter-tweet">
-<p lang="en" dir="ltr">
-The <a href="https://twitter.com/R4DScommunity?ref_src=twsrc%5Etfw"><span class="citation" data-cites="R4DScommunity">@R4DScommunity</span></a> welcomes you to week 2 of <a href="https://twitter.com/hashtag/TidyTuesday?src=hash&amp;ref_src=twsrc%5Etfw">#TidyTuesday</a>! We're exploring Bee colony loss!<br><br>📂 <a href="https://t.co/sElb4fcv3u">https://t.co/sElb4fcv3u</a><br>🗞 <a href="https://t.co/6TiLX8FWE4">https://t.co/6TiLX8FWE4</a><a href="https://twitter.com/hashtag/r4ds?src=hash&amp;ref_src=twsrc%5Etfw">#r4ds</a> <a href="https://twitter.com/hashtag/tidyverse?src=hash&amp;ref_src=twsrc%5Etfw">#tidyverse</a> <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/hashtag/dataviz?src=hash&amp;ref_src=twsrc%5Etfw">#dataviz</a> <a href="https://t.co/xY5CFgeMf9">pic.twitter.com/xY5CFgeMf9</a>
-</p>
-— Tom Mock (<span class="citation" data-cites="thomas_mock">@thomas_mock</span>) <a href="https://twitter.com/thomas_mock/status/1480724289955454984?ref_src=twsrc%5Etfw">January 11, 2022</a>
-</blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-<p>Bees! <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/2022-01-11/readme.md">Data</a> / <a href="https://www.dropbox.com/s/i1mf75oja07985u/tidytuesday.zip?dl=1">Template</a></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>Drops on Tuesday!</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -2280,8 +2316,11 @@ The <a href="https://twitter.com/R4DScommunity?ref_src=twsrc%5Etfw"><span class=
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <div class="distill-site-nav distill-site-footer">
-<p><a href="http://ericpgreen.com/">Eric Green</a> | <a href="https://themethodsection.com/">The Method Section</a></p>
-<p>GLHLTH 562 course materials shared with <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
+<p><a href="http://ericpgreen.com/">Eric Green</a> | <a
+href="https://themethodsection.com/">The Method Section</a></p>
+<p>GLHLTH 562 course materials shared with <a
+href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA
+4.0</a>.</p>
 </div>
 <!--/radix_placeholder_navigation_after_body-->
 

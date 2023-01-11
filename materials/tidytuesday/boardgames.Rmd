@@ -1,0 +1,78 @@
+---
+title: "#TidyTuesday"
+subtitle: "TT Week 4 / Class Week 3"
+author: "Eric Green"
+css: custom_report.css
+output: 
+  bookdown::html_document2:
+    toc: true
+    toc_float: true
+    toc_depth: 1
+    code_folding: show
+    theme: default
+    highlight: tango
+    fig_captions: no
+    number_sections: false
+---
+
+
+
+```{r setup, include=FALSE, warning = FALSE, message = FALSE}
+  knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+  options(scipen=999) # turns off scientific notation
+
+# load packages
+  library(tidyverse)
+  library(tidytuesdayR)   # install.packages("tidytuesdayR") to get new data
+
+# load data
+  tuesdata <- tidytuesdayR::tt_load('2022-01-25')
+  ratings <- tuesdata$ratings
+  details <- tuesdata$details
+```
+
+
+# Exploration
+ 
+*Use what you know so far to explore the dataset. If you are just starting out, write about what you want to do with the data. Try to stretch a bit every week.*
+
+```{r}
+  ratings %>%
+    filter(year != 0) %>%
+    group_by(year) %>%
+    summarise(mean_of_avg_ratings = mean(average, na.rm=TRUE),
+              games = n()) %>%
+    filter(games >= 10, year >= 1958) %>%
+  
+    ggplot(aes(x = year, y = mean_of_avg_ratings)) +
+      geom_col() +
+      theme_minimal() +
+      labs(title = "Recent games are rated more highly",
+           subtitle = "Mean of average ratings for games introduced since 1958",
+           y = NULL,
+           x = NULL) +
+      theme(plot.title = element_text(face = "bold"))
+      
+```
+
+
+# Review
+
+## Find and run
+
+*Search the Twitter hashag [#TidyTuesday](https://twitter.com/hashtag/TidyTuesday?src=hashtag_click) for an entry that catches your eye (and includes a link to their code). Include links to the details and run their code.*
+
+| Name | Details |
+|:--   |:--      |
+| Author | Replace |
+| Tweet | [url](https://twitter.com/...) |
+| Code | [url](https://github.com/...) |
+
+```{r entry}
+# insert their code
+
+```
+
+## Notes
+
+*What did you learn from their approach?*

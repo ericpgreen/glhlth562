@@ -32,7 +32,7 @@ You don't get the same answer because knitting a Rmd is a self-contained action 
 
 The `ducks.csv` file is located in `wrangling1/data/ducks.csv`. Based on the working directory, R will find `read_csv("data/ducks.csv")` if you run it in the Console. But it will fail when you knit this document. Try it.
 
-```{r duck1, eval=TRUE}
+```{r duck1, eval=FALSE}
   read_csv("data/ducks.csv")
 ```
 
@@ -47,5 +47,6 @@ You could replace this with `read_csv("../data/ducks.csv")` and it will work whe
 A fix that works for the Console and knitr is to use the `here()` function from the `{here}` package to use paths relative to the project working directory.
 
 ```{r duck3}
+  #library(here)
   read_csv(here::here("data", "ducks.csv"))
 ```

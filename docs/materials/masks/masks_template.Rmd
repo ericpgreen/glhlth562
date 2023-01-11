@@ -22,6 +22,7 @@ output:
   library(tidyverse)
   library(googlesheets4)
   gs4_deauth()
+  library(ggbeeswarm)
 ```
 
 What can we say about mask mandates and SARS-CoV-2 transmission at the county level? That's our motivating question. In exploring this question, you'll have an opportunity to put your accumulated R knowledge to work. You'll import data, join tables, transform variables, work with strings and factors, and more.
@@ -143,7 +144,367 @@ This work should showcase:
 
 # Go
 
-```{r}
+## Import data
 
+```{r}
+# cases
+  cases21 <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-counties-2021.csv")
+
+  cases22 <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-counties-2022.csv")
+  
+# political affiliation
+  pol <- read_csv("countypres_2000-2020.csv")
+
+# mask mandates  
+  masks <- read_sheet("https://docs.google.com/spreadsheets/d/1gPwa2xhwVvowDwBR5CS32PU7RVSryey57wBfrJ69280/edit?usp=sharing")
+```
+
+## Wrangling
+
+* Limit the COVID data to July 1, 2021 and after for NC and SC counties
+
+```{r}
+  cases21_ <- cases21 %>%
+    filter(date >= "2021-07-01", 
+           (state=="North Carolina" | state=="South Carolina"))
+
+  cases22_ <- cases22 %>%
+      filter(date >= "2021-07-01", 
+             (state=="North Carolina" | state=="South Carolina"))
+  
+  cases <- cases21_ %>%
+    bind_rows(cases22_)
+```
+
+* Calculate the timing and level of each county's peak cases (per 100,000) during the Omicron wave (i.e., when did each county peak and what was the rolling average of new cases at the peak?)
+
+```{r}
+  cases_peak <- cases %>%
+    arrange(geoid, desc(cases_avg_per_100k)) %>%
+    distinct(geoid, .keep_all = TRUE) %>%
+    select(date, geoid, county, state, cases_avg_per_100k) %>%
+    mutate(days_to_peak = date - lubridate::ymd("2021-07-01")) %>%
+    mutate(geoid = str_remove(geoid, "USA-")) %>%
+    filter(date <= "2022-02-07") # but all peaks before 
+
+  deaths_peak <- cases %>%
+    arrange(geoid, desc(deaths_avg_per_100k)) %>%
+    distinct(geoid, .keep_all = TRUE) %>%
+    select(date, geoid, county, state, deaths_avg_per_100k) %>%
+    mutate(days_to_peak_deaths = date - lubridate::ymd("2021-07-01")) %>%
+    mutate(geoid = str_remove(geoid, "USA-"))  
+```
+
+* Calculate the percentage of votes in each county for the Republican candidate in the 2020 presidential election
+
+```{r}
+  prop_rep_2020 <- pol %>%
+    filter(year==2020) %>%
+    filter(state_po=="NC" | state_po=="SC") %>%
+    filter(party == "REPUBLICAN" | party == "DEMOCRAT") %>%
+    group_by(county_fips) %>%
+    mutate(RD_total = sum(candidatevotes)) %>%
+    filter(party == "REPUBLICAN") %>%
+    summarize(rep_votes = sum(candidatevotes),
+              RD_total = RD_total,
+              state = state, 
+              county_name = county_name,
+              county_fips = county_fips
+              ) %>%
+    ungroup() %>%
+    distinct(county_fips, .keep_all = TRUE) %>%
+    mutate(rep_share = (rep_votes/RD_total)*100) %>%
+    select(county_fips, rep_share) %>%
+    mutate(rep = case_when(
+      rep_share > 50 ~ "Republican",
+      TRUE ~ "Democrat"
+    )) 
+```
+
+* Decide how to represent data on mask mandates (e.g., some counties did not have mandates, others did...some did then they didn't...and then they did again)
+
+```{r}
+  masks2 <- masks %>%
+    mutate(geoid = str_remove(geoid, "USA-")) %>%
+    mutate(mandate = case_when(
+      is.na(masksStart_1) ~ "Never",
+      !is.na(masksStart_1) & is.na(masksEnd_1) ~ "Always",
+      TRUE ~ "Partial"
+    )) %>%
+    mutate(masksStart_1 = lubridate::ymd(masksStart_1),
+           masksStart_2 = lubridate::ymd(masksStart_2),
+           masksEnd_1 = lubridate::ymd(masksEnd_1),
+           masksEnd_2 = lubridate::ymd(masksEnd_2)) %>%
+    mutate(days_mandate_in_effect = case_when(
+      mandate=="Never" ~ 0,
+      mandate=="Always" ~ 
+        as.numeric(lubridate::ymd("2022-02-07") - masksStart_1,
+                   units="days"),
+      TRUE ~ NA_real_
+    )) %>%
+    mutate(partial1 = as.numeric(masksEnd_1 - masksStart_1,
+                                 units="days")) %>%
+    mutate(partial2 = as.numeric(masksEnd_2 - masksStart_2,
+                                   units="days"),
+           partial2 = case_when(
+             partial2 <0 ~ 0,
+             TRUE ~ partial2
+           )) %>%
+    mutate(partial3 = as.numeric(lubridate::ymd("2022-02-07") - masksStart_2,
+                                   units="days"),
+           partial3 = case_when(
+             !is.na(masksEnd_2) ~ NA_real_,
+             TRUE ~ partial3
+           )) %>%
+    mutate(days_mandate_in_effect = case_when(
+      mandate=="Partial" & is.na(partial2) & is.na(partial3) ~ partial1,
+      mandate=="Partial" & is.na(partial2) & !is.na(partial3) ~ 
+        partial1 + partial3,
+      mandate=="Partial" & !is.na(partial2) & is.na(partial3) ~ 
+        partial1 + partial2,
+      TRUE ~ days_mandate_in_effect
+    )) %>%
+  mutate(date_mandate_removed = case_when(
+    is.na(masksStart_1) ~ lubridate::ymd("2021-07-01"),
+    is.na(masksEnd_1) ~ lubridate::ymd("2022-02-07"),
+    TRUE ~ masksEnd_1
+  )) %>%
+  select(geoid, mandate, days_mandate_in_effect, date_mandate_removed) %>%
+  mutate(always_mandate = case_when(
+      mandate=="Always" ~ "Yes",
+      TRUE ~ "No"
+    )) %>%
+   mutate(any_mandate = case_when(
+      mandate=="Never" ~ "No mask mandate",
+      TRUE ~ "Full or partial mask mandate"
+    )) 
+```
+
+```{r}
+  df <- cases_peak %>%
+    left_join(select(deaths_peak, geoid, deaths_avg_per_100k)) %>%
+    left_join(prop_rep_2020, by = c("geoid" = "county_fips")) %>%
+    left_join(masks2) %>%
+    rename(date_peak = date,
+           peak_cases_avg_per_100k = cases_avg_per_100k,
+           peak_deaths_avg_per_100k = deaths_avg_per_100k) %>%
+    select(geoid, everything()) %>%
+    mutate(always_mandate = factor(always_mandate,
+                                   levels = c("No", 
+                                              "Yes"))) %>%
+    mutate(any_mandate = factor(any_mandate,
+                                levels = c("No mask mandate", 
+                                           "Full or partial mask mandate"))) %>%
+    mutate(rep = factor(rep,
+                        levels=c("Republican", "Democrat"))) %>%
+    mutate(state = factor(state,
+                          levels=c("South Carolina", "North Carolina"))) %>%
+    mutate(mandate_at_peak = case_when(
+      date_mandate_removed < date_peak ~ "No mask mandate at case peak",
+      TRUE ~ "Mask mandate at case peak"
+    )) %>%
+    mutate(mandate_at_peak = factor(mandate_at_peak,
+                                    levels = c("No mask mandate at case peak",
+                                               "Mask mandate at case peak")
+                                    ))
+```
+
+## Plot
+
+* Create a visualization that includes peak case information, mask mandates, and political affiliation
+
+### Collapse across states
+
+```{r}
+  df_n_rep <- df %>%
+    #group_by(state, mandate_at_peak) %>%
+    group_by(mandate_at_peak, rep) %>%
+    count() %>%
+    ungroup() %>%
+    mutate(label_n = paste0("N = ", n))
+
+  df %>%
+    ggplot(aes(x=peak_cases_avg_per_100k, 
+               y=mandate_at_peak,
+               group=mandate_at_peak)) +
+      stat_summary(fun.y = median, fun.ymin = median, fun.ymax = median,
+                 geom = "crossbar", width = 0.5) +
+      geom_quasirandom(alpha=0.5, aes(color = rep)) +
+      #geom_quasirandom(alpha=0.5, aes(color = rep_share)) +
+      #scale_color_gradient(low="#0015BC", high="#e9141d") +
+      scale_color_manual(values=c("#e9141d", "#0015BC")) +
+      geom_vline(data=df_mean, aes(xintercept = median), 
+                 color="grey",
+                 alpha = 0.7,
+                 linetype="dashed") +
+      #geom_text(data = df_n_state, aes(x = 600, y = state, label = label_n)) + 
+      geom_text(data = df_n_rep, aes(x = 600, y = mandate_at_peak, label = label_n)) + 
+      facet_grid(~ rep) +
+      theme_bw() +
+      theme(panel.grid.major.x = element_blank(),
+            panel.grid.minor = element_blank(),
+            plot.title = element_text(face="bold"),
+            plot.title.position = "plot",
+            plot.subtitle = element_text(margin=margin(0,0,10,0)),
+            plot.caption = element_text(margin=margin(15,0,0,0)),
+            legend.position = "bottom") +
+      labs(y=NULL, x=NULL,
+           title = str_wrap("There is not a clear pattern at the county-level demonstrating that school mask mandates reduced the peak of the Delta/Omicron waves", 90),
+           subtitle = str_wrap("Peak case counts (7-day rolling average, per 100,000 people) in NC and SC counties by school mask mandate status (as of Feb 7, 2022). Dashed vertical line marks the median case peak across all counties. Black vertical bars display group medians.", 110),
+           caption = str_wrap("Counties are red if candidate Donald Trump received more than 50% of the votes cast for Trump and Biden in the 2020 US Presidential Election. Data Sources: COVID data from The New York Times, based on reports from state and local health agencies; county Presidential Election Returns 2020 from the MIT Election Data and Science Lab; NC school mandate data from the North Carolina School Boards Association; SC school mandate data extracted from news reports by Eric Green, @ericpgreen.", 130),
+           color = "Majority of county vote share")
+```
+
+### Facet by state
+
+```{r}
+  df_n_state <- df %>%
+    #group_by(state, mandate_at_peak) %>%
+    group_by(mandate_at_peak, state) %>%
+    count() %>%
+    ungroup() %>%
+    mutate(label_n = paste0("N = ", n))
+
+  df %>%
+    ggplot(aes(x=peak_cases_avg_per_100k, 
+               #y=state,
+               y=mandate_at_peak,
+               #group=state,
+               group=mandate_at_peak)) +
+      stat_summary(fun.y = median, fun.ymin = median, fun.ymax = median,
+                 geom = "crossbar", width = 0.5) +
+      geom_quasirandom(alpha=0.5, aes(color = rep)) +
+      #geom_quasirandom(alpha=0.5, aes(color = rep_share)) +
+      #scale_color_gradient(low="#0015BC", high="#e9141d") +
+      scale_color_manual(values=c("#e9141d", "#0015BC")) +
+      geom_vline(data=df_mean, aes(xintercept = median), 
+                 color="grey",
+                 alpha = 0.7,
+                 linetype="dashed") +
+      #geom_text(data = df_n_state, aes(x = 600, y = state, label = label_n)) + 
+      geom_text(data = df_n_state, aes(x = 600, y = mandate_at_peak, label = label_n)) + 
+      #facet_grid(~ mandate_at_peak) +
+      facet_grid(~ state) +
+      theme_bw() +
+      theme(panel.grid.major.x = element_blank(),
+            panel.grid.minor = element_blank(),
+            plot.title = element_text(face="bold"),
+            plot.title.position = "plot",
+            plot.subtitle = element_text(margin=margin(0,0,10,0)),
+            plot.caption = element_text(margin=margin(15,0,0,0)),
+            legend.position = "bottom") +
+      labs(y=NULL, x=NULL,
+           title = str_wrap("There is not a clear pattern at the county-level demonstrating that school mask mandates reduced the peak of the Delta/Omicron waves", 90),
+           subtitle = str_wrap("Peak case counts (7-day rolling average, per 100,000 people) in NC and SC counties by school mask mandate status (as of Feb 7, 2022). Dashed vertical line marks the median case peak across all counties. Black vertical bars display group medians.", 110),
+           caption = str_wrap("Counties are red if candidate Donald Trump received more than 50% of the votes cast for Trump and Biden in the 2020 US Presidential Election. Data Sources: COVID data from The New York Times, based on reports from state and local health agencies; county Presidential Election Returns 2020 from the MIT Election Data and Science Lab; NC school mandate data from the North Carolina School Boards Association; SC school mandate data extracted from news reports by Eric Green, @ericpgreen.", 130),
+           color = "Majority of county vote share")
+```
+
+### Facet by masks and vote 
+
+```{r}
+  df_mean <- df %>%
+    summarize(median = median(peak_cases_avg_per_100k)) 
+
+  df_n <- df %>%
+    group_by(state, rep, mandate_at_peak) %>%
+    count() %>%
+    ungroup() %>%
+    mutate(label_n = paste0("N = ", n))
+
+  df %>%
+    ggplot(aes(x=peak_cases_avg_per_100k, 
+               y=state,
+               group=state,
+               color=rep)) +
+      stat_summary(fun.y = median, fun.ymin = median, fun.ymax = median,
+                 geom = "crossbar", width = 0.5) +
+      geom_quasirandom(alpha=0.5) +
+      scale_color_manual(values=c("#e9141d", "#0015BC")) +
+      geom_vline(data=df_mean, aes(xintercept = median), 
+                 color="grey",
+                 alpha = 0.7,
+                 linetype="dashed") +
+      geom_text(data = df_n, aes(x = 600, y = state, label = label_n)) + 
+      facet_grid(rep ~ mandate_at_peak) +
+      theme_bw() +
+      theme(panel.grid.major.x = element_blank(),
+            panel.grid.minor = element_blank(),
+            plot.title = element_text(face="bold"),
+            plot.title.position = "plot",
+            plot.subtitle = element_text(margin=margin(0,0,10,0)),
+            plot.caption = element_text(margin=margin(15,0,0,0)),
+            legend.position = "none") +
+      labs(y=NULL, x=NULL,
+           title = str_wrap("There is not a clear pattern at the county-level demonstrating that school mask mandates reduced the peak of the Delta/Omicron waves", 90),
+           subtitle = str_wrap("Peak case counts (7-day rolling average, per 100,000 people) in NC and SC counties by school mask mandate status (as of Feb 7, 2022) and county-level results of the 2020 Presidential election. Dashed vertical line marks the median case peak across all counties. Colored vertical bars display group medians.", 110),
+           caption = str_wrap("Counties labeled as 'Republican' if candidate Donald Trump received more than 50% of the votes cast for Trump and Biden. Data Sources: COVID data from The New York Times, based on reports from state and local health agencies; county Presidential Election Returns 2020 from the MIT Election Data and Science Lab; NC school mandate data from the North Carolina School Boards Association; SC school mandate data extracted from news reports by Eric Green, @ericpgreen.", 130))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+  library(brms)
+  m <- brm(peak_cases_avg_per_100k ~ 1 + mandate_at_peak + rep_share + (1 | state),
+           data = df)
+  
+  m2 <- brm(peak_cases_avg_per_100k ~ 1 + days_mandate_in_effect + rep_share + (1 | state),
+            data = df)
+```
+
+```{r}
+summary(m)
+summary(m2)
+```
+
+```{r}
+  df_mean_death <- df %>%
+    summarize(median = median(peak_deaths_avg_per_100k)) 
+
+  df %>%
+    ggplot(aes(x=peak_deaths_avg_per_100k, 
+               y=mandate_at_peak,
+               group=mandate_at_peak)) +
+      stat_summary(fun.y = median, fun.ymin = median, fun.ymax = median,
+                 geom = "crossbar", width = 0.5) +
+      geom_quasirandom(alpha=0.5, aes(color = rep)) +
+      scale_color_manual(values=c("#e9141d", "#0015BC")) +
+      geom_vline(data=df_mean_death, aes(xintercept = median), 
+                 color="grey",
+                 alpha = 0.7,
+                 linetype="dashed") +
+      geom_text(data = df_n_state, aes(x = 12, y = mandate_at_peak, label = label_n)) + 
+      facet_grid(~ state) +
+      theme_bw() +
+      theme(panel.grid.major.x = element_blank(),
+            panel.grid.minor = element_blank(),
+            plot.title = element_text(face="bold"),
+            plot.title.position = "plot",
+            plot.subtitle = element_text(margin=margin(0,0,10,0)),
+            plot.caption = element_text(margin=margin(15,0,0,0)),
+            legend.position = "none") +
+      labs(y=NULL, x=NULL,
+           title = str_wrap("There is not a clear pattern at the county-level demonstrating that school mask mandates reduced the peak of the Delta/Omicron waves", 90),
+           subtitle = str_wrap("Peak death counts (7-day rolling average, per 100,000 people) in NC and SC counties by school mask mandate status (as of Feb 7, 2022) and county-level results of the 2020 Presidential election", 110),
+           caption = str_wrap("Counties labeled as 'Republican' if candidate Donald Trump received more than 50% of the votes cast for Trump and Biden. Data Sources: COVID data from The New York Times, based on reports from state and local health agencies; county Presidential Election Returns 2020 from the MIT Election Data and Science Lab; NC school mandate data from the North Carolina School Boards Association; SC school mandate data extracted from news reports by Eric Green, @ericpgreen.", 130))
+```
+
+
+```{r}
+m3 <- brm(peak_deaths_avg_per_100k ~ 1 + mandate_at_peak + rep_share + (1 | state),
+           data = df)
+```
+```{r}
+summary(m3)
 ```
 

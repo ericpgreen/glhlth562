@@ -1,0 +1,63 @@
+---
+title: "DPS Covid"
+subtitle: "Can you wrangle the dashboard?"
+css: custom_report.css
+output: 
+  bookdown::html_document2:
+    toc: true
+    toc_float: true
+    toc_depth: 1
+    code_folding: show
+    theme: default
+    highlight: tango
+    fig_captions: no
+    number_sections: false
+---
+
+```{r setup, include=FALSE, warning = FALSE, message = FALSE}
+  knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+  options(scipen=999) # turns off scientific notation
+
+# define colors
+  glhlth562_colors <- c(
+    `blue`       = "#1f9ac9",
+    `yellow`     = "#ffd966",
+    `black`      = "#000000",
+    `lightgrey`  = "#D3D3D3",
+    `darkgrey`   = "#444444",
+    `grey`       = "#808080"
+  )
+
+# load packages
+  library(tidyverse)
+```
+
+
+Durham Public Schools publishes a COVID-19 "dashboard". Check it out [here](https://www.dpsnc.net/Page/5339). 
+
+Click on any of the links and you will find a PDF. There are tools for extracting data from pdfs, but fortunately you'll find a [link to a spreadsheet](https://docs.google.com/spreadsheets/d/1kQ35JKpk3vNaM7ZfFK2DFb1B9kQIQ4IODr7lOM394nQ/edit#gid=769268401). Please open it.
+
+## 1. Describe the data structure. 
+
+
+
+## 2. This sheet appears to be updated weekly. What are some barriers to feeding this sheet into a data pipeline that will always plot the latest results?
+
+
+
+## 3. Import this sheet into R and assign it to an object called `raw`. (hint: you need to do this in a way that your analysis will update every time you knit this document)
+
+```{r}
+
+```
+
+## 4. What are the steps you need to do to get this into a tidy dataframe?
+
+
+
+## 5. Go!
+
+```{r}
+
+```
+

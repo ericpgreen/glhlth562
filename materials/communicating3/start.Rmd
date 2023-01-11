@@ -1,0 +1,133 @@
+---
+title: "Penguins!"
+subtitle: "I love penguins"  
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    css: [xaringan-themer.css,custom_deck.css]
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+    seal: false
+---
+
+class: titleSlide 
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(palmerpenguins)
+library(xaringan)
+library(xaringanthemer)
+library(xaringanExtra)
+
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(fig.width=9, fig.height=3.5, fig.retina=3, out.width = "100%", cache = FALSE, echo = TRUE, message = FALSE, warning = FALSE, hiline = TRUE)
+```
+
+```{r r xaringan-themer, include=FALSE, warning=FALSE}
+style_duo_accent(
+  primary_color = "#1889c9",
+  secondary_color = "#fec52e",
+  header_font_google = google_font("Source Sans Pro"),
+  text_font_google   = google_font("Libre Franklin", "300", "300i"),
+  code_font_google   = google_font("Anonymous Pro"),
+  base_font_size = "30px",
+  text_font_size = "1rem",
+  header_h1_font_size = "2.5rem",
+  header_h2_font_size = "2rem",
+  header_h3_font_size = "1.25rem",
+  padding = "8px 32px 8px 32px",
+)
+```
+
+
+# `r rmarkdown::metadata$title`
+
+## `r rmarkdown::metadata$subtitle`
+
+<br>
+
+<center><img src="penguins.png" width="400px"/></center>
+
+---
+class: center, middle
+
+# This is a new slide
+
+This is my content
+---
+
+class: left
+
+### A level 3 heading
+
+.pull-left[
+
+On the left 
+
+]
+
+.pull-right[
+
+On the right
+
+]
+
+---
+
+class: left
+
+```{r xaringan-panelset, echo=FALSE}
+xaringanExtra::use_panelset()
+```
+
+### Panels
+
+.panelset[
+
+.panel[.panel-name[Panel 1]
+Penguins!
+]
+
+.panel[.panel-name[Panel 2]
+<center><img src="penguins.png" width="400px"/></center>
+]
+
+]
+---
+
+class: left
+
+### Panels with code/output
+
+.panelset[
+
+.panel[.panel-name[Code]
+
+```{r penguins, eval=FALSE}
+ggplot(data = penguins, aes(x=species, 
+                            y = flipper_length_mm, 
+                            fill=species)) +
+  geom_violin() + scale_fill_manual(values = c("darkorange",
+                                               "purple",
+                                               "cyan4")) +
+  labs(y = "Flipper length (mm)", x = NULL, 
+       title = "Penguin flipper lengths") +   
+  theme_minimal() + 
+  theme(legend.position = "none")
+```
+]
+
+.panel[.panel-name[Plot]
+```{r penguins-plot, ref.label="penguins", echo=FALSE}
+```
+]
+
+]
+---
+
+
+

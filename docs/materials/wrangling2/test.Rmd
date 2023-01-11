@@ -1,0 +1,25 @@
+---
+title: "My document"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r}
+
+```
+
+This is my code:
+
+```{r}
+1+1
+```
+
+```{r}
+
+```
+

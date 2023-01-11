@@ -21,7 +21,7 @@ We'll also read several chapters in Professor Kieran Healy's book [*Data Visuali
 
 It's important that you read the chapters AND run the code as you go. If you read without coding you are likely to trick yourself into thinking you've learned more than you have. This type of material requires most of us to be active learners. `Read/Type/Run` > `Read/Copy/Paste/Run` > `Read only`.
 
-# Jan 11: The grammar of graphics and ggplot2 API
+# Jan 17: The grammar of graphics and ggplot2 API
 
 ## Prepare
 
@@ -41,7 +41,7 @@ It's important that you read the chapters AND run the code as you go. If you rea
 * `r emo::ji("computer")`: {`learnr`} tutorial on [getting started with R/RStudio](https://aosmith.shinyapps.io/part1_rbasics_getting_started/)
 
 
-# Jan 13: Designing effective plots
+# Jan 19: Designing effective plots
 
 ## Prepare
 
@@ -61,7 +61,5 @@ It's important that you read the chapters AND run the code as you go. If you rea
 
 ## TidyTuesday
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">The <a href="https://twitter.com/R4DScommunity?ref_src=twsrc%5Etfw">@R4DScommunity</a> welcomes you to week 2 of <a href="https://twitter.com/hashtag/TidyTuesday?src=hash&amp;ref_src=twsrc%5Etfw">#TidyTuesday</a>! We&#39;re exploring Bee colony loss!<br><br>📂 <a href="https://t.co/sElb4fcv3u">https://t.co/sElb4fcv3u</a><br>🗞 <a href="https://t.co/6TiLX8FWE4">https://t.co/6TiLX8FWE4</a><a href="https://twitter.com/hashtag/r4ds?src=hash&amp;ref_src=twsrc%5Etfw">#r4ds</a> <a href="https://twitter.com/hashtag/tidyverse?src=hash&amp;ref_src=twsrc%5Etfw">#tidyverse</a> <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/hashtag/dataviz?src=hash&amp;ref_src=twsrc%5Etfw">#dataviz</a> <a href="https://t.co/xY5CFgeMf9">pic.twitter.com/xY5CFgeMf9</a></p>&mdash; Tom Mock (@thomas_mock) <a href="https://twitter.com/thomas_mock/status/1480724289955454984?ref_src=twsrc%5Etfw">January 11, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-Bees! [Data](https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/2022-01-11/readme.md) / [Template](https://www.dropbox.com/s/i1mf75oja07985u/tidytuesday.zip?dl=1)
+Drops on Tuesday!
 

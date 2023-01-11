@@ -1,7 +1,7 @@
 ---
 title: "Syllabus"
 description: |
-  GLHLTH 562, Duke University, Spring, 2022
+  GLHLTH 562, Duke University, Spring, 2023
 ---
 
 <center>
@@ -16,7 +16,7 @@ This course will introduce you to data science and data visualization in R. The 
 
 [Eric Green](https://globalhealth.duke.edu/people/green-eric), PhD
 
-Madeline Wilkerson, TA
+Kayla Hendrickson, TA
 
 # Topics
 
@@ -35,32 +35,32 @@ We'll finish the course with some topics of my choosing. Maybe we'll explore map
 
 | Week | Date | Unit | Topic |
 |--- | --- | --- | --- |
-| 0 | Jan 6 | - | Welcome |
-| 1 | Jan 11 | Data visualization | The grammar of graphics and ggplot2 API |
-| 1 | Jan 13 | Data visualization | Designing effective plots |
-| 2 | Jan 18 | Data visualization | Common geoms and plot styles to know |
-| 2 | Jan 20 | Data visualization | Small multiples and patchwork |
-| 3 | Jan 25 | Data wrangling | Data import |
-| 3 | Jan 27 | Data wrangling | Data transformation |
-| 4 | Feb 1 | Data wrangling | Tidy data |
-| 4 | Feb 3 | Data wrangling | Relational data |
-| 5 | Feb 8 | Data wrangling | Strings |
-| 5 | Feb 10 | Data wrangling | Factors |
-| 6 | Feb 15 | Data wrangling | Dates and times |
-| 6 | Feb 17 | Data wrangling | Iteration |
-| 7 | Feb 22 | Models | Data science ethics |
-| 7 | Feb 24 | Models | Catch-up / Prepare for models |
-| 8 | Mar 1 | Models | Tidy models introduction, part 1 |
-| 8 | Mar 3 | Models | Tidy models introduction, part 2 |
-| 9 | Mar 15 | Communicating data science | Reproducible workflows |
-| 9 | Mar 17 | Communicating data science | RMarkdown |
-| 10 | Mar 22 | Communicating data science | Dashboards |
-| 10 | Mar 24 | Communicating data science | Slide decks |
-| 11 | Mar 29 | Chef's choice | Maps? |
-| 11 | Mar 31 | Chef's choice | Text mining? |
-| 12 | Apr 5 | Projects | Work session |
-| 12 | Apr 7 | Projects | Presentations Day 1 |
-| 13 | Apr 12 | Projects | Presentations Day 2 |
+| 0 | Jan 12 | - | Welcome |
+| 1 | Jan 17 | Data visualization | The grammar of graphics and ggplot2 API |
+| 1 | Jan 19 | Data visualization | Designing effective plots |
+| 2 | Jan 24 | Data visualization | Common geoms and plot styles to know |
+| 2 | Jan 26 | Data visualization | Small multiples and patchwork |
+| 3 | Jan 31 | Data wrangling | Data import |
+| 3 | Feb 2 | Data wrangling | Data transformation |
+| 4 | Feb 7 | Data wrangling | Tidy data |
+| 4 | Feb 9 | Data wrangling | Relational data |
+| 5 | Feb 14 | Data wrangling | Strings |
+| 5 | Feb 16 | Data wrangling | Factors |
+| 6 | Feb 21 | Data wrangling | Dates and times |
+| 6 | Feb 23 | Data wrangling | Iteration |
+| 7 | Feb 28 | Models | Data science ethics |
+| 7 | Mar 2 | Models | Catch-up |
+| 8 | Mar 7 | Models | Tidy models introduction, part 1 |
+| 8 | Mar 9 | Models | Tidy models introduction, part 2 |
+| 9 | Mar 21 | Communicating data science | Reproducible workflows |
+| 9 | Mar 23 | Communicating data science | RMarkdown |
+| 10 | Mar 28 | Communicating data science | Dashboards |
+| 10 | Mar 30 | Communicating data science | Slide decks |
+| 11 | Apr 4 | Chef's choice | Maps? |
+| 11 | Apr 6 | Chef's choice | Text mining? |
+| 12 | Apr 11 | Projects | Work session |
+| 12 | Apr 13 | Projects | Presentations Day 1 |
+| 13 | Apr 18 | Projects | Presentations Day 2 |
 
 Assignments will be posted the Saturday before each week begins.
 
@@ -69,8 +69,8 @@ Assignments will be posted the Saturday before each week begins.
 There are no prerequisites to take this course aside from a good dose of curiosity and interest in learning about R, data visualization, and data science. All you need to participate is a computer with an internet connection. Our tech stack will include:
 
 * [R](https://cloud.r-project.org/)
-* [RStudio Desktop](https://rstudio.com/products/rstudio/download/#download)
-* Zoom for remote learning and office hours
+* [RStudio Desktop](https://posit.co/download/rstudio-desktop/)
+* Zoom for remote learning (if the situation arises) and office hours
 * Ed for course discussion
 
 # Format
@@ -80,11 +80,11 @@ You'll prepare for each class session by reading and practicing. During class, w
 ## Weekly Assignments
 
 * Each week you will explore a new [*Tidy Tuesday*](https://github.com/rfordatascience/tidytuesday) dataset. The R4DS Online Learning Community posts a new dataset each Monday. We'll leave time in our Tuesday sessions to review the dataset, and then you will have until Sunday to explore it. I'll provide you with a template for reporting. In the beginning of the course when your skills are more limited, I'll ask you to think more about the data and what you want to do. As the semester goes on, I'll expect that your explorations become more sophisticated. In addition to exploring the datasets on your own, I'll also ask you to find a `#tidytuesday` entry on Twitter, examine the author's code and describe what you learned from them.
-* [Mid-semester skills/comprehension check-in](masks.html) (replaces 2 weeks of TidyTuesday)
+* Mid-semester skills/comprehension check-in (replaces 2 weeks of TidyTuesday)
 
 ## Final Project
 
-You will also complete a final project alone or with partners using a dataset of your choosing. Details are [here](final.html).
+You will also complete a final project alone or with partners using a dataset of your choosing. Details forthcoming.
 
 ## Exams
 
@@ -96,14 +96,11 @@ You will be evaluated on the basis of your weekly assignments (50%) and independ
 
 # Policies
 
-* These are challenging times. If you miss an assignment deadline (Sundays at 10pm Eastern), get in touch so we can discuss if a make-up or extension is possible. Missing more than one deadline could result in grade penalties. Class sessions will be recorded. 
-* Failure to complete the independent project will result in an Incomplete. Please see your school's policy on incompletes (e.g., [Trinity](https://trinity.duke.edu/undergraduate/academic-policies/continuation-requirements))
+* If you miss an assignment deadline (Sundays at 10pm Eastern), get in touch so we can discuss if a make-up or extension is possible. Missing more than one deadline could result in grade penalties. Class sessions will be recorded. 
 * Students should abide by the [Duke Community Standard](https://studentaffairs.duke.edu/conduct/about-us/duke-community-standard) at all times. If a questionable circumstance arises, do not hesitate to seek my guidance (before is always better than after).
 
-# Equity and Inclusion at DGHI
+### Equity and Inclusion at DGHI
 
-On June 10, 2020 DGHI formed the Equity Task Force (ETF) to identify and address structural inequities related to global power dynamics, race, ethnicity, gender, and all marginalized identities throughout the institute. While it is expected that these goals will be met with gradual progress, the urgency for change and the need to learn from past mistakes must be acted upon immediately.
+In 2020 DGHI formed the Equity Task Force to identify and address structural inequities related to global power dynamics, race, ethnicity, gender, and all marginalized identities throughout the institute. See [here](https://globalhealth.duke.edu/about/diversity-equity-and-inclusion){target="_blank"} for more information on this work.
 
-As our institute begins the process of making these changes, I will attempt to do the same throughout my courses. We as a class will honor all requests to address students by pronouns or names with which they are most comfortable, and I welcome your input on things I can do to make the course materials, my lessons, and the classroom experience more inclusive. I invite you to keep an open line of communication with me throughout this process about any areas where you think I am or the institute is excelling or could use some improvement. If you don’t feel comfortable reaching out to me about areas of concern please contact the ETF co-chairs (Kate Whetten `k.whetten@duke.edu`, Kim McNeil `km.mcneil@duke.edu`) or the relevant steering committee members.
-
-If you require any additional accommodations or arrangements (hearing, vision, English language comprehension, extenuating personal or family circumstances, etc.) please let me know ASAP and, if relevant, please contact the [Student Disability Access Office](http://www.access.duke.edu/students/requesting/index.php) to ensure the accommodation/arrangements can be implemented in a timely fashion.
+If you require any accommodations or arrangements (hearing, vision, English language comprehension, extenuating personal or family circumstances, etc.) please let me know ASAP and, if relevant, please contact the Student Disability Access Office (SDOA) to ensure the accommodation/arrangements can be implemented in a timely fashion.

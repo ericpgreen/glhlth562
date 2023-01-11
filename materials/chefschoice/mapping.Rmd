@@ -35,7 +35,7 @@ Load the packages we'll need for today.
   #census_api_key("YOUR KEY HERE")
   library(sf)
   library(viridis)
-  library(gganimate)
+  #library(gganimate)
   library(leaflet)
 ```
 
@@ -70,21 +70,19 @@ The original plot only shows the lower 48 states, so we have to exclude Alaska, 
     select(date, fips, cases, deaths) %>%
     mutate(date = lubridate::ymd(date)) %>%
     mutate(fips = stringr::str_pad(fips, width=5, pad="0")) %>%
-    filter(date == "2020-05-04")
+    filter(date<="2020-05-04")
 ```
 
 ### Population/Geographic
 
 ```{r geo}
-  counties <- 
-    counties %>%
+  counties <- counties %>%
     filter(!grepl("Hawaii", NAME)) %>%
     filter(!grepl("Puerto Rico", NAME)) %>%
     filter(!grepl("District of Columbia", NAME)) %>%
     filter(!grepl("Alaska", NAME)) 
   
-  states <- 
-  states %>%
+  states <- states %>%
     filter(NAME!="District of Columbia" &
            NAME!="Puerto Rico" &
            NAME!="Hawaii" &
@@ -176,7 +174,7 @@ The original plot only shows the lower 48 states, so we have to exclude Alaska, 
 
 ```{r leaf, warning=FALSE, message=FALSE}
   nc <- constructed %>%
-    filter(monthDay=="May 5") %>%
+    filter(monthDay=="May 4") %>%
     filter(substring(GEOID, 1, 2)=="37") %>%
     mutate(group = as.numeric(as.character(as.factor(group))))
   
