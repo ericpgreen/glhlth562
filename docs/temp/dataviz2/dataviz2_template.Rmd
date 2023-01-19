@@ -1,0 +1,153 @@
+---
+title: "Data Visualization"
+subtitle: "Designing effective plots"
+css: custom_report.css
+output: 
+  bookdown::html_document2:
+    toc: true
+    toc_float: true
+    toc_depth: 1
+    code_folding: show
+    theme: default
+    highlight: tango
+    fig_captions: no
+    number_sections: false
+---
+
+```{r setup}
+#| include = FALSE, 
+#| warning = FALSE, 
+#| message = FALSE
+
+  knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+  
+# load packages
+  library(tidyverse)
+  library(lubridate)
+  library(zoo)
+  library(ftplottools)
+```
+
+```{r design, include=FALSE}
+# define colors
+  glhlth562_colors <- c(
+    `blue`       = "#1f9ac9",
+    `yellow`     = "#ffd966",
+    `black`      = "#000000",
+    `lightgrey`  = "#D3D3D3",
+    `darkgrey`   = "#444444",
+    `grey`       = "#808080"
+  )
+  
+  options(scipen=999) # turns off scientific notation
+```
+ 
+We'll return to this plot from the [Financial Times](https://ig.ft.com/coronavirus-chart/) to continue exploring the `ggplot2` API:
+
+```{r echo=FALSE, out.width="70%", fig.align="center"}
+knitr::include_graphics("img/ft2.png")
+```
+
+# Load the data
+
+The processed and ready to plot data are stored in the `covid.csv` file. Let's load it.
+
+```{r load}
+  covid <- read_csv("https://raw.githubusercontent.com/ericpgreen/glhlth562/main/materials/dataviz1/covid.csv")
+```
+
+# Resume
+
+Here's where we left off:
+
+```{r resume}
+  p <- covid %>%                                  # data
+  ggplot(aes(x = date, y = deaths_roll7_100k,     # mapping
+             color = Province_State)) +
+         geom_line() +                            # geom
+         scale_color_manual(values = c(           # theme
+                                       "#eb5e8d",   # pink 
+                                       "#0f5599"    # blue
+                                       )) 
+p                              
+```
+
+We won't repeat the code each time. Instead, we'll keep building on the object `p`.
+
+# Adjust the scales
+
+```{r scales}
+  p <- p +
+    scale_y_continuous(breaks = seq(___, ___, ___)) + # seq(from, to, by)
+    scale_x_date(date_breaks = "1 _____",             # N unit
+                 #date_labels = "%b",
+                 # add row for year
+                 # https://stackoverflow.com/a/50116294/841405
+                 labels = function(x) if_else(month(x) == 9 | month(x) == 1, 
+                                              paste(month(x, label = TRUE), 
+                                                    "\n", year(x)), 
+                                              paste(month(x, label = TRUE))))
+  p
+```
+
+# Annotations
+
+```{r annotate}
+  p <- p +
+    geom_vline(xintercept = as.Date("2020-12-20"), 
+               linetype="solid", color="black") +
+    annotate("text", 
+             x = as.Date("2020-12-20"), 
+             y = ___, 
+             label = "US vaccine launch", 
+             hjust=1.1) +
+    geom_segment(aes(x=as.Date("2021-03-11"), 
+                     xend=as.Date("2021-03-11"), 
+                     y= ___, 
+                     yend=___), 
+                 linetype="dashed", 
+                 color="#0f5599") +
+    annotate("text", 
+             x = as.Date("2021-03-11"), 
+             y = ___, 
+             label = "NC 10% fully vaccinated",
+             color="#0f5599", 
+             hjust=-0.1) +
+    geom_segment(aes(x=as.Date("2021-03-08"), 
+                     xend=as.Date("2021-03-08"),       
+                     y=0, 
+                     yend=1.4), 
+                 linetype="dashed", 
+                 color="#eb5e8d") +
+    annotate("text", 
+             x = as.Date("2021-03-08"), 
+             y = 1.4, 
+             label = "___",
+             color="#eb5e8d", 
+             hjust=-0.1)
+  p
+```
+
+# Labels
+
+```{r label}
+  p <- p +
+    labs(title = "New deaths attributed to COVID-19 in North Carolina and Arizona",
+         subtitle = "Seven-day rolling average of new deaths (per 100k)",
+         y = NULL,
+         x = NULL,
+         caption = "Source: Financial Times analysis of data from the Johns Hopkins CSSE.") 
+  p
+```
+
+# Themes
+
+```{r theme}
+  p <- p +
+    theme_minimal() +
+    theme(panel.grid.minor = element_blank(),
+          plot.title.position = "plot",
+          plot.title = element_text(face="bold"),
+          legend.position = "none")
+  p
+```

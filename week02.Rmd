@@ -13,12 +13,12 @@ output:
   library(emo)
 ```
 
-# Jan 18: Common geoms and plot styles to know
+# Jan 24: Common geoms and plot styles to know
 
 ## Prepare
 
 * `r emo::ji("computer")`: Get to know a `geom`
-  * Search Twitter again for more `#TidyTuesday` Week 2 (bees) entries
+  * Search Twitter again for more `#TidyTuesday` Week 3 (art history) entries
   * Find examples of at least 3 different geoms used in `#TidyTuesday` charts and write down the names of these geoms
   * Go to the {`ggplot2`} [reference documents](https://ggplot2.tidyverse.org/reference/#section-geoms) and find your selected geoms
   * For each geom you selected, run a few of the examples and see what happens when you modify the arguments
@@ -34,7 +34,7 @@ output:
 * `r emo::ji("tv")`: [Effective visualizations](https://www.rstudio.com/resources/rstudioconf-2020/effective-visualizations/)
 * `r emo::ji("tv")`: [The glamour of graphics](https://www.rstudio.com/resources/rstudioconf-2020/the-glamour-of-graphics/)
 
-# Jan 20: Small multiples and patchwork
+# Jan 26: Small multiples and patchwork
 
 ## Prepare
 
@@ -56,6 +56,4 @@ output:
 
 ## TidyTuesday
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">The <a href="https://twitter.com/R4DScommunity?ref_src=twsrc%5Etfw">@R4DScommunity</a> welcomes you to week 3 of <a href="https://twitter.com/hashtag/TidyTuesday?src=hash&amp;ref_src=twsrc%5Etfw">#TidyTuesday</a>! We&#39;re exploring Chocolate bar ratings!!<br><br>📁 <a href="https://t.co/sElb4fcv3u">https://t.co/sElb4fcv3u</a><br>📰 <a href="https://t.co/aHkFwfqyOj">https://t.co/aHkFwfqyOj</a><a href="https://twitter.com/hashtag/r4ds?src=hash&amp;ref_src=twsrc%5Etfw">#r4ds</a> <a href="https://twitter.com/hashtag/tidyverse?src=hash&amp;ref_src=twsrc%5Etfw">#tidyverse</a> <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/hashtag/dataviz?src=hash&amp;ref_src=twsrc%5Etfw">#dataviz</a> <a href="https://t.co/emAV8jVLnw">pic.twitter.com/emAV8jVLnw</a></p>&mdash; Tom Mock (@thomas_mock) <a href="https://twitter.com/thomas_mock/status/1483236475370102787?ref_src=twsrc%5Etfw">January 18, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
+Drops Tuesday
