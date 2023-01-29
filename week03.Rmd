@@ -13,7 +13,7 @@ output:
   library(emo)
 ```
 
-# Jan 25: Data import
+# Jan 31: Data import
 
 ## Prepare
 
@@ -30,7 +30,7 @@ output:
 
 * `r emo::ji("tv")`: [Getting data into R](https://www.rstudio.com/resources/webinars/getting-data-into-r/)
 
-# Jan 27: Data transformation
+# Feb 2: Data transformation
 
 ## Prepare
 
@@ -47,4 +47,4 @@ output:
 
 ## TidyTuesday
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">The <a href="https://twitter.com/R4DScommunity?ref_src=twsrc%5Etfw">@R4DScommunity</a> welcomes you to week 4 of <a href="https://twitter.com/hashtag/TidyTuesday?src=hash&amp;ref_src=twsrc%5Etfw">#TidyTuesday</a>! We&#39;re exploring Board Games!!<br><br>📂 <a href="https://t.co/sElb4fcv3u">https://t.co/sElb4fcv3u</a><br>🗞 <a href="https://t.co/BHckhU2kpD">https://t.co/BHckhU2kpD</a><a href="https://twitter.com/hashtag/r4ds?src=hash&amp;ref_src=twsrc%5Etfw">#r4ds</a> <a href="https://twitter.com/hashtag/tidyverse?src=hash&amp;ref_src=twsrc%5Etfw">#tidyverse</a> <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/hashtag/dataviz?src=hash&amp;ref_src=twsrc%5Etfw">#dataviz</a> <a href="https://t.co/h2yD0L8qcg">pic.twitter.com/h2yD0L8qcg</a></p>&mdash; Tom Mock (@thomas_mock) <a href="https://twitter.com/thomas_mock/status/1485788636746596354?ref_src=twsrc%5Etfw">January 25, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+Drops Tuesday

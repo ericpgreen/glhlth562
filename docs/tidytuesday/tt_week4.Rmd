@@ -1,0 +1,68 @@
+---
+title: "#TidyTuesday"
+subtitle: "Week X"
+author: "Your name"
+css: custom_report.css
+output: 
+  bookdown::html_document2:
+    toc: true
+    toc_float: true
+    toc_depth: 1
+    code_folding: show
+    theme: default
+    highlight: tango
+    fig_captions: no
+    number_sections: false
+---
+
+<!-- This is a comment in markdown. 
+
+The top section is the YAML metadata. 
+
+Below are code chunks interspersed with markdown prose.
+
+-->
+
+```{r setup, include=FALSE, warning = FALSE, message = FALSE}
+  knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+  options(scipen=999) # turns off scientific notation
+
+# load packages
+  library(tidyverse)
+  library(tidytuesdayR)   # install.packages("tidytuesdayR") to get new data
+
+# load data
+  
+  
+  
+# clean data
+  
+```
+
+
+# Exploration
+ 
+*Use what you know so far to explore the dataset. If you are just starting out, write about what you want to do with the data. Try to stretch a bit every week.*
+
+
+
+# Review
+
+## Find and run
+
+*Search the Twitter hashag [#TidyTuesday](https://twitter.com/hashtag/TidyTuesday?src=hashtag_click) for an entry that catches your eye (and includes a link to their code). Include links to the details and run their code.*
+
+| Name | Details |
+|:--   |:--      |
+| Author | Replace |
+| Tweet | [url](https://twitter.com/...) |
+| Code | [url](https://github.com/...) |
+
+```{r entry}
+# insert their code
+
+```
+
+## Notes
+
+*What did you learn from their approach? What would you do differently?*
