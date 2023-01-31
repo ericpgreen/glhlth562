@@ -47,4 +47,16 @@ output:
 
 ## TidyTuesday
 
-Drops Tuesday
+Two options this week:
+
+### Tidy Tuesday Week 5
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">The <a href="https://twitter.com/R4DScommunity?ref_src=twsrc%5Etfw">@R4DSCommunity</a> welcomes you to week 5 of <a href="https://twitter.com/hashtag/TidyTuesday?src=hash&amp;ref_src=twsrc%5Etfw">#TidyTuesday</a>! We&#39;re exploring Pet Cats UK!<br><br>📁 <a href="https://t.co/upWR7qlVv3">https://t.co/upWR7qlVv3</a><br>🗞️ <a href="https://t.co/R6hhYmqESg">https://t.co/R6hhYmqESg</a><a href="https://twitter.com/hashtag/r4ds?src=hash&amp;ref_src=twsrc%5Etfw">#r4ds</a> <a href="https://twitter.com/hashtag/tidyverse?src=hash&amp;ref_src=twsrc%5Etfw">#tidyverse</a> <a href="https://twitter.com/hashtag/RStats?src=hash&amp;ref_src=twsrc%5Etfw">#RStats</a> <a href="https://twitter.com/hashtag/DataViz?src=hash&amp;ref_src=twsrc%5Etfw">#DataViz</a> <a href="https://t.co/ono4G3X1uV">pic.twitter.com/ono4G3X1uV</a></p>&mdash; Jon Harmon (he/him) (@JonTheGeek) <a href="https://twitter.com/JonTheGeek/status/1620075421520871424?ref_src=twsrc%5Etfw">January 30, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Pet Cats UK! [Data](https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-01-31/readme.md) / [Template](https://www.dropbox.com/s/i1mf75oja07985u/tidytuesday.zip?dl=1)
+
+### Groundhog Day
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Introducing {feb2}, the Groundhog Day data package you never knew you didn&#39;t need <a href="https://twitter.com/hashtag/GroundhogDay?src=hash&amp;ref_src=twsrc%5Etfw">#GroundhogDay</a> <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a><br><br>📦: <a href="https://t.co/F5ejTz6q5x">https://t.co/F5ejTz6q5x</a> <a href="https://t.co/MD0yHdp1Cq">pic.twitter.com/MD0yHdp1Cq</a></p>&mdash; Eric Green (@ericpgreen) <a href="https://twitter.com/ericpgreen/status/1620079068967481344?ref_src=twsrc%5Etfw">January 30, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Use the normal #tidytuesday Rmd template but focus on data from the {`feb2`} package for the first part. For the second part (reviewing other people's submissions), you should search for #tidytuesday submissions as usual.
