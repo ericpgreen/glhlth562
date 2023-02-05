@@ -17,6 +17,8 @@ navbar:
           href: week02.html
         - text: "Week 3"
           href: week03.html
+        - text: "Week 4"
+          href: week04.html
 
   right:
     - icon: fa-github
