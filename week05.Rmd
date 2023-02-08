@@ -13,7 +13,7 @@ output:
   library(emo)
 ```
 
-# Feb 8: Strings
+# Feb 14: Strings
 
 ## Prepare
 
@@ -28,7 +28,7 @@ output:
 
 `r emo::ji("tv")`: [Help me help you. Creating reproducible examples](https://www.rstudio.com/resources/webinars/help-me-help-you-creating-reproducible-examples/)
 
-# Feb 10: Factors
+# Feb 16: Factors
 
 ## Prepare
 
@@ -45,5 +45,5 @@ output:
 
 ## TidyTuesday
 
-No `#TidyTuesday` this week. Instead, you'll complete [this lab assignment](masks.html). It is due February 20 at 10pm ET.
+Drops Tuesday
 
