@@ -480,3 +480,4 @@ raw <- read_sheet("https://docs.google.com/spreadsheets/d/1kQ35JKpk3vNaM7ZfFK2DF
            subtitle = paste0("Weekly reported cases among students, ",
                              "(", date_min, "-", date_max, ")"),
            caption = "Data Source: Durham Public Schools, https://tinyurl.com/mr32wdzs")
+a

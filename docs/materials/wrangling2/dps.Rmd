@@ -30,6 +30,8 @@ output:
 
 # load packages
   library(tidyverse)
+  library(googlesheets4)
+  gs4_deauth()
 ```
 
 
@@ -48,7 +50,7 @@ Click on any of the links and you will find a PDF. There are tools for extractin
 ## 3. Import this sheet into R and assign it to an object called `raw`. (hint: you need to do this in a way that your analysis will update every time you knit this document)
 
 ```{r}
-
+  raw <- read_sheet("https://docs.google.com/spreadsheets/d/1kQ35JKpk3vNaM7ZfFK2DFb1B9kQIQ4IODr7lOM394nQ/edit#gid=769268401")
 ```
 
 ## 4. What are the steps you need to do to get this into a tidy dataframe?

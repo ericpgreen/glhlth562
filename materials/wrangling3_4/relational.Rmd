@@ -1,0 +1,36 @@
+---
+title: "Relational Data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(feb2)
+```
+
+## How many prognosticators have no prediction data?
+
+Return a number (in a tibble is fine)
+
+```{r}
+
+```
+
+There are PLACEHOLDER prognosticators with no prediction data.
+
+
+## What are their names?
+
+Return a vector of names
+
+## Which prognosticator's city coordinates are closest to a GHCND weather station?
+
+Punxsutawney Phil or Jimmy the Groundhog?
+
+## Create a plot of prediction accuracy over time by `prognosticator_status`
+
+* exclude human mascots
+* limit to years with at least 5 per year per level of `prognosticator_status` (except human mascots)
+* create a dataset with only `prognosticator_name`, `year`, `predict_early_spring`, `prognosticator_city`, `prognosticator_status`, and `class`
+* facet plot by `prognosticator_status`

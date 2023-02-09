@@ -1,0 +1,94 @@
+---
+title: "Relational Data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(feb2)
+```
+
+## How many prognosticators have no prediction data?
+
+Return a number (in a tibble is fine)
+
+```{r}
+ans <- prognosticators %>%
+  anti_join(predictions, by="prognosticator_name") %>%
+  count()
+```
+
+There are `r ans` prognosticators with no prediction data.
+
+
+## What are their names?
+
+Return a vector of names
+
+```{r}
+ans_names <- prognosticators %>%
+  anti_join(predictions, by="prognosticator_name") %>%
+  pull(prognosticator_name)
+
+ans_names <- paste(ans_names, collapse = ", ")
+```
+
+Their names are: `r ans_names`.
+
+## Which prognosticator's city coordinates are closest to a GHCND weather station?
+
+Punxsutawney Phil or Jimmy the Groundhog?
+
+```{r}
+prognosticators %>%
+  left_join(weather_stations_ghcnd, by = "prognosticator_city") %>%
+  filter(prognosticator_name %in% c("Punxsutawney Phil", 
+                                    "Jimmy the Groundhog")) %>%
+  group_by(prognosticator_name) %>%
+  summarize(min_distance = min(distance))
+```
+
+
+## Create a plot of prediction accuracy over time by `prognosticator_status`
+
+* exclude human mascots
+* limit to years with at least 5 per year per level of `prognosticator_status` (except human mascots)
+* create a dataset with only `prognosticator_name`, `year`, `predict_early_spring`, `prognosticator_city`, `prognosticator_status`, and `class`
+* facet plot by `prognosticator_status`
+
+```{r}
+predictions %>%
+  select(prognosticator_name, year, prediction) %>%
+  right_join(select(filter(prognosticators, 
+                           prognosticator_status!="Human Mascot"),
+                    prognosticator_name, prognosticator_city,
+                    prognosticator_status),
+             by = "prognosticator_name") %>%
+  left_join(class_def1, by = c("prognosticator_city", "year")) %>%
+  filter(complete.cases(.)) %>%
+  mutate(result = case_when(
+    prediction == class ~ "Correct",
+    TRUE ~ "Incorrect"
+  )) %>%
+  group_by(year, prognosticator_status, result) %>%
+  count() %>%
+  group_by(year, prognosticator_status) %>%
+  mutate(n_predictions_status = sum(n)) %>%
+  filter(result=="Correct") %>%
+  group_by(year) %>%
+  mutate(n_predictions = sum(n_predictions_status)) %>%
+  group_by(year, prognosticator_status) %>%
+  filter(n_predictions_status >=5) %>%
+  group_by(year) %>%
+  mutate(valid_status_year = n()) %>%
+  ungroup() %>%
+  filter(valid_status_year==2) %>%
+  mutate(per_correct = n_predictions_status/n_predictions) %>%
+  select(year, prognosticator_status, n_predictions_status, per_correct) %>%
+  ggplot(aes(x = year, y = per_correct)) +
+    geom_point() +
+    facet_wrap(~ prognosticator_status) +
+    scale_y_continuous(labels = scales::percent_format(),
+                       limits = c(0, 1))
+```
