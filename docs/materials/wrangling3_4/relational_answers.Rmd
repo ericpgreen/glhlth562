@@ -54,11 +54,11 @@ prognosticators %>%
 
 * exclude human mascots
 * limit to years with at least 5 per year per level of `prognosticator_status` (except human mascots)
-* create a dataset with only `prognosticator_name`, `year`, `predict_early_spring`, `prognosticator_city`, `prognosticator_status`, and `class`
 * facet plot by `prognosticator_status`
 
 ```{r}
 predictions %>%
+# join data
   select(prognosticator_name, year, prediction) %>%
   right_join(select(filter(prognosticators, 
                            prognosticator_status!="Human Mascot"),
@@ -67,28 +67,43 @@ predictions %>%
              by = "prognosticator_name") %>%
   left_join(class_def1, by = c("prognosticator_city", "year")) %>%
   filter(complete.cases(.)) %>%
+# construct outcome
   mutate(result = case_when(
     prediction == class ~ "Correct",
     TRUE ~ "Incorrect"
   )) %>%
+# count results by year and status
   group_by(year, prognosticator_status, result) %>%
   count() %>%
+  ungroup() %>%
+  complete(year, prognosticator_status, result, 
+           fill = list(n=0)) %>%
+# count total predictions made by year and status
   group_by(year, prognosticator_status) %>%
   mutate(n_predictions_status = sum(n)) %>%
-  filter(result=="Correct") %>%
-  group_by(year) %>%
-  mutate(n_predictions = sum(n_predictions_status)) %>%
-  group_by(year, prognosticator_status) %>%
-  filter(n_predictions_status >=5) %>%
-  group_by(year) %>%
-  mutate(valid_status_year = n()) %>%
   ungroup() %>%
-  filter(valid_status_year==2) %>%
-  mutate(per_correct = n_predictions_status/n_predictions) %>%
-  select(year, prognosticator_status, n_predictions_status, per_correct) %>%
-  ggplot(aes(x = year, y = per_correct)) +
+# remove years if either status had <5 predictions
+  group_by(year) %>%
+  mutate(min = min(n_predictions_status)) %>%
+  ungroup() %>%
+  filter(min >= 5) %>%
+# calculate percent by year, status, and result
+  mutate(prop_year_status = n/n_predictions_status) %>%
+# limit to correct predictions
+  filter(result=="Correct") %>%
+# plot
+  select(year, prognosticator_status, prop_year_status) %>%
+  ggplot(aes(x = year, y = prop_year_status)) +
     geom_point() +
+    geom_smooth() +
     facet_wrap(~ prognosticator_status) +
     scale_y_continuous(labels = scales::percent_format(),
-                       limits = c(0, 1))
+                       limits = c(0, 1)) +
+    labs(x=NULL, y=NULL,
+         title = str_wrap("Inanimate creatures are becoming better prognosticators over time", 60),
+         subtitle = "Comparing yearly prediction accuracy among real and fake prognosticators",
+         caption = str_wrap("Source: Countdown to Groundhog Day and U.S. National Ocean and Atmospheric Administration. Limited to years with at least 5 predictions per group.", 100)) +
+    theme_bw() + 
+    theme(plot.title.position = "plot",
+          plot.title = element_text(face="bold"))
 ```
