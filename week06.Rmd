@@ -13,7 +13,7 @@ output:
   library(emo)
 ```
 
-# Feb 15: Dates and times
+# Feb 21: Dates and times
 
 ## Prepare
 
@@ -28,7 +28,7 @@ output:
 
 `r emo::ji("tv")`: [Communicating the Value of Data Science | Data Science Hangout | Elaine McVey at the Looma Project](https://youtu.be/IkqItgPSPro)
 
-# Feb 17: Iteration
+# Feb 23: Iteration
 
 ## Prepare
 
@@ -46,5 +46,5 @@ output:
 
 ## TidyTuesday
 
-No `#TidyTuesday` this week. Instead, you'll complete [this lab assignment](masks.html). It is due February 20 at 10pm ET.
+Drops Tuesday
 

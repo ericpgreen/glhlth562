@@ -1,0 +1,78 @@
+---
+title: "Data Wrangling"
+subtitle: "Strings"
+css: custom_report.css
+output: 
+  bookdown::html_document2:
+    toc: true
+    toc_float: true
+    toc_depth: 1
+    code_folding: show
+    theme: default
+    highlight: tango
+    fig_captions: no
+    number_sections: false
+---
+
+```{r setup, include=FALSE, warning = FALSE, message = FALSE}
+  knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+  options(scipen=999) # turns off scientific notation
+
+# define colors
+  glhlth562_colors <- c(
+    `blue`       = "#1f9ac9",
+    `yellow`     = "#ffd966",
+    `black`      = "#000000",
+    `lightgrey`  = "#D3D3D3",
+    `darkgrey`   = "#444444",
+    `grey`       = "#808080"
+  )
+
+# load packages
+  library(tidyverse)
+  library(gapminder)
+```
+
+# Strings
+
+## Keep just records from countries:
+
+### with "ee" in their names:
+
+```{r}
+gapminder %>% 
+  filter(str_detect(country, "ee"))
+```
+
+### whose names start with "South"
+
+```{r}
+gapminder %>% 
+  filter(str_detect(country, "South"))
+```
+
+### whose names end in "land"
+
+```{r}
+gapminder %>% 
+  filter(str_ends(country, "land"))
+
+# watch out for `str_detect` that keeps Netherlands by mistake
+gapminder %>% 
+  filter(str_detect(country, "land"))
+```
+
+### have a word in their name that starts with "Ga"
+
+```{r}
+gapminder %>% 
+  filter(grepl("\\bGa\\w*", country))
+```
+
+### have punctuation in their name
+
+```{r}
+gapminder %>%
+  filter(str_detect(country, "[:punct:]"))
+```
+
