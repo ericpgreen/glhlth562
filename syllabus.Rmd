@@ -84,7 +84,7 @@ You'll prepare for each class session by reading and practicing. During class, w
 
 ## Final Project
 
-You will also complete a final project alone or with partners using a dataset of your choosing. Details forthcoming.
+You will also complete a final project alone or with partners using a dataset of your choosing. Details [here](final.html).
 
 ## Exams
 

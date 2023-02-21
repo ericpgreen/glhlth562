@@ -25,7 +25,7 @@ The project is very open ended. You should create some kind of compelling visual
 
 You do not need to visualize all of the data at once. A single high quality visualization will receive a much higher grade than a large number of poor quality visualizations. Also pay attention to your presentation. Neatness, coherency, and clarity will count. All analyses must be done in RStudio, using R. 
 
-You may work alone or in teams of 2 or 3. We prefer that you work in teams.
+You may work alone or in teams of 2. We prefer that you work in teams.
 
 # Data
 
@@ -55,9 +55,9 @@ If the data are not publicly available, you must have the owner's permission to 
 
 ## Deliverables
 
-1.  Proposal - due February 28
-2.  Presentation - due April 6
-3.  Project files and write-up - due April 12
+1.  Proposal - due March 7
+2.  Presentation - due April 10
+3.  Project files and write-up - due April 18
 
 ### Proposal
 
