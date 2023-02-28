@@ -1,0 +1,135 @@
+---
+title: "Self-assessment"
+output: 
+  prettydoc::html_pretty:
+    theme: architect
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The purpose of this assessment is to take stock of what you know after six weeks of learning R. Open a new `Rmd` file and name it `assessment_inclass_surname.Rmd`. Format the file as follows:
+
+````
+---
+title: "Self-assessment"
+author: "Your name"
+output: github_document
+---
+
+## Q1
+
+Your answer
+
+```{r}
+# code chunk here
+```
+
+
+## Q2
+
+And so forth
+````
+
+
+You are free to use resources like Stack Overflow, but you may not talk/chat with other people or use chatGPT (except for writing regular expressions, if needed). Complete as much as you can in class and submit via Sakai when time is up (hard stop at 3:05pm). Make sure your `Rmd` file compiles without error!
+
+If you do not complete the assessment in class, complete it by 10pm Sunday, name the file `assessment_complete_surname.Rmd`, and submit it via Sakai. The same rules apply for the out of class portion.
+
+This takes the place of the regular #tidytuesday assignment this week (we're done with TT assignments).
+
+## Get started
+
+Load the following packages:
+
+```{r}
+library(tidyverse)
+library(patchwork)
+library(nycflights13)
+```
+
+## Plotting
+
+1. What’s gone wrong with this code? Why are the points not blue?
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = "blue"))
+```
+
+2. Which variables in `mpg` are categorical? Which variables are continuous? (Hint: type `?mpg` to read the documentation for the dataset). How can you see this information when you run `mpg`?
+
+3. Using the `mpg` dataset, plot points showing the relationship between `displ` and `hwy`, faceted by `class` with two rows.
+
+4. What geom would you use to draw a line chart? A boxplot? A histogram? An area chart?
+
+5. What does the se argument to `geom_smooth()` do?
+
+6. Recreate the R code necessary to generate the following graphs (together as one figure).
+
+```{r, echo=FALSE}
+  knitr::include_graphics(here::here("materials", "self-assessment_p1.png"))
+```
+
+## Wrangling
+
+7. Using the `flights` dataset, find all flights that
+
+<ol type="a">
+<li>Had an arrival delay of two or more hours</li>
+<li>Flew to Houston (IAH or HOU)</li>
+<li>Were operated by United, American, or Delta</li>
+<li>Departed in summer (July, August, and September)</li>
+<li>Arrived more than two hours late, but didn’t leave late</li>
+<li>Were delayed by at least an hour, but made up over 30 minutes in flight</li>
+</ol>
+
+
+8. What function would you use to read a file where fields were separated with
+"|"?
+
+9. What’s the difference between `read_csv()` and `read_csv2()`?
+
+10. Tidy the simple tibble below. Do you need to make it wider or longer? What are the variables?
+
+```{r}
+preg <- tribble(
+  ~pregnant, ~male, ~female,
+  "yes",     NA,    10,
+  "no",      20,    12
+)
+```
+
+11. Add the location of the origin and destination (i.e. the lat and lon) to flights.
+
+12. In code that doesn't use `stringr`, you’ll often see `paste()` and `paste0()`. What’s the difference between the two functions? What `stringr` function are they equivalent to? How do the functions differ in their handling of `NA`?
+
+13. In the string `x`, replace the characters "item" with the characters "question" and separate the letters from the numbers with an underscore.
+
+```{r}
+x <- c("item1", "item2", "item3", "item4", "item5")
+```
+
+14. In the dataset `forcats::gss_cat`, how could you collapse `rincome` into a small set of categories?
+
+15. Use the appropriate lubridate function to parse each of the following dates:
+
+```{r}
+d1 <- "January 1, 2010"
+d2 <- "2015-Mar-07"
+d3 <- "06-Jun-2017"
+d4 <- c("August 19 (2015)", "July 1 (2015)")
+d5 <- "12/30/14" # Dec 30, 2014
+```
+
+16. Using the `flights` dataset, determine on what day of the week should you leave if you want to minimise the chance of a delay?
+
+17a. Create a scatterplot of `height` vs `mass`, faceted by `gender`, using the `starwars` dataset. 
+
+17b. Then write a function called `plot_starwars` that takes the argument `species` with a default value of "Human". This function should filter the plot to only include specific species. 
+
+17c. Write a for loop that prints three plots for "Human", "Wookiee", and "Ewok".
+
+17d. Get the same result as 17c using the `map()` function.
+
