@@ -1,0 +1,53 @@
+---
+title: "Week 8"
+subtitle: "Models"
+description: |
+  Tidy models
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 2
+---
+
+```{r, include=FALSE}
+  library(emo)
+```
+
+# Mar 1: Tidy models introduction, part 1
+
+## Prepare
+
+* `r emo::ji("open_book")`: [Tidy Modeling with R, CH 3](https://www.tmwr.org/base-r.html)
+* `r emo::ji("open_book")`: [Tidy Modeling with R, CH 4](https://www.tmwr.org/ames.html)
+* `r emo::ji("open_book")`: [Tidy Modeling with R, CH 5](https://www.tmwr.org/splitting.html)
+  
+## During Class
+
+[Deck 1](https://docs.google.com/presentation/d/1oIT3cnb-O3TNB_sJMZDPoa1Q6XJNhA6Oy7524BSZbAE/edit?usp=sharing) / [Deck 2](https://tmv.netlify.app/site/slides/rmed01-model.html#1) / ([zip](https://www.dropbox.com/s/9h6028ssqnuvevu/models1.zip?dl=1))
+
+## After Class (Optional)
+
+`r emo::ji("tv")`: Max Kuhn, [What's new in tidymodels?](https://www.rstudio.com/resources/rstudioglobal-2021/whats-new-in-tidymodels/)
+
+# Mar 3: Tidy models introduction, part 2
+
+## Prepare
+
+* `r emo::ji("open_book")`: [Tidy Modeling with R, CH 6](https://www.tmwr.org/models.html)
+* `r emo::ji("open_book")`: [Tidy Modeling with R, CH 7](https://www.tmwr.org/workflows.html)
+* `r emo::ji("open_book")`: [Tidy Modeling with R, CH 8](https://www.tmwr.org/recipes.html)
+* `r emo::ji("open_book")`: [Tidy Modeling with R, CH 9](https://www.tmwr.org/performance.html)
+
+## During Class
+
+[Deck 1](https://tmv.netlify.app/site/slides/rmed02-workflows.html) / [Deck 2](https://tmv.netlify.app/site/slides/rmed03-tune.html) / Materials ([zip](https://www.dropbox.com/s/nlzhyye4bumcona/models2.zip?dl=1))
+
+## After Class (Optional)
+
+`r emo::ji("tv")`: Simon Couch, [tidymodels/stacks, Or, In Preparation for Pesto: A Grammar for Stacked Ensemble Modeling](https://www.rstudio.com/resources/rstudioglobal-2021/tidymodelsstacks-or-in-preparation-for-pesto-a-grammar-for-stacked-ensemble-modeling/)
+
+
+## TidyTuesday
+
+No assignment this week.
+

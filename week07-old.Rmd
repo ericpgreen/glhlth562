@@ -1,0 +1,48 @@
+---
+title: "Week 7"
+subtitle: "Models"
+description: |
+  Ethics and modeling data
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 2
+---
+
+```{r, include=FALSE}
+  library(emo)
+```
+
+# Feb 21: Data science ethics
+
+## Prepare
+
+`r emo::ji("tv")`: [Mine Çetinkaya-Rundel, Algorithmic bias](https://youtu.be/E2eD72pwtps)
+  
+## During Class
+
+We'll screen the 2020 film, ["Coded Bias"](https://www.imdb.com/title/tt11394170/).
+
+## After Class (Optional)
+
+`r emo::ji("tv")`: [Weapons of Math Destruction | Cathy O'Neil | Talks at Google](https://youtu.be/TQHs8SA1qpk)
+
+# Feb 23: Models
+
+## Prepare
+
+* `r emo::ji("open_book")`: [R4DS Chapter 22](https://r4ds.had.co.nz/model-intro.html)
+* `r emo::ji("open_book")`: [R4DS Chapter 23](https://r4ds.had.co.nz/model-basics.html)
+
+## During Class
+
+Deck / Materials
+
+## After Class (Optional)
+
+`r emo::ji("tv")`: [Richard McElreath, Science Before Statistics: Causal Inference](https://youtu.be/KNPYUVmY3NM)
+
+## TidyTuesday
+
+No assignment this week. Project proposals due soon.
+

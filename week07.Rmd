@@ -1,8 +1,8 @@
 ---
 title: "Week 7"
-subtitle: "Models"
+subtitle: "Wrangling"
 description: |
-  Ethics and modeling data
+  Plotting and wrangling self-assessment and intro to data science ethics
 output:
   distill::distill_article:
     toc: true
@@ -13,7 +13,17 @@ output:
   library(emo)
 ```
 
-# Feb 21: Data science ethics
+# Feb 28: Self-assessment
+
+## Prepare
+
+Nothing
+
+## During Class
+
+You'll work on the self-assessment.
+
+# Mar 2: Data science ethics
 
 ## Prepare
 
@@ -27,22 +37,8 @@ We'll screen the 2020 film, ["Coded Bias"](https://www.imdb.com/title/tt11394170
 
 `r emo::ji("tv")`: [Weapons of Math Destruction | Cathy O'Neil | Talks at Google](https://youtu.be/TQHs8SA1qpk)
 
-# Feb 23: Models
-
-## Prepare
-
-* `r emo::ji("open_book")`: [R4DS Chapter 22](https://r4ds.had.co.nz/model-intro.html)
-* `r emo::ji("open_book")`: [R4DS Chapter 23](https://r4ds.had.co.nz/model-basics.html)
-
-## During Class
-
-Deck / Materials
-
-## After Class (Optional)
-
-`r emo::ji("tv")`: [Richard McElreath, Science Before Statistics: Causal Inference](https://youtu.be/KNPYUVmY3NM)
 
 ## TidyTuesday
 
-No assignment this week. Project proposals due soon.
+If you do not complete your self-assessment in class, complete it by Sunday.
 
