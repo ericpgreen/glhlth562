@@ -1,0 +1,525 @@
+---
+title: "Self-assessment answers"
+output: 
+  prettydoc::html_pretty:
+    theme: architect
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Get started
+
+Credit: https://jrnold.github.io/r4ds-exercise-solutions/
+
+Load the following packages:
+
+```{r}
+library(tidyverse)
+library(patchwork)
+library(nycflights13)
+library(lubridate)
+```
+
+## Plotting
+
+1. What’s gone wrong with this code? Why are the points not blue?
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = "blue"))
+```
+The argument `colour = "blue"` is included within the `mapping` argument, and as such, it is treated as an aesthetic, which is a mapping between a variable and a value. In the expression, `colour = "blue"`, `"blue"` is interpreted as a categorical variable which only takes a single value `"blue"`. 
+
+The following code does produces the expected result.
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy), colour = "blue")
+```
+
+2. Which variables in `mpg` are categorical? Which variables are continuous? (Hint: type `?mpg` to read the documentation for the dataset). How can you see this information when you run `mpg`?
+
+The following list contains the categorical variables in `mpg`:
+
+* manufacturer
+* model
+* trans
+* drv
+* fl
+* class
+
+The following list contains the continuous variables in mpg:
+
+* displ
+* year
+* cyl
+* cty
+* hwy
+
+In the printed data frame, angled brackets at the top of each column provide type of each variable. 
+
+```{r}
+mpg
+```
+
+
+Those with `<chr>` above their columns are categorical, while those with `<dbl>` or `<int>` are continuous. 
+
+`glimpse()` is another function that concisely displays the type of each column in the data frame:
+
+```{r}
+glimpse(mpg)
+```
+
+For those lists, we can consider any non-numeric variable to be categorical and any numeric variable to be continuous. This largely corresponds to the heuristics `ggplot()` uses for will interpreting variables as discrete or continuous.
+
+However, this definition of continuous vs. categorical misses several important cases. Of the numeric variables, `year` and `cyl` (cylinders) clearly take on discrete values. The variables `cty` and hwy are stored as integers (int) so they only take on a discrete values. Even though `displ` has In some sense, due to measurement and computational constraints all numeric variables are discrete. But unlike the categorical variables, it is possible to add and subtract these numeric variables in a meaningful way.
+
+Fundamentally, categorizing variables as “discrete”, “continuous”, “ordinal”, “nominal”, “categorical”, etc. is about specifying what operations can be performed on the variables. Discrete variables support counting and calculating the mode. Variables with an ordering support sorting and calculating quantiles. Variables that have an interval scale support addition and subtraction and operations such as taking the mean that rely on these primitives.
+
+3. Using the `mpg` dataset, plot points showing the relationship between `displ` and `hwy`, faceted by `class` with two rows.
+
+```{r}
+  ggplot(mpg, aes(x=displ, y=hwy)) +
+    geom_point() + 
+    facet_wrap(~ class, nrow=2)
+```
+
+
+4. What geom would you use to draw a line chart? A boxplot? A histogram? An area chart?
+
+* line chart: `geom_line()`
+* boxplot: `geom_boxplot()`
+* histogram: `geom_histogram()`
+* area chart: `geom_area()`
+
+5. What does the se argument to `geom_smooth()` do?
+
+It adds standard error bands to the lines.
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, colour = drv)) +
+  geom_point() +
+  geom_smooth(se = TRUE)
+#> `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+```
+By default `se = TRUE`:
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, colour = drv)) +
+  geom_point() +
+  geom_smooth()
+#> `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+```
+
+6. Recreate the R code necessary to generate the following graphs (together as one figure).
+
+```{r, echo=FALSE}
+  knitr::include_graphics(here::here("materials", "self-assessment_p1.png"))
+```
+
+```{r}
+p1 <- mpg %>%
+  ggplot(aes(x=displ, y=hwy)) +
+    geom_point() + 
+    geom_smooth(color="blue", se=FALSE) +
+    labs(title = "1")
+
+p2 <- mpg %>%
+  ggplot(aes(x=displ, y=hwy)) +
+  geom_point() + 
+  geom_smooth(color="blue", se=FALSE, aes(group = drv)) +
+  labs(title = "2")
+
+p3 <- mpg %>%
+  ggplot(aes(x=displ, y=hwy, color=drv)) +
+  geom_point() + 
+  geom_smooth(se=FALSE)+
+  labs(title = "3")
+
+p4 <- mpg %>%
+  ggplot(aes(x=displ, y=hwy)) +
+  geom_point(aes(color=drv)) + 
+  geom_smooth(se=FALSE, color="blue")+
+  labs(title = "4")
+
+p5 <- mpg %>%
+  ggplot(aes(x=displ, y=hwy)) +
+  geom_point(aes(color=drv)) + 
+  geom_smooth(se=FALSE, color="blue",
+              aes(linetype = drv))+
+  labs(title = "5")
+
+p6 <- mpg %>%
+  ggplot(aes(x=displ, y=hwy)) +
+  geom_point(shape = 21,
+             aes(fill=drv), color="white", stroke=2)+
+  labs(title = "6") 
+
+p1 + p2 / p3 + p4 / p5 + p6 + 
+  plot_annotation(title = "Hint: just use default colors")
+```
+
+
+## Wrangling
+
+7. Using the `flights` dataset, find all flights that
+
+a. Had an arrival delay of two or more hours
+b. Flew to Houston (IAH or HOU)
+c. Were operated by United, American, or Delta
+d. Departed in summer (July, August, and September)
+e. Arrived more than two hours late, but didn’t leave late
+f. Were delayed by at least an hour, but made up over 30 minutes in flight
+
+The answer to each part follows.
+
+a. Since the `arr_delay` variable is measured in minutes, find flights with an arrival delay of 120 or more minutes.
+
+```{r}
+filter(flights, arr_delay >= 120)
+```
+
+b. The flights that flew to Houston are those flights where the destination (`dest`) is either “IAH” or “HOU”.
+
+```{r}
+filter(flights, dest == "IAH" | dest == "HOU")
+```
+
+However, using `%in%` is more compact and would scale to cases where there were more than two airports we were interested in.
+
+```{r}
+filter(flights, dest %in% c("IAH", "HOU"))
+```
+
+c. In the `flights` dataset, the column `carrier` indicates the airline, but it uses two-character carrier codes. We can find the carrier codes for the airlines in the `airlines` dataset. Since the carrier code dataset only has 16 rows, and the names of the airlines in that dataset are not exactly “United”, “American”, or “Delta”, it is easiest to manually look up their carrier codes in that data.
+
+```{r}
+airlines
+```
+
+The carrier code for Delta is "DL", for American is "AA", and for United is "UA". Using these carriers codes, we check whether `carrier` is one of those.
+
+```{r}
+filter(flights, carrier %in% c("AA", "DL", "UA"))
+```
+
+d. The variable `month` has the month, and it is numeric. So, the summer flights are those that departed in months 7 (July), 8 (August), and 9 (September).
+
+```{r}
+filter(flights, month >= 7, month <= 9)
+```
+
+The `%in%` operator is an alternative. If the `:` operator is used to specify the integer range, the expression is readable and compact.
+
+```{r}
+filter(flights, month %in% 7:9)
+```
+
+We could also use the `|` operator. However, the `|` does not scale to many choices. Even with only three choices, it is quite verbose.
+
+```{r}
+filter(flights, month == 7 | month == 8 | month == 9)
+```
+
+e. Flights that arrived more than two hours late, but didn’t leave late will have an arrival delay of more than 120 minutes (`arr_delay > 120`) and a non-positive departure delay (`dep_delay <= 0`).
+
+```{r}
+filter(flights, arr_delay > 120, dep_delay <= 0)
+```
+
+f. Were delayed by at least an hour, but made up over 30 minutes in flight. If a flight was delayed by at least an hour, then `dep_delay >= 60`. If the flight didn’t make up any time in the air, then its arrival would be delayed by the same amount as its departure, meaning `dep_delay == arr_delay`, or alternatively, `dep_delay - arr_delay == 0`. If it makes up over 30 minutes in the air, then the arrival delay must be at least 30 minutes less than the departure delay, which is stated as `dep_delay - arr_delay > 30`.
+
+```{r}
+filter(flights, dep_delay >= 60, dep_delay - arr_delay > 30)
+```
+
+g. Finding flights that departed between midnight and 6 a.m. is complicated by the way in which times are represented in the data. In `dep_time`, midnight is represented by 2400, not 0. You can verify this by checking the minimum and maximum of dep_time.
+
+```{r}
+summary(flights$dep_time)
+```
+
+This is an example of why it is always good to check the summary statistics of your data. Unfortunately, this means we cannot simply check that `dep_time < 600`, because we also have to consider the special case of midnight.
+
+```{r}
+filter(flights, dep_time <= 600 | dep_time == 2400)
+```
+
+Alternatively, we could use the modulo operator, `%%`. The modulo operator returns the remainder of division. Let’s see how this affects our times.
+
+```{r}
+c(600, 1200, 2400) %% 2400
+```
+
+
+Since `2400 %% 2400 == 0` and all other times are left unchanged, we can compare the result of the modulo operation to 600,
+
+```{r}
+filter(flights, dep_time %% 2400 <= 600)
+```
+
+This filter expression is more compact, but its readability depends on the familiarity of the reader with modular arithmetic.
+
+8. What function would you use to read a file where fields were separated with
+"|"?
+
+Use the `read_delim()` function with the argument `delim="|"`.
+
+```{r}
+#read_delim(file, delim = "|")
+```
+
+9. What’s the difference between `read_csv()` and `read_csv2()`?
+
+The delimiter. The function `read_csv()` uses a comma, while `read_csv2()` uses a semi-colon (;). Using a semi-colon is useful when commas are used as the decimal point (as in Europe).
+
+10. Tidy the simple tibble below. Do you need to make it wider or longer? What are the variables?
+
+```{r}
+preg <- tribble(
+  ~pregnant, ~male, ~female,
+  "yes",     NA,    10,
+  "no",      20,    12
+)
+```
+
+To tidy the preg table use `pivot_longer()` to create a long table. The variables in this data are:
+
+* `sex` (“female”, “male”)
+* `pregnant` (“yes”, “no”)
+* `count`, which is a non-negative integer representing the number of observations.
+
+The observations in this data are unique combinations of sex and pregnancy status.
+
+```{r}
+preg_tidy <- preg %>%
+  pivot_longer(c(male, female), 
+               names_to = "sex", 
+               values_to = "count")
+
+preg_tidy
+```
+
+Remove the (male, pregnant) row with a missing value to simplify the tidied data frame.
+
+```{r}
+preg_tidy2 <- preg %>%
+  pivot_longer(c(male, female), 
+               names_to = "sex", 
+               values_to = "count", 
+               values_drop_na = TRUE)
+
+preg_tidy2
+```
+
+11. Add the location of the origin and destination (i.e. the lat and lon) to flights.
+
+You can perform one join after another. If duplicate variables are found, by default, dplyr will distinguish the two by adding `.x`, and `.y` to the ends of the variable names to solve naming conflicts.
+
+```{r}
+airport_locations <- airports %>%
+  select(faa, lat, lon)
+
+flights %>%
+  select(year:day, hour, origin, dest) %>%
+  left_join(
+    airport_locations,
+    by = c("origin" = "faa")
+  ) %>%
+  left_join(
+    airport_locations,
+    by = c("dest" = "faa")
+  )
+```
+
+The `suffix` argument overrides this default behavior. Since is always good practice to have clear variable names, we can use the suffixes `"_dest"` and `"_origin"` to specify whether the column refers to the destination or origin airport.
+
+```{r}
+airport_locations <- airports %>%
+  select(faa, lat, lon)
+
+flights %>%
+  select(year:day, hour, origin, dest) %>%
+  left_join(
+    airport_locations,
+    by = c("origin" = "faa")
+  ) %>%
+  left_join(
+    airport_locations,
+    by = c("dest" = "faa"),
+    suffix = c("_origin", "_dest")
+    # existing lat and lon variables in tibble gain the _origin suffix
+    # new lat and lon variables are given _dest suffix
+  )
+```
+
+
+12. In code that doesn't use `stringr`, you’ll often see `paste()` and `paste0()`. What’s the difference between the two functions? What `stringr` function are they equivalent to? How do the functions differ in their handling of `NA`?
+
+The function `paste()` separates strings by spaces by default, while `paste0()` does not separate strings with spaces by default.
+
+```{r}
+paste("foo", "bar")
+#> [1] "foo bar"
+paste0("foo", "bar")
+#> [1] "foobar"
+```
+
+
+Since `str_c()` does not separate strings with spaces by default it is closer in behavior to `paste0()`.
+
+```{r}
+str_c("foo", "bar")
+#> [1] "foobar"
+```
+
+However, `str_c()` and the paste function handle NA differently. The function `str_c()` propagates NA, if any argument is a missing value, it returns a missing value. This is in line with how the numeric R functions, e.g. `sum()`, `mean()`, handle missing values. However, the paste functions, convert `NA` to the string `"NA"` and then treat it as any other character vector.
+
+```{r}
+str_c("foo", NA)
+#> [1] NA
+paste("foo", NA)
+#> [1] "foo NA"
+paste0("foo", NA)
+#> [1] "fooNA"
+```
+
+13. In the string `x`, replace the characters "item" with the characters "question" and separate the letters from the numbers with an underscore.
+
+```{r}
+x <- c("item1", "item2", "item3", "item4", "item5")
+```
+
+```{r}
+str_replace(x, "item", "question_")
+```
+
+
+14. In the dataset `forcats::gss_cat`, how could you collapse `rincome` into a small set of categories?
+
+Group all the non-responses into one category, and then group other categories into a smaller number. Since there is a clear ordering, we would not use `fct_lump()`.
+
+```{r}
+levels(gss_cat$rincome)
+```
+
+```{r}
+library("stringr")
+gss_cat %>%
+  mutate(
+    rincome =
+      fct_collapse(
+        rincome,
+        `Unknown` = c("No answer", "Don't know", "Refused", "Not applicable"),
+        `Lt $5000` = c("Lt $1000", str_c(
+          "$", c("1000", "3000", "4000"),
+          " to ", c("2999", "3999", "4999")
+        )),
+        `$5000 to 10000` = str_c(
+          "$", c("5000", "6000", "7000", "8000"),
+          " to ", c("5999", "6999", "7999", "9999")
+        )
+      )
+  ) %>%
+  ggplot(aes(x = rincome)) +
+  geom_bar() +
+  coord_flip()
+```
+
+
+15. Use the appropriate lubridate function to parse each of the following dates:
+
+```{r}
+d1 <- "January 1, 2010"
+d2 <- "2015-Mar-07"
+d3 <- "06-Jun-2017"
+d4 <- c("August 19 (2015)", "July 1 (2015)")
+d5 <- "12/30/14" # Dec 30, 2014
+```
+
+```{r}
+mdy(d1)
+#> [1] "2010-01-01"
+ymd(d2)
+#> [1] "2015-03-07"
+dmy(d3)
+#> [1] "2017-06-06"
+mdy(d4)
+#> [1] "2015-08-19" "2015-07-01"
+mdy(d5)
+#> [1] "2014-12-30"
+```
+
+16. Using the `flights` dataset, determine on what day of the week should you leave if you want to minimise the chance of a delay?
+
+Saturday has the lowest average departure delay time and the lowest average arrival delay time.
+
+```{r}
+# This code is needed by exercises.
+
+make_datetime_100 <- function(year, month, day, time) {
+  make_datetime(year, month, day, time %/% 100, time %% 100)
+}
+
+flights_dt <- flights %>%
+  filter(!is.na(dep_time), !is.na(arr_time)) %>%
+  mutate(
+    dep_time = make_datetime_100(year, month, day, dep_time),
+    arr_time = make_datetime_100(year, month, day, arr_time),
+    sched_dep_time = make_datetime_100(year, month, day, sched_dep_time),
+    sched_arr_time = make_datetime_100(year, month, day, sched_arr_time)
+  ) %>%
+  select(origin, dest, ends_with("delay"), ends_with("time"))
+
+
+flights_dt %>%
+  mutate(dow = wday(sched_dep_time)) %>%
+  group_by(dow) %>%
+  summarise(
+    dep_delay = mean(dep_delay),
+    arr_delay = mean(arr_delay, na.rm = TRUE)
+  ) %>%
+  print(n = Inf)
+```
+
+
+17a. Create a scatterplot of `height` vs `mass`, faceted by `gender`, using the `starwars` dataset. 
+
+```{r}
+ggplot(starwars, aes(x = height, y = mass)) +
+  geom_point() +
+  facet_wrap(~gender) 
+```
+
+
+17b. Then write a function called `plot_starwars` that takes the argument `species` with a default value of "Human". This function should filter the plot to only include specific species. 
+
+```{r}
+
+plot_starwars <- function(species="Human") {
+  
+  starwars %>%
+    filter(species==species) %>%
+    ggplot(aes(x = height, y = mass)) +
+      geom_point() +
+      facet_wrap(~gender) 
+}
+```
+
+17c. Write a for loop that prints three plots for "Human", "Wookiee", and "Ewok".
+
+```{r}
+for (`s` in c("Human", "Wookiee", "Ewok")) {
+  print(plot_starwars(species = `s`))
+}
+```
+
+17d. Get the same result as 17c using the `map()` function.
+
+```{r}
+map(c("Human", "Wookiee", "Ewok"), ~ plot_starwars(.))
+```
+
