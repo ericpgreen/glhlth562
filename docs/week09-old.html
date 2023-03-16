@@ -87,29 +87,29 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>GLHLTH562: Data Science and Visualization with R: Syllabus</title>
+  <title>GLHLTH562: Data Science and Visualization with R: Week 9</title>
 
-  <meta property="description" itemprop="description" content="GLHLTH 562, Duke University, Spring, 2023"/>
+  <meta property="description" itemprop="description" content="Reproducible workflows and RMarkdown"/>
 
 
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="GLHLTH562: Data Science and Visualization with R: Syllabus"/>
+  <meta property="og:title" content="GLHLTH562: Data Science and Visualization with R: Week 9"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="GLHLTH 562, Duke University, Spring, 2023"/>
+  <meta property="og:description" content="Reproducible workflows and RMarkdown"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="GLHLTH562: Data Science and Visualization with R"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="GLHLTH562: Data Science and Visualization with R: Syllabus"/>
-  <meta property="twitter:description" content="GLHLTH 562, Duke University, Spring, 2023"/>
+  <meta property="twitter:title" content="GLHLTH562: Data Science and Visualization with R: Week 9"/>
+  <meta property="twitter:description" content="Reproducible workflows and RMarkdown"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description"]}},"value":[{"type":"character","attributes":{},"value":["Syllabus"]},{"type":"character","attributes":{},"value":["GLHLTH 562, Duke University, Spring, 2023"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","subtitle","description","output"]}},"value":[{"type":"character","attributes":{},"value":["Week 9"]},{"type":"character","attributes":{},"value":["Communicating Data Science"]},{"type":"character","attributes":{},"value":["Reproducible workflows and RMarkdown\n"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_depth"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[2]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2140,7 +2140,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Syllabus","description":"GLHLTH 562, Duke University, Spring, 2023","authors":[]}
+{"title":"Week 9","description":"Reproducible workflows and RMarkdown","authors":[]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2189,293 +2189,79 @@ Content
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Syllabus</h1>
+<h1>Week 9</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>GLHLTH 562, Duke University, Spring, 2023</p></p>
+<p><p>Reproducible workflows and RMarkdown</p></p>
 </div>
 
 
 <div class="d-article">
-<center>
-<div class="layout-chunk" data-layout="l-body">
-<p><img src="images/562.png" width="20%" style="padding:10px" /></p>
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#mar-15-reproducible-workflows"
+id="toc-mar-15-reproducible-workflows">Mar 15: Reproducible
+workflows</a>
+<ul>
+<li><a href="#prepare" id="toc-prepare">Prepare</a></li>
+<li><a href="#during-class" id="toc-during-class">During Class</a></li>
+<li><a href="#after-class-optional" id="toc-after-class-optional">After
+Class (Optional)</a></li>
+</ul></li>
+<li><a href="#mar-17-rmarkdown" id="toc-mar-17-rmarkdown">Mar 17:
+RMarkdown</a>
+<ul>
+<li><a href="#prepare-1" id="toc-prepare-1">Prepare</a></li>
+<li><a href="#during-class-1" id="toc-during-class-1">During
+Class</a></li>
+<li><a href="#after-class-optional-1"
+id="toc-after-class-optional-1">After Class (Optional)</a></li>
+<li><a href="#tidytuesday" id="toc-tidytuesday">TidyTuesday</a></li>
+</ul></li>
+</ul>
+</nav>
 </div>
-</center>
-<p>This course will introduce you to data science and data visualization
-in R. The core content of the course focuses on data acquisition and
-wrangling, exploratory data analysis, data visualization, modeling, and
-effective communication of results. My goal is to bring you from zero to
-being able to work in a team on a fully reproducible data science
-project analyzing a dataset of your choice and answering questions you
-care about.</p>
-<h1 id="teaching-team">Teaching Team</h1>
-<p><a href="https://globalhealth.duke.edu/people/green-eric">Eric
-Green</a>, PhD</p>
-<p>Kayla Hendrickson, TA</p>
-<h1 id="topics">Topics</h1>
-<p>We’ll start with the good stuff—data visualization. You’ll learn how
-to break down a plot into its component parts, imagine the underlying
-data structure, and create effective visuals.</p>
-<p>Next, we’ll dig into the core data wrangling skills required in every
-data science project. You’ll learn about data transformation, import,
-tidying, joining, strings, factors, dates, and iteraton—oh my.</p>
-<p>By this point of the course you will have enough of a foundation in R
-to learn about modeling, and I’ll introduce you to the tidy models
-framework. As we talk about machine learning, we’ll also spend time
-thinking about data science ethics and algorithmic bias.</p>
-<p>Following modeling, we’ll zoom out and discuss the importance of
-having reproducible workflows. I’ll introduce you to literate
-programming and the world of RMarkdown. We’ll spend time learning about
-how to create two specific outputs: dashboards and slide decks.</p>
-<p>We’ll finish the course with some topics of my choosing. Maybe we’ll
-explore maps and text mining. Or maybe we’ll take a beat and revisit
-topics that tripped us up along the way. The final three sessions will
-be devoted to your course projects.</p>
-<h1 id="schedule">Schedule</h1>
-<table>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Week</th>
-<th>Date</th>
-<th>Unit</th>
-<th>Topic</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>0</td>
-<td>Jan 12</td>
-<td>-</td>
-<td>Welcome</td>
-</tr>
-<tr class="even">
-<td>1</td>
-<td>Jan 17</td>
-<td>Data visualization</td>
-<td>The grammar of graphics and ggplot2 API</td>
-</tr>
-<tr class="odd">
-<td>1</td>
-<td>Jan 19</td>
-<td>Data visualization</td>
-<td>Designing effective plots</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>Jan 24</td>
-<td>Data visualization</td>
-<td>Common geoms and plot styles to know</td>
-</tr>
-<tr class="odd">
-<td>2</td>
-<td>Jan 26</td>
-<td>Data visualization</td>
-<td>Small multiples and patchwork</td>
-</tr>
-<tr class="even">
-<td>3</td>
-<td>Jan 31</td>
-<td>Data wrangling</td>
-<td>Data import</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>Feb 2</td>
-<td>Data wrangling</td>
-<td>Data transformation</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>Feb 7</td>
-<td>Data wrangling</td>
-<td>Tidy data</td>
-</tr>
-<tr class="odd">
-<td>4</td>
-<td>Feb 9</td>
-<td>Data wrangling</td>
-<td>Relational data</td>
-</tr>
-<tr class="even">
-<td>5</td>
-<td>Feb 14</td>
-<td>Data wrangling</td>
-<td>Strings</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td>Feb 16</td>
-<td>Data wrangling</td>
-<td>Factors</td>
-</tr>
-<tr class="even">
-<td>6</td>
-<td>Feb 21</td>
-<td>Data wrangling</td>
-<td>Dates and times</td>
-</tr>
-<tr class="odd">
-<td>6</td>
-<td>Feb 23</td>
-<td>Data wrangling</td>
-<td>Iteration</td>
-</tr>
-<tr class="even">
-<td>7</td>
-<td>Feb 28</td>
-<td>Data wrangling</td>
-<td>Skills assessment</td>
-</tr>
-<tr class="odd">
-<td>7</td>
-<td>Mar 2</td>
-<td>Models</td>
-<td>Data science ethics</td>
-</tr>
-<tr class="even">
-<td>8</td>
-<td>Mar 7</td>
-<td>Models</td>
-<td>Building models</td>
-</tr>
-<tr class="odd">
-<td>8</td>
-<td>Mar 9</td>
-<td>Models</td>
-<td>Tidy models introduction, part 1</td>
-</tr>
-<tr class="even">
-<td>9</td>
-<td>Mar 21</td>
-<td>Models</td>
-<td>Tidy models introduction, part 2</td>
-</tr>
-<tr class="odd">
-<td>9</td>
-<td>Mar 23</td>
-<td>Models</td>
-<td>Tidy models introduction, part 3</td>
-</tr>
-<tr class="even">
-<td>10</td>
-<td>Mar 28</td>
-<td>Communicating data science</td>
-<td>Reproducible workflows / RMarkdown</td>
-</tr>
-<tr class="odd">
-<td>10</td>
-<td>Mar 30</td>
-<td>Communicating data science</td>
-<td>Dashboards</td>
-</tr>
-<tr class="even">
-<td>11</td>
-<td>Apr 4</td>
-<td>Chef’s choice</td>
-<td>Slide decks</td>
-</tr>
-<tr class="odd">
-<td>11</td>
-<td>Apr 6</td>
-<td>Chef’s choice</td>
-<td>Maps / Text mining?</td>
-</tr>
-<tr class="even">
-<td>12</td>
-<td>Apr 11</td>
-<td>Projects</td>
-<td>Work session</td>
-</tr>
-<tr class="odd">
-<td>12</td>
-<td>Apr 13</td>
-<td>Projects</td>
-<td>Presentations Day 1</td>
-</tr>
-<tr class="even">
-<td>13</td>
-<td>Apr 18</td>
-<td>Projects</td>
-<td>Presentations Day 2</td>
-</tr>
-</tbody>
-</table>
-<p>Assignments will be posted the Saturday before each week begins.</p>
-<h1 id="requirements">Requirements</h1>
-<p>There are no prerequisites to take this course aside from a good dose
-of curiosity and interest in learning about R, data visualization, and
-data science. All you need to participate is a computer with an internet
-connection. Our tech stack will include:</p>
+<h1 id="mar-15-reproducible-workflows">Mar 15: Reproducible
+workflows</h1>
+<h2 id="prepare">Prepare</h2>
 <ul>
-<li><a href="https://cloud.r-project.org/">R</a></li>
-<li><a href="https://posit.co/download/rstudio-desktop/">RStudio
-Desktop</a></li>
-<li>Zoom for remote learning (if the situation arises) and office
-hours</li>
-<li>Ed for course discussion</li>
+<li>📖: <a
+href="https://www.annualreviews.org/doi/abs/10.1146/annurev-publhealth-012420-105110">Reproducible
+Research: A Retrospective Roger D. Peng and Stephanie C. Hicks, Annual
+Review of Public Health 2021 42:1, 79-93</a></li>
 </ul>
-<h1 id="format">Format</h1>
-<p>You’ll prepare for each class session by reading and practicing.
-During class, we’ll divide our time discussing concepts and running
-code. I’ll often suggest opportunities for you to continue practicing
-after class.</p>
-<h2 id="weekly-assignments">Weekly Assignments</h2>
+<h2 id="during-class">During Class</h2>
+<p>Materials (<a
+href="https://www.dropbox.com/s/3vpw7yr33eivhvq/models3.zip?dl=1">zip</a>)</p>
+<h2 id="after-class-optional">After Class (Optional)</h2>
+<p>📺: <a
+href="https://www.rstudio.com/resources/rstudioglobal-2021/how-reproducible-am-i-a-retrospective-on-a-year-of-commercial-data-science-projects-in-r/">How
+reproducible am I? A retrospective on a year of commercial data science
+projects in R</a></p>
+<h1 id="mar-17-rmarkdown">Mar 17: RMarkdown</h1>
+<h2 id="prepare-1">Prepare</h2>
 <ul>
-<li>Each week you will explore a new <a
-href="https://github.com/rfordatascience/tidytuesday"><em>Tidy
-Tuesday</em></a> dataset. The R4DS Online Learning Community posts a new
-dataset each Monday. We’ll leave time in our Tuesday sessions to review
-the dataset, and then you will have until Sunday to explore it. I’ll
-provide you with a template for reporting. In the beginning of the
-course when your skills are more limited, I’ll ask you to think more
-about the data and what you want to do. As the semester goes on, I’ll
-expect that your explorations become more sophisticated. In addition to
-exploring the datasets on your own, I’ll also ask you to find a
-<code>#tidytuesday</code> entry on Twitter, examine the author’s code
-and describe what you learned from them.</li>
-<li>Mid-semester skills/comprehension check-in (replaces 2 weeks of
-TidyTuesday)</li>
+<li>⬇️: <a
+href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf">RMarkdown
+cheatsheet</a></li>
+<li>📖: <a href="https://r4ds.had.co.nz/r-markdown.html">R4DS, CH
+27</a></li>
+<li>📖: <a href="https://r4ds.had.co.nz/r-markdown-formats.html">R4DS,
+CH 29</a></li>
+<li>REFERENCE: 📖: <a href="https://bookdown.org/yihui/rmarkdown/">R
+Markdown: The Definitive Guide</a></li>
 </ul>
-<h2 id="final-project">Final Project</h2>
-<p>You will also complete a final project alone or with partners using a
-dataset of your choosing. Details <a href="final.html">here</a>.</p>
-<h2 id="exams">Exams</h2>
-<p>There are no exams (including no final exam).</p>
-<h1 id="grading">Grading</h1>
-<p>You will be evaluated on the basis of your weekly assignments (50%)
-and independent project (50%). Ranges for letter grades will be set at
-the end of the semester. Cumulative scores of at least 90, 80, and 70
-will be guaranteed at least an A-, B-, and C-, respectively.</p>
-<h1 id="policies">Policies</h1>
-<ul>
-<li>If you miss an assignment deadline (Sundays at 10pm Eastern), get in
-touch so we can discuss if a make-up or extension is possible. Missing
-more than one deadline could result in grade penalties. Class sessions
-will be recorded.</li>
-<li>Students should abide by the <a
-href="https://studentaffairs.duke.edu/conduct/about-us/duke-community-standard">Duke
-Community Standard</a> at all times. If a questionable circumstance
-arises, do not hesitate to seek my guidance (before is always better
-than after).</li>
-</ul>
-<h3 id="equity-and-inclusion-at-dghi">Equity and Inclusion at DGHI</h3>
-<p>In 2020 DGHI formed the Equity Task Force to identify and address
-structural inequities related to global power dynamics, race, ethnicity,
-gender, and all marginalized identities throughout the institute. See <a
-href="https://globalhealth.duke.edu/about/diversity-equity-and-inclusion"
-target="_blank">here</a> for more information on this work.</p>
-<p>If you require any accommodations or arrangements (hearing, vision,
-English language comprehension, extenuating personal or family
-circumstances, etc.) please let me know ASAP and, if relevant, please
-contact the Student Disability Access Office (SDOA) to ensure the
-accommodation/arrangements can be implemented in a timely fashion.</p>
+<h2 id="during-class-1">During Class</h2>
+<p>Materials (<a
+href="https://www.dropbox.com/s/qlld80bnd8n3rvj/communicating1.zip?dl=1">zip</a>)</p>
+<h2 id="after-class-optional-1">After Class (Optional)</h2>
+<p>📺: <a
+href="https://www.rstudio.com/resources/webinars/reproducible-reporting/">Reproducible
+Reporting</a></p>
+<h2 id="tidytuesday">TidyTuesday</h2>
+<p><a href="office.html">The Office!</a></p>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->

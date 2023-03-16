@@ -89,27 +89,27 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_meta_tags-->
   <title>GLHLTH562: Data Science and Visualization with R: Week 9</title>
 
-  <meta property="description" itemprop="description" content="Reproducible workflows and RMarkdown"/>
+  <meta property="description" itemprop="description" content="Tidy models"/>
 
 
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
   <meta property="og:title" content="GLHLTH562: Data Science and Visualization with R: Week 9"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Reproducible workflows and RMarkdown"/>
+  <meta property="og:description" content="Tidy models"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="GLHLTH562: Data Science and Visualization with R"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
   <meta property="twitter:title" content="GLHLTH562: Data Science and Visualization with R: Week 9"/>
-  <meta property="twitter:description" content="Reproducible workflows and RMarkdown"/>
+  <meta property="twitter:description" content="Tidy models"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","subtitle","description","output"]}},"value":[{"type":"character","attributes":{},"value":["Week 9"]},{"type":"character","attributes":{},"value":["Communicating Data Science"]},{"type":"character","attributes":{},"value":["Reproducible workflows and RMarkdown\n"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_depth"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[2]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","subtitle","description","output"]}},"value":[{"type":"character","attributes":{},"value":["Week 9"]},{"type":"character","attributes":{},"value":["Models"]},{"type":"character","attributes":{},"value":["Tidy models\n"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_depth"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[2]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2140,7 +2140,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Week 9","description":"Reproducible workflows and RMarkdown","authors":[]}
+{"title":"Week 9","description":"Tidy models","authors":[]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2166,6 +2166,7 @@ Content
 <a href="week06.html">Week 6</a>
 <a href="week07.html">Week 7</a>
 <a href="week08.html">Week 8</a>
+<a href="week09.html">Week 9</a>
 </div>
 </div>
 </div>
@@ -2191,7 +2192,7 @@ Content
 <h1>Week 9</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>Reproducible workflows and RMarkdown</p></p>
+<p><p>Tidy models</p></p>
 </div>
 
 
@@ -2200,67 +2201,54 @@ Content
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#mar-15-reproducible-workflows"
-id="toc-mar-15-reproducible-workflows">Mar 15: Reproducible
-workflows</a>
+<li><a href="#mar-21-tidy-models-introduction-part-2"
+id="toc-mar-21-tidy-models-introduction-part-2">Mar 21: Tidy models
+introduction, part 2</a>
 <ul>
 <li><a href="#prepare" id="toc-prepare">Prepare</a></li>
 <li><a href="#during-class" id="toc-during-class">During Class</a></li>
 <li><a href="#after-class-optional" id="toc-after-class-optional">After
 Class (Optional)</a></li>
 </ul></li>
-<li><a href="#mar-17-rmarkdown" id="toc-mar-17-rmarkdown">Mar 17:
-RMarkdown</a>
+<li><a href="#mar-23-tidy-models-introduction-part-3"
+id="toc-mar-23-tidy-models-introduction-part-3">Mar 23: Tidy models
+introduction, part 3</a>
 <ul>
-<li><a href="#prepare-1" id="toc-prepare-1">Prepare</a></li>
-<li><a href="#during-class-1" id="toc-during-class-1">During
-Class</a></li>
-<li><a href="#after-class-optional-1"
-id="toc-after-class-optional-1">After Class (Optional)</a></li>
 <li><a href="#tidytuesday" id="toc-tidytuesday">TidyTuesday</a></li>
 </ul></li>
 </ul>
 </nav>
 </div>
-<h1 id="mar-15-reproducible-workflows">Mar 15: Reproducible
-workflows</h1>
+<h1 id="mar-21-tidy-models-introduction-part-2">Mar 21: Tidy models
+introduction, part 2</h1>
 <h2 id="prepare">Prepare</h2>
 <ul>
-<li>📖: <a
-href="https://www.annualreviews.org/doi/abs/10.1146/annurev-publhealth-012420-105110">Reproducible
-Research: A Retrospective Roger D. Peng and Stephanie C. Hicks, Annual
-Review of Public Health 2021 42:1, 79-93</a></li>
+<li>📖: <a href="https://www.tmwr.org/models.html">Tidy Modeling with R,
+CH 6</a></li>
+<li>📖: <a href="https://www.tmwr.org/workflows.html">Tidy Modeling with
+R, CH 7</a></li>
+<li>📖: <a href="https://www.tmwr.org/recipes.html">Tidy Modeling with
+R, CH 8</a></li>
+<li>📖: <a href="https://www.tmwr.org/performance.html">Tidy Modeling
+with R, CH 9</a></li>
 </ul>
 <h2 id="during-class">During Class</h2>
-<p>Materials (<a
-href="https://www.dropbox.com/s/3vpw7yr33eivhvq/models3.zip?dl=1">zip</a>)</p>
+<p><a
+href="https://tmv.netlify.app/site/slides/rmed02-workflows.html">Deck
+1</a> / <a
+href="https://tmv.netlify.app/site/slides/rmed03-tune.html">Deck 2</a> /
+Materials (<a
+href="https://www.dropbox.com/s/nlzhyye4bumcona/models2.zip?dl=1">zip</a>)</p>
 <h2 id="after-class-optional">After Class (Optional)</h2>
-<p>📺: <a
-href="https://www.rstudio.com/resources/rstudioglobal-2021/how-reproducible-am-i-a-retrospective-on-a-year-of-commercial-data-science-projects-in-r/">How
-reproducible am I? A retrospective on a year of commercial data science
-projects in R</a></p>
-<h1 id="mar-17-rmarkdown">Mar 17: RMarkdown</h1>
-<h2 id="prepare-1">Prepare</h2>
-<ul>
-<li>⬇️: <a
-href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf">RMarkdown
-cheatsheet</a></li>
-<li>📖: <a href="https://r4ds.had.co.nz/r-markdown.html">R4DS, CH
-27</a></li>
-<li>📖: <a href="https://r4ds.had.co.nz/r-markdown-formats.html">R4DS,
-CH 29</a></li>
-<li>REFERENCE: 📖: <a href="https://bookdown.org/yihui/rmarkdown/">R
-Markdown: The Definitive Guide</a></li>
-</ul>
-<h2 id="during-class-1">During Class</h2>
-<p>Materials (<a
-href="https://www.dropbox.com/s/qlld80bnd8n3rvj/communicating1.zip?dl=1">zip</a>)</p>
-<h2 id="after-class-optional-1">After Class (Optional)</h2>
-<p>📺: <a
-href="https://www.rstudio.com/resources/webinars/reproducible-reporting/">Reproducible
-Reporting</a></p>
+<p>📺: Simon Couch, <a
+href="https://www.rstudio.com/resources/rstudioglobal-2021/tidymodelsstacks-or-in-preparation-for-pesto-a-grammar-for-stacked-ensemble-modeling/">tidymodels/stacks,
+Or, In Preparation for Pesto: A Grammar for Stacked Ensemble
+Modeling</a></p>
+<h1 id="mar-23-tidy-models-introduction-part-3">Mar 23: Tidy models
+introduction, part 3</h1>
+<p>Wrap up</p>
 <h2 id="tidytuesday">TidyTuesday</h2>
-<p><a href="office.html">The Office!</a></p>
+<p>No assignment this week.</p>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->

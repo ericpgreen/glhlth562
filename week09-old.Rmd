@@ -1,0 +1,50 @@
+---
+title: "Week 9"
+subtitle: "Communicating Data Science"
+description: |
+  Reproducible workflows and RMarkdown
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 2
+---
+
+```{r, include=FALSE}
+  library(emo)
+```
+
+# Mar 15: Reproducible workflows
+
+## Prepare
+
+* `r emo::ji("open_book")`: [Reproducible Research: A Retrospective
+Roger D. Peng and Stephanie C. Hicks, Annual Review of Public Health 2021 42:1, 79-93](https://www.annualreviews.org/doi/abs/10.1146/annurev-publhealth-012420-105110)
+  
+## During Class
+
+Materials ([zip](https://www.dropbox.com/s/3vpw7yr33eivhvq/models3.zip?dl=1))
+
+## After Class (Optional)
+
+`r emo::ji("tv")`: [How reproducible am I? A retrospective on a year of commercial data science projects in R](https://www.rstudio.com/resources/rstudioglobal-2021/how-reproducible-am-i-a-retrospective-on-a-year-of-commercial-data-science-projects-in-r/)
+
+# Mar 17: RMarkdown
+
+## Prepare
+
+* `r emo::ji("down_arrow")`: [RMarkdown cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf)
+* `r emo::ji("open_book")`: [R4DS, CH 27](https://r4ds.had.co.nz/r-markdown.html)
+* `r emo::ji("open_book")`: [R4DS, CH 29](https://r4ds.had.co.nz/r-markdown-formats.html)
+* REFERENCE: `r emo::ji("open_book")`: [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/)
+
+## During Class
+
+Materials ([zip](https://www.dropbox.com/s/qlld80bnd8n3rvj/communicating1.zip?dl=1))
+
+## After Class (Optional)
+
+`r emo::ji("tv")`: [Reproducible Reporting](https://www.rstudio.com/resources/webinars/reproducible-reporting/)
+
+## TidyTuesday
+
+[The Office!](office.html)

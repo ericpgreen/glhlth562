@@ -52,12 +52,12 @@ We'll finish the course with some topics of my choosing. Maybe we'll explore map
 | 7 | Mar 2 | Models | Data science ethics |
 | 8 | Mar 7 | Models | Building models |
 | 8 | Mar 9 | Models | Tidy models introduction, part 1 |
-| 9 | Mar 21 | Communicating data science | Tidy models introduction, part 2 |
-| 9 | Mar 23 | Communicating data science | Reproducible workflows / RMarkdown |
-| 10 | Mar 28 | Communicating data science | Dashboards |
-| 10 | Mar 30 | Communicating data science | Slide decks |
-| 11 | Apr 4 | Chef's choice | Maps? |
-| 11 | Apr 6 | Chef's choice | Text mining? |
+| 9 | Mar 21 | Models | Tidy models introduction, part 2 |
+| 9 | Mar 23 | Models | Tidy models introduction, part 3 |
+| 10 | Mar 28 | Communicating data science | Reproducible workflows / RMarkdown |
+| 10 | Mar 30 | Communicating data science | Dashboards |
+| 11 | Apr 4 | Chef's choice | Slide decks |
+| 11 | Apr 6 | Chef's choice | Maps / Text mining? |
 | 12 | Apr 11 | Projects | Work session |
 | 12 | Apr 13 | Projects | Presentations Day 1 |
 | 13 | Apr 18 | Projects | Presentations Day 2 |

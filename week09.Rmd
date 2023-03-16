@@ -1,8 +1,8 @@
 ---
 title: "Week 9"
-subtitle: "Communicating Data Science"
+subtitle: "Models"
 description: |
-  Reproducible workflows and RMarkdown
+  Tidy models
 output:
   distill::distill_article:
     toc: true
@@ -13,38 +13,28 @@ output:
   library(emo)
 ```
 
-# Mar 15: Reproducible workflows
+# Mar 21: Tidy models introduction, part 2
 
 ## Prepare
 
-* `r emo::ji("open_book")`: [Reproducible Research: A Retrospective
-Roger D. Peng and Stephanie C. Hicks, Annual Review of Public Health 2021 42:1, 79-93](https://www.annualreviews.org/doi/abs/10.1146/annurev-publhealth-012420-105110)
-  
-## During Class
-
-Materials ([zip](https://www.dropbox.com/s/3vpw7yr33eivhvq/models3.zip?dl=1))
-
-## After Class (Optional)
-
-`r emo::ji("tv")`: [How reproducible am I? A retrospective on a year of commercial data science projects in R](https://www.rstudio.com/resources/rstudioglobal-2021/how-reproducible-am-i-a-retrospective-on-a-year-of-commercial-data-science-projects-in-r/)
-
-# Mar 17: RMarkdown
-
-## Prepare
-
-* `r emo::ji("down_arrow")`: [RMarkdown cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf)
-* `r emo::ji("open_book")`: [R4DS, CH 27](https://r4ds.had.co.nz/r-markdown.html)
-* `r emo::ji("open_book")`: [R4DS, CH 29](https://r4ds.had.co.nz/r-markdown-formats.html)
-* REFERENCE: `r emo::ji("open_book")`: [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/)
+* `r emo::ji("open_book")`: [Tidy Modeling with R, CH 6](https://www.tmwr.org/models.html)
+* `r emo::ji("open_book")`: [Tidy Modeling with R, CH 7](https://www.tmwr.org/workflows.html)
+* `r emo::ji("open_book")`: [Tidy Modeling with R, CH 8](https://www.tmwr.org/recipes.html)
+* `r emo::ji("open_book")`: [Tidy Modeling with R, CH 9](https://www.tmwr.org/performance.html)
 
 ## During Class
 
-Materials ([zip](https://www.dropbox.com/s/qlld80bnd8n3rvj/communicating1.zip?dl=1))
+[Deck 1](https://tmv.netlify.app/site/slides/rmed02-workflows.html) / [Deck 2](https://tmv.netlify.app/site/slides/rmed03-tune.html) / Materials ([zip](https://www.dropbox.com/s/nlzhyye4bumcona/models2.zip?dl=1))
 
 ## After Class (Optional)
 
-`r emo::ji("tv")`: [Reproducible Reporting](https://www.rstudio.com/resources/webinars/reproducible-reporting/)
+`r emo::ji("tv")`: Simon Couch, [tidymodels/stacks, Or, In Preparation for Pesto: A Grammar for Stacked Ensemble Modeling](https://www.rstudio.com/resources/rstudioglobal-2021/tidymodelsstacks-or-in-preparation-for-pesto-a-grammar-for-stacked-ensemble-modeling/)
+
+# Mar 23: Tidy models introduction, part 3
+
+Wrap up
 
 ## TidyTuesday
 
-[The Office!](office.html)
+No assignment this week.
+
