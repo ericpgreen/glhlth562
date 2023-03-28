@@ -1,0 +1,46 @@
+---
+title: "Week 10"
+subtitle: "Communicating Data Science"
+description: |
+  Dashboards and slide decks
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 2
+---
+
+```{r, include=FALSE}
+  library(emo)
+```
+
+# Mar 22: Dashboards
+
+## Prepare
+
+* `r emo::ji("open_book")`: [RMarkdown: the Definitive Guide, CH 5](https://bookdown.org/yihui/rmarkdown/dashboards.html)
+  
+## During Class
+
+[Deck](https://ericpgreen.github.io/glhlth562/materials/communicating2/communicating2_deck.html) / Materials ([zip](https://www.dropbox.com/s/jnot6io5q77ermi/communicating2.zip?dl=1))
+
+## After Class (Optional)
+
+`r emo::ji("tv")`: [R Shiny Masterclass: Building, Styling, and Scaling Shiny Applications](https://youtu.be/MYVojGHeKAc)
+
+# Mar 24: Slide decks
+
+## Prepare
+
+* `r emo::ji("open_book")`: [RMarkdown: the Definitive Guide, CH 7](https://bookdown.org/yihui/rmarkdown/xaringan.html)
+
+## During Class
+
+[Deck](https://ericpgreen.github.io/glhlth562/materials/communicating3/communicating3_deck.html) / Materials ([zip](https://www.dropbox.com/s/b8gly9oh7ovnrzt/communicating3.zip?dl=1))
+
+## After Class (Optional)
+
+`r emo::ji("tv")`: [Garrick Aden-Buie - Making Extra Great Slides with xaringan, xaringanthemer and xaringanExtra](https://youtu.be/FHy6NseH8yk)
+
+## TidyTuesday
+
+None

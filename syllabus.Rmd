@@ -56,7 +56,7 @@ We'll finish the course with some topics of my choosing. Maybe we'll explore map
 | 9 | Mar 23 | Models | Tidy models introduction, part 3 |
 | 10 | Mar 28 | Communicating data science | Reproducible workflows / RMarkdown |
 | 10 | Mar 30 | Communicating data science | Dashboards |
-| 11 | Apr 4 | Chef's choice | Slide decks |
+| 11 | Apr 4 | Communicating data science | Slide decks |
 | 11 | Apr 6 | Chef's choice | Maps / Text mining? |
 | 12 | Apr 11 | Projects | Work session |
 | 12 | Apr 13 | Projects | Presentations Day 1 |
