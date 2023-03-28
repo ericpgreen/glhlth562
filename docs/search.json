@@ -13,7 +13,7 @@
       "description": "GLHLTH 562, Duke University, Spring, 2023\n",
       "author": [],
       "contents": "\n\n\n\n\n\nThis course will introduce you to data science and data visualization\nin R. The core content of the course focuses on data acquisition and\nwrangling, exploratory data analysis, data visualization, modeling, and\neffective communication of results. My goal is to bring you from zero to\nbeing able to work in a team on a fully reproducible data science\nproject analyzing a dataset of your choice and answering questions you\ncare about.\n[Hex sticker shows the rolling mean of daily COVID-19 cases\nworldwide through 2021.]\n\n\n\n",
-      "last_modified": "2023-03-28T09:58:21-04:00"
+      "last_modified": "2023-03-28T12:52:59-04:00"
     },
     {
       "path": "masks.html",
