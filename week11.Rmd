@@ -25,6 +25,7 @@ output:
 [Deck](https://ericpgreen.github.io/glhlth562/materials/communicating3/communicating3_deck.html) / Materials ([zip](https://www.dropbox.com/s/b8gly9oh7ovnrzt/communicating3.zip?dl=1))
 
 Additional materials on Quarto:
+
 * Tom Mock's 2022 RStudio Conf Quarto presentations workshop [deck](https://rstudio-conf-2022.github.io/get-started-quarto/materials/05-presentations.html#/presentations) and [materials (zip)](https://www.dropbox.com/s/1cgkrcvaa9vlgz8/mockquarto.zip?dl=1)
 * [Info about presentations](https://r4ds.hadley.nz/quarto-formats.html#presentations) in new draft R4DS chapter about Quarto
 * Quarto presentations [reference page](https://quarto.org/docs/presentations/)
