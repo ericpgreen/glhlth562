@@ -1,8 +1,8 @@
 ---
 title: "Week 11"
-subtitle: "Chef's Choice"
+subtitle: "Communicating Data Science"
 description: |
-  Textmining and mapping
+  Slide decks and chef's choice
 output:
   distill::distill_article:
     toc: true
@@ -13,14 +13,28 @@ output:
   library(emo)
 ```
 
-# Mar 29: Dashboards
-  
+
+# Apr 4: Slide decks
+
+## Prepare
+
+* `r emo::ji("open_book")`: [RMarkdown: the Definitive Guide, CH 7](https://bookdown.org/yihui/rmarkdown/xaringan.html)
+
 ## During Class
 
-Bring your static plot and we'll make it interactive!
+[Deck](https://ericpgreen.github.io/glhlth562/materials/communicating3/communicating3_deck.html) / Materials ([zip](https://www.dropbox.com/s/b8gly9oh7ovnrzt/communicating3.zip?dl=1))
 
-# Mar 31: Textmining and mapping
+## After Class (Optional)
+
+`r emo::ji("tv")`: [Garrick Aden-Buie - Making Extra Great Slides with xaringan, xaringanthemer and xaringanExtra](https://youtu.be/FHy6NseH8yk)
+
+# Apr 6: Textmining and mapping
 
 ## During Class
 
 Materials ([zip](https://www.dropbox.com/s/qbw26htfm5lpma6/chefschoice.zip?dl=1))
+
+
+## TidyTuesday
+
+None
