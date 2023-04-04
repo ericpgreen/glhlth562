@@ -56,7 +56,7 @@ If the data are not publicly available, you must have the owner's permission to 
 ## Deliverables
 
 1.  Proposal - due March 7
-2.  Presentation - due April 10
+2.  Presentation - due April 13
 3.  Project files and write-up - due April 18
 
 ### Proposal
