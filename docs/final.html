@@ -50,16 +50,17 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  { color: #00769e; background-color: #f1f3f5; }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
+code span { color: #00769e; } /* Normal */
 code span.al { color: #ad0000; } /* Alert */
 code span.an { color: #5e5e5e; } /* Annotation */
-code span.at { } /* Attribute */
+code span.at { color: #657422; } /* Attribute */
 code span.bn { color: #ad0000; } /* BaseN */
 code span.bu { } /* BuiltIn */
-code span.cf { color: #007ba5; } /* ControlFlow */
+code span.cf { color: #00769e; } /* ControlFlow */
 code span.ch { color: #20794d; } /* Char */
 code span.cn { color: #8f5902; } /* Constant */
 code span.co { color: #5e5e5e; } /* Comment */
@@ -73,9 +74,9 @@ code span.fl { color: #ad0000; } /* Float */
 code span.fu { color: #4758ab; } /* Function */
 code span.im { } /* Import */
 code span.in { color: #5e5e5e; } /* Information */
-code span.kw { color: #007ba5; } /* Keyword */
+code span.kw { color: #00769e; } /* Keyword */
 code span.op { color: #5e5e5e; } /* Operator */
-code span.ot { color: #007ba5; } /* Other */
+code span.ot { color: #00769e; } /* Other */
 code span.pp { color: #ad0000; } /* Preprocessor */
 code span.sc { color: #5e5e5e; } /* SpecialChar */
 code span.ss { color: #20794d; } /* SpecialString */
@@ -454,8 +455,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
 
   <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
-  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet"/>
   <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
   <script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
   <script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
@@ -784,6 +785,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   d-article table.gt_table td,
   d-article table.gt_table th {
     border-bottom: none;
+    font-size: 100%;
   }
 
   .html-widget {
@@ -1025,10 +1027,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     position: relative;
     margin-bottom: 2.5em;
     margin-top: 1.5em;
-  }
-
-  .figure img {
-    width: 100%;
   }
 
   .figure .caption {
@@ -1860,9 +1858,21 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
       // hoverable references
       $('span.citation[data-cites]').each(function() {
+        const citeChild = $(this).children()[0]
+        // Do not process if @xyz has been used without escaping and without bibliography activated
+        // https://github.com/rstudio/distill/issues/466
+        if (citeChild === undefined) return true
+
+        if (citeChild.nodeName == "D-FOOTNOTE") {
+          var fn = citeChild
+          $(this).html(fn.shadowRoot.querySelector("sup"))
+          $(this).id = fn.id
+          fn.remove()
+        }
         var refs = $(this).attr('data-cites').split(" ");
         var refHtml = refs.map(function(ref) {
-          return "<p>" + $('#ref-' + ref).html() + "</p>";
+          // Could use CSS.escape too here, we insure backward compatibility in navigator
+          return "<p>" + $('div[id="ref-' + ref + '"]').html() + "</p>";
         }).join("\n");
         window.tippy(this, {
           allowHTML: true,
@@ -1874,6 +1884,31 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
           placement: 'bottom-start'
         });
       });
+
+      // fix footnotes in tables (#411)
+      // replacing broken distill.pub feature
+      $('table d-footnote').each(function() {
+        // we replace internal showAtNode methode which is triggered when hovering a footnote
+        this.hoverBox.showAtNode = function(node) {
+          // ported from https://github.com/distillpub/template/pull/105/files
+          calcOffset = function(elem) {
+              let x = elem.offsetLeft;
+              let y = elem.offsetTop;
+              // Traverse upwards until an `absolute` element is found or `elem`
+              // becomes null.
+              while (elem = elem.offsetParent && elem.style.position != 'absolute') {
+                  x += elem.offsetLeft;
+                  y += elem.offsetTop;
+              }
+
+              return { left: x, top: y };
+          }
+          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
+          const bbox = node.getBoundingClientRect();
+          const offset = calcOffset(node);
+          this.show([offset.left + bbox.width, offset.top + bbox.height]);
+        }
+      })
 
       // clear polling timer
       clearInterval(tid);
@@ -1973,6 +2008,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // mark non-body figures created by knitr chunks as 100% width
     $('.layout-chunk').each(function(i, val) {
       var figures = $(this).find('img, .html-widget');
+      // ignore leaflet img layers (#106)
+      figures = figures.filter(':not(img[class*="leaflet"])')
       if ($(this).attr('data-layout') !== "l-body") {
         figures.css('width', '100%');
       } else {
@@ -1995,7 +2032,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // get rid of index.html references in header
     if (window.location.protocol !== "file:") {
       $('.distill-site-header a[href]').each(function(i,val) {
-        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+        $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
       });
     }
 
@@ -2034,7 +2071,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
 
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.12/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.22/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2156,16 +2193,6 @@ Content
 <div class="nav-dropdown-content">
 <a href="week00.html">Week 0</a>
 <a href="week01.html">Week 1</a>
-<a href="week02.html">Week 2</a>
-<a href="week03.html">Week 3</a>
-<a href="week04.html">Week 4</a>
-<a href="week05.html">Week 5</a>
-<a href="week06.html">Week 6</a>
-<a href="week07.html">Week 7</a>
-<a href="week08.html">Week 8</a>
-<a href="week09.html">Week 9</a>
-<a href="week10.html">Week 10</a>
-<a href="week11.html">Week 11</a>
 </div>
 </div>
 </div>
@@ -2211,89 +2238,34 @@ Content
 </nav>
 </div>
 <p>Pick a dataset, any dataset…</p>
-<p>…and do something with it. That is your final project in a
-nutshell.</p>
+<p>…and do something with it. That is your final project in a nutshell.</p>
 <h1 id="overview">Overview</h1>
-<p>The final project for this class will consist of analysis on a
-dataset of your choosing. You can choose the data based on your
-interests or based on work in other courses or research projects. The
-goal of this project is for you to demonstrate proficiency in the
-techniques we have covered in this class (and beyond, if you like) and
-apply them to a novel dataset in a meaningful way.</p>
-<p>The goal is not to do an exhaustive data analysis i.e., do not
-calculate every statistic and procedure you have learned for every
-variable, but rather let me know that you are proficient at asking
-meaningful questions and answering them with results of data analysis,
-that you are proficient in using R, and that you are proficient at
-interpreting and presenting the results. Focus on methods that help you
-begin to answer your research questions. You do not have to apply every
-procedure we learned (and you can use techniques we haven’t officially
-covered in class, if you’re feeling adventurous). Also, critique your
-own methods and provide suggestions for improving your analysis. Issues
-pertaining to the reliability and validity of your data, and
-appropriateness of the statistical analysis should be discussed
-here.</p>
-<p>The project is very open ended. You should create some kind of
-compelling visualizations of this data in R with an accompanying
-write-up. There is no limit on what tools or packages you may use, but
-you are required to work primarily in the tidyverse (vs base R).</p>
-<p>You do not need to visualize all of the data at once. A single high
-quality visualization will receive a much higher grade than a large
-number of poor quality visualizations. Also pay attention to your
-presentation. Neatness, coherency, and clarity will count. All analyses
-must be done in RStudio, using R.</p>
-<p>You may work alone or in teams of 2. We prefer that you work in
-teams.</p>
+<p>The final project for this class will consist of analysis on a dataset of your choosing. You can choose the data based on your interests or based on work in other courses or research projects. The goal of this project is for you to demonstrate proficiency in the techniques we have covered in this class (and beyond, if you like) and apply them to a novel dataset in a meaningful way.</p>
+<p>The goal is not to do an exhaustive data analysis i.e., do not calculate every statistic and procedure you have learned for every variable, but rather let me know that you are proficient at asking meaningful questions and answering them with results of data analysis, that you are proficient in using R, and that you are proficient at interpreting and presenting the results. Focus on methods that help you begin to answer your research questions. You do not have to apply every procedure we learned (and you can use techniques we haven’t officially covered in class, if you’re feeling adventurous). Also, critique your own methods and provide suggestions for improving your analysis. Issues pertaining to the reliability and validity of your data, and appropriateness of the statistical analysis should be discussed here.</p>
+<p>The project is very open ended. You should create some kind of compelling visualizations of this data in R with an accompanying write-up. There is no limit on what tools or packages you may use, but you are required to work primarily in the tidyverse (vs base R).</p>
+<p>You do not need to visualize all of the data at once. A single high quality visualization will receive a much higher grade than a large number of poor quality visualizations. Also pay attention to your presentation. Neatness, coherency, and clarity will count. All analyses must be done in RStudio, using R.</p>
+<p>You may work alone or in teams of 2. We prefer that you work in teams.</p>
 <h1 id="data">Data</h1>
-<p>To have the greatest chance of success with this project you should
-select a manageable dataset. This means that the data should be readily
-accessible and large enough that multiple relationships can be explored.
-As such, your dataset must have at least 50 observations, ideally many
-more. Exceptions can be made but you must speak with me first. The
-dataset’s variables should include categorical variables, discrete
-numerical variables, and continuous numerical variables.</p>
-<p>If you are using a dataset that comes in a format that we haven’t
-encountered in class, make sure that you are able to load it into R as
-this can be tricky depending on the source. If you are having trouble
-ask for help before it is too late.</p>
+<p>To have the greatest chance of success with this project you should select a manageable dataset. This means that the data should be readily accessible and large enough that multiple relationships can be explored. As such, your dataset must have at least 50 observations, ideally many more. Exceptions can be made but you must speak with me first. The dataset’s variables should include categorical variables, discrete numerical variables, and continuous numerical variables.</p>
+<p>If you are using a dataset that comes in a format that we haven’t encountered in class, make sure that you are able to load it into R as this can be tricky depending on the source. If you are having trouble ask for help before it is too late.</p>
 <p><strong>Do not reuse datasets used in class.</strong></p>
-<p>Below are a list of data repositories that might be of interest to
-browse. You’re not limited to these resources, and in fact you’re
-encouraged to venture beyond them. But you might find something
-interesting there:</p>
+<p>Below are a list of data repositories that might be of interest to browse. You’re not limited to these resources, and in fact you’re encouraged to venture beyond them. But you might find something interesting there:</p>
 <ul>
-<li><a
-href="https://github.com/rfordatascience/tidytuesday">TidyTuesday</a></li>
-<li><a href="https://www.opendata.nhs.scot/">NHS Scotland Open
-Data</a></li>
-<li><a href="https://edinburghopendata.info/">Edinburgh Open
-Data</a></li>
-<li><a href="https://statistics.gov.scot/home">Open access to Scotland’s
-official statistics</a></li>
-<li><a href="https://www.bikeshare.com/data/">Bikeshare data
-portal</a></li>
+<li><a href="https://github.com/rfordatascience/tidytuesday">TidyTuesday</a></li>
+<li><a href="https://www.opendata.nhs.scot/">NHS Scotland Open Data</a></li>
+<li><a href="https://edinburghopendata.info/">Edinburgh Open Data</a></li>
+<li><a href="https://statistics.gov.scot/home">Open access to Scotland’s official statistics</a></li>
+<li><a href="https://www.bikeshare.com/data/">Bikeshare data portal</a></li>
 <li><a href="https://data.gov.uk/">UK Gov Data</a></li>
 <li><a href="https://www.kaggle.com/datasets">Kaggle datasets</a></li>
-<li><a href="http://openintrostat.github.io/openintro/">OpenIntro
-datasets</a></li>
-<li><a
-href="https://github.com/awesomedata/awesome-public-datasets">Awesome
-public datasets</a></li>
-<li><a
-href="https://chronicdata.cdc.gov/Youth-Risk-Behaviors/DASH-Youth-Risk-Behavior-Surveillance-System-YRBSS/q6p7-56au">Youth
-Risk Behavior Surveillance System (YRBSS)</a></li>
-<li><a
-href="https://www.icpsr.umich.edu/icpsrweb/content/ICPSR/fenway.html">PRISM
-Data Archive Project</a></li>
+<li><a href="http://openintrostat.github.io/openintro/">OpenIntro datasets</a></li>
+<li><a href="https://github.com/awesomedata/awesome-public-datasets">Awesome public datasets</a></li>
+<li><a href="https://chronicdata.cdc.gov/Youth-Risk-Behaviors/DASH-Youth-Risk-Behavior-Surveillance-System-YRBSS/q6p7-56au">Youth Risk Behavior Surveillance System (YRBSS)</a></li>
+<li><a href="https://www.icpsr.umich.edu/icpsrweb/content/ICPSR/fenway.html">PRISM Data Archive Project</a></li>
 <li><a href="https://dataverse.harvard.edu/">Harvard Dataverse</a></li>
 <li>If you know of others, let me know, and we’ll add here…</li>
 </ul>
-<p>If the data are not publicly available, you must have the owner’s
-permission to use the data for this assignment. If your dataset includes
-protected health information or if you are otherwise unable to share it
-with us, you must use the <a
-href="https://synthpop.org.uk/get-started.html"><code>synthpop</code>
-package</a> to create a synthetic dataset.</p>
+<p>If the data are not publicly available, you must have the owner’s permission to use the data for this assignment. If your dataset includes protected health information or if you are otherwise unable to share it with us, you must use the <a href="https://synthpop.org.uk/get-started.html"><code>synthpop</code> package</a> to create a synthetic dataset.</p>
 <h2 id="deliverables">Deliverables</h2>
 <ol type="1">
 <li>Proposal - due March 7</li>
@@ -2301,35 +2273,19 @@ package</a> to create a synthetic dataset.</p>
 <li>Project files and write-up - due April 18</li>
 </ol>
 <h3 id="proposal">Proposal</h3>
-<p>This is a draft of the introduction section of your project as well
-as a data analysis plan and your dataset.</p>
+<p>This is a draft of the introduction section of your project as well as a data analysis plan and your dataset.</p>
 <ul>
-<li><p><strong>Section 1 - Introduction:</strong> The introduction
-should introduce your general research question and your data (where it
-came from, how it was collected, what are the cases, what are the
-variables, etc.).</p></li>
-<li><p><strong>Section 2 - Data:</strong> Place your data in the `/data`
-folder and use the <code>dataReporter</code> package to create a
-codebook. Do not include unnecessary columns in your dataset.</p></li>
+<li><p><strong>Section 1 - Introduction:</strong> The introduction should introduce your general research question and your data (where it came from, how it was collected, what are the cases, what are the variables, etc.).</p></li>
+<li><p><strong>Section 2 - Data:</strong> Place your data in the `/data` folder and use the <code>dataReporter</code> package to create a codebook. Do not include unnecessary columns in your dataset.</p></li>
 <li><p><strong>Section 3 - Data analysis plan:</strong></p>
 <ul>
 <li><p>Describe the key variables to answer your question</p></li>
-<li><p>Very preliminary exploratory data analysis, including some
-summary statistics and visualizations, along with some explanation on
-how they help you learn more about your data. (You can add to these
-later as you work on your project.)</p></li>
-<li><p>The method(s) that you believe will be useful in answering your
-question(s). (You can update these later as you work on your
-project.)</p></li>
-<li><p>What results from these specific statistical methods are needed
-to support your hypothesized answer?</p></li>
+<li><p>Very preliminary exploratory data analysis, including some summary statistics and visualizations, along with some explanation on how they help you learn more about your data. (You can add to these later as you work on your project.)</p></li>
+<li><p>The method(s) that you believe will be useful in answering your question(s). (You can update these later as you work on your project.)</p></li>
+<li><p>What results from these specific statistical methods are needed to support your hypothesized answer?</p></li>
 </ul></li>
 </ul>
-<p>The grading scheme for the project proposal is as follows. Note that
-after you receive feedback for your proposal you can improve it based on
-the feedback and re-submit it. If you re-submit, your final score for
-the proposal will be the average of two scores you receive (first and
-second submission).</p>
+<p>The grading scheme for the project proposal is as follows. Note that after you receive feedback for your proposal you can improve it based on the feedback and re-submit it. If you re-submit, your final score for the proposal will be the average of two scores you receive (first and second submission).</p>
 <table style="width:99%;">
 <colgroup>
 <col style="width: 83%" />
@@ -2361,22 +2317,10 @@ second submission).</p>
 </tbody>
 </table>
 <h3 id="presentation">Presentation</h3>
-<p>5 minutes maximum, and each team member should say something
-substantial. You can either present live during your slot or pre-record
-and submit your video to be played during the workshop.</p>
-<p>Prepare a slide deck using <code>xaringan</code>. There isn’t a limit
-to how many slides you can use, just a time limit (5 minutes total). If
-you work with a partner, each person should have a chance to speak
-during the presentation. Your presentation should not just be an account
-of everything you tried (“then we did this, then we did this, etc.”),
-instead it should convey what choices you made, and why, and what you
-found.</p>
-<p>Before you finalize your presentation, make sure your chunks are
-turned off with <code>echo = FALSE</code>.</p>
-<p>Presentations will take place during the last two sessions of the
-semester. You will watch presentations from other teams in your workshop
-and provide feedback in the form of peer evaluations. The presentation
-line-up will be generated randomly and posted on April 5.</p>
+<p>5 minutes maximum, and each team member should say something substantial. You can either present live during your slot or pre-record and submit your video to be played during the workshop.</p>
+<p>Prepare a slide deck using <code>xaringan</code>. There isn’t a limit to how many slides you can use, just a time limit (5 minutes total). If you work with a partner, each person should have a chance to speak during the presentation. Your presentation should not just be an account of everything you tried (“then we did this, then we did this, etc.”), instead it should convey what choices you made, and why, and what you found.</p>
+<p>Before you finalize your presentation, make sure your chunks are turned off with <code>echo = FALSE</code>.</p>
+<p>Presentations will take place during the last two sessions of the semester. You will watch presentations from other teams in your workshop and provide feedback in the form of peer evaluations. The presentation line-up will be generated randomly and posted on April 5.</p>
 <p>The grading scheme for the presentation is as follows:</p>
 <table>
 <colgroup>
@@ -2391,98 +2335,58 @@ line-up will be generated randomly and posted on April 5.</p>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Time management: Did the team divide the time well amongst
-themselves or got cut off going over time?</td>
+<td>Time management: Did the team divide the time well amongst themselves or got cut off going over time?</td>
 <td>4 pts</td>
 </tr>
 <tr class="even">
-<td>Content: Is the research question well designed and is the data
-being used relevant to the research question?</td>
+<td>Content: Is the research question well designed and is the data being used relevant to the research question?</td>
 <td>5 pts</td>
 </tr>
 <tr class="odd">
-<td>Professionalism: How well did the team present? Does the
-presentation appear to be well practiced? Did everyone get a chance to
-say something meaningful about the project?</td>
+<td>Professionalism: How well did the team present? Does the presentation appear to be well practiced? Did everyone get a chance to say something meaningful about the project?</td>
 <td>5 pts</td>
 </tr>
 <tr class="even">
-<td>Teamwork: Did the team present a unified story, or did it seem like
-independent pieces of work patched together?</td>
+<td>Teamwork: Did the team present a unified story, or did it seem like independent pieces of work patched together?</td>
 <td>6 pts</td>
 </tr>
 <tr class="odd">
-<td>Content: Did the team use appropriate statistical procedures and
-interpretations of results accurately?</td>
+<td>Content: Did the team use appropriate statistical procedures and interpretations of results accurately?</td>
 <td>10 pts</td>
 </tr>
 <tr class="even">
-<td>Creativity and Critical Thought: Is the project carefully thought
-out? Are the limitations carefully considered? Does it appear that time
-and effort went into the planning and implementation of the
-project?</td>
+<td>Creativity and Critical Thought: Is the project carefully thought out? Are the limitations carefully considered? Does it appear that time and effort went into the planning and implementation of the project?</td>
 <td>10 pts</td>
 </tr>
 <tr class="odd">
-<td>Slides: Are the slides well organized, readable, not full of text,
-featuring figures with legible labels, legends, etc.?</td>
+<td>Slides: Are the slides well organized, readable, not full of text, featuring figures with legible labels, legends, etc.?</td>
 <td>10 pts</td>
 </tr>
 </tbody>
 </table>
 <h3 id="executive-summary">Executive summary</h3>
-<p>Along with your presentation slides, we want you to provide a summary
-of your project in the README of your directory/repository. This
-executive summary should provide information on the dataset you’re
-using, your research question(s), your methodology, and your findings.
-The executive summary is worth 15 points and will be evaluated based on
-whether it follows guidance and whether it’s concise but detailed
-enough.</p>
+<p>Along with your presentation slides, we want you to provide a summary of your project in the README of your directory/repository. This executive summary should provide information on the dataset you’re using, your research question(s), your methodology, and your findings. The executive summary is worth 15 points and will be evaluated based on whether it follows guidance and whether it’s concise but detailed enough.</p>
 <h3 id="project-directory-structure">Project Directory Structure</h3>
-<p>You may prepare a zip file of your project files or give us access to
-your Github repository (if you use one):</p>
+<p>You may prepare a zip file of your project files or give us access to your Github repository (if you use one):</p>
 <ul>
 <li><code>final.Rproj</code></li>
-<li><code>README.Rmd</code> + <code>README.md</code>: Your executive
-summary (<a
-href="https://rmarkdown.rstudio.com/docs/reference/github_document.html">github
-flavored markdown</a>)</li>
-<li><code>/data</code>: Your dataset in CSV or RDS format and your data
-dictionary</li>
+<li><code>README.Rmd</code> + <code>README.md</code>: Your executive summary (<a href="https://rmarkdown.rstudio.com/docs/reference/github_document.html">github flavored markdown</a>)</li>
+<li><code>/data</code>: Your dataset in CSV or RDS format and your data dictionary</li>
 <li><code>/deck</code>: Your slide deck (Rmd + html)</li>
 <li><code>/proposal</code>: Your project proposal (Rmd + html)</li>
 </ul>
-<p>Style and format does count for this assignment, so please take the
-time to make sure everything looks good and your data and code are
-properly formatted. Your files must run without error. Remember, any
-local images you use must be included in your directory.</p>
+<p>Style and format does count for this assignment, so please take the time to make sure everything looks good and your data and code are properly formatted. Your files must run without error. Remember, any local images you use must be included in your directory.</p>
 <h2 id="tips">Tips</h2>
 <ul>
-<li><p>Review the marking guidelines below and ask questions if any of
-the expectations are unclear.</p></li>
-<li><p>Make sure each team member is contributing, both in terms of
-quality and quantity of contribution (we will be reviewing commits from
-different team members).</p></li>
+<li><p>Review the marking guidelines below and ask questions if any of the expectations are unclear.</p></li>
+<li><p>Make sure each team member is contributing, both in terms of quality and quantity of contribution (we will be reviewing commits from different team members).</p></li>
 <li><p>Set aside time to work together and apart (physically).</p></li>
-<li><p>When you’re done, review your documents to make sure you’re happy
-with the final state of your work.</p></li>
-<li><p>Code: In your presentation your code should be hidden
-(<code>echo = FALSE</code>) so that your document is neat and easy to
-read. However your document should include all your code such that if I
-re-knit your R Markdown file I should be able to obtain the results you
-presented.</p>
+<li><p>When you’re done, review your documents to make sure you’re happy with the final state of your work.</p></li>
+<li><p>Code: In your presentation your code should be hidden (<code>echo = FALSE</code>) so that your document is neat and easy to read. However your document should include all your code such that if I re-knit your R Markdown file I should be able to obtain the results you presented.</p>
 <ul>
-<li>Exception: If you want to highlight something specific about a piece
-of code, you’re welcomed to show that portion.</li>
+<li>Exception: If you want to highlight something specific about a piece of code, you’re welcomed to show that portion.</li>
 </ul></li>
-<li><p>Teamwork: You are to complete the assignment as a team. All team
-members are expected to contribute equally to the completion of this
-assignment and team evaluations will be given at its completion - anyone
-judged to not have sufficient contributed to the final product will have
-their grade penalized. While different teams members may have different
-backgrounds and abilities, it is the responsibility of every team member
-to understand how and why all code and approaches in the assignment
-works.</p></li>
+<li><p>Teamwork: You are to complete the assignment as a team. All team members are expected to contribute equally to the completion of this assignment and team evaluations will be given at its completion - anyone judged to not have sufficient contributed to the final product will have their grade penalized. While different teams members may have different backgrounds and abilities, it is the responsibility of every team member to understand how and why all code and approaches in the assignment works.</p></li>
 </ul>
 <h2 id="marking">Marking</h2>
 <table style="width:99%;">
@@ -2526,62 +2430,29 @@ works.</p></li>
 <h3 id="criteria">Criteria</h3>
 <p>Your project will be assessed on the following criteria:</p>
 <ul>
-<li>Content - What is the quality of research and/or policy question and
-relevancy of data to those questions?</li>
-<li>Correctness - Are procedures carried out and explained
-correctly?</li>
-<li>Writing and Presentation - What is the quality of the presentation,
-writing, and explanations?</li>
-<li>Creativity and Critical Thought - Is the project carefully thought
-out? Are the limitations carefully considered? Does it appear that time
-and effort went into the planning and implementation of the
-project?</li>
+<li>Content - What is the quality of research and/or policy question and relevancy of data to those questions?</li>
+<li>Correctness - Are procedures carried out and explained correctly?</li>
+<li>Writing and Presentation - What is the quality of the presentation, writing, and explanations?</li>
+<li>Creativity and Critical Thought - Is the project carefully thought out? Are the limitations carefully considered? Does it appear that time and effort went into the planning and implementation of the project?</li>
 </ul>
 <p>A general breakdown of scoring is as follows:</p>
 <ul>
-<li>90%-100% - Outstanding effort. Student understands how to apply all
-statistical concepts, can put the results into a cogent argument, can
-identify weaknesses in the argument, and can clearly communicate the
-results to others.</li>
-<li>80%-89% - Good effort. Student understands most of the concepts,
-puts together an adequate argument, identifies some weaknesses of their
-argument, and communicates most results clearly to others.</li>
-<li>70%-79% - Passing effort. Student has misunderstanding of concepts
-in several areas, has some trouble putting results together in a cogent
-argument, and communication of results is sometimes unclear.</li>
-<li>60%-69% - Struggling effort. Student is making some effort, but has
-misunderstanding of many concepts and is unable to put together a cogent
-argument. Communication of results is unclear.</li>
+<li>90%-100% - Outstanding effort. Student understands how to apply all statistical concepts, can put the results into a cogent argument, can identify weaknesses in the argument, and can clearly communicate the results to others.</li>
+<li>80%-89% - Good effort. Student understands most of the concepts, puts together an adequate argument, identifies some weaknesses of their argument, and communicates most results clearly to others.</li>
+<li>70%-79% - Passing effort. Student has misunderstanding of concepts in several areas, has some trouble putting results together in a cogent argument, and communication of results is sometimes unclear.</li>
+<li>60%-69% - Struggling effort. Student is making some effort, but has misunderstanding of many concepts and is unable to put together a cogent argument. Communication of results is unclear.</li>
 <li>Below 60% - Student is not making a sufficient effort.</li>
 </ul>
 <h3 id="team-peer-evaluation">Team peer evaluation</h3>
-<p>You will be asked to fill out a survey where you rate the
-contribution and teamwork of each team member out of 10 points. You will
-additionally report a contribution percentage for each team member.
-Filling out the survey is a prerequisite for getting credit on the team
-member evaluation. If you are suggesting that an individual did less
-than 20% of the work, please provide some explanation. If any individual
-gets an average peer score indicating that they did less than 10% of the
-work, this person will receive half the grade of the rest of the
-group.</p>
+<p>You will be asked to fill out a survey where you rate the contribution and teamwork of each team member out of 10 points. You will additionally report a contribution percentage for each team member. Filling out the survey is a prerequisite for getting credit on the team member evaluation. If you are suggesting that an individual did less than 20% of the work, please provide some explanation. If any individual gets an average peer score indicating that they did less than 10% of the work, this person will receive half the grade of the rest of the group.</p>
 <h3 id="late-work-policy">Late work policy</h3>
 <ul>
-<li>There is no late submission / make up for the presentation. You must
-be in class on the day of the presentation to get credit for it
-<em>or</em> pre-record and submit your presentation by 9am in the
-morning of the presentations.</li>
-<li>The late work policy for the write-up is 5% of the maximum
-obtainable mark per calendar day up to seven calendar days after the
-deadline. If you intend to submit work late for the project, you must
-notify us before the original deadline as well as as soon as the
-completed work is submitted.</li>
+<li>There is no late submission / make up for the presentation. You must be in class on the day of the presentation to get credit for it <em>or</em> pre-record and submit your presentation by 9am in the morning of the presentations.</li>
+<li>The late work policy for the write-up is 5% of the maximum obtainable mark per calendar day up to seven calendar days after the deadline. If you intend to submit work late for the project, you must notify us before the original deadline as well as as soon as the completed work is submitted.</li>
 </ul>
 <hr />
-<p>Final project template modified from <a
-href="https://datasciencebox.org/project.html">Data Science in a
-Box</a></p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>Final project template modified from <a href="https://datasciencebox.org/project.html">Data Science in a Box</a></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

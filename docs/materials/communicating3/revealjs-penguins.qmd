@@ -59,7 +59,7 @@ Let's move on to some plots, for the overall distributions and for just the Adel
 
 ## Distribution 
 
-```{r, fig.retina=1, fig.dim=c(8,4)}
+```{r, fig.retina=1, fig.dim=c(6,4)}
 penguins %>% 
   ggplot(aes(body_mass_g, fill = species)) + 
   geom_density(color = "white", alpha = 0.5) +
@@ -80,7 +80,7 @@ penguin_size_plot <- penguins_clean %>%
 penguin_size_plot
 ```
 
-## Modeling section {background-color="black"}
+## Modeling section {background-color="#8DBEBE"}
 
 Moving on to some basic modeling we can see if what kind of relationships we observe in the data. Note that I'm really not following any plan, just indicating how you can fit some different models all at once with `dplyr` + `broom`.
 

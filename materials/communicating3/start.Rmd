@@ -74,6 +74,11 @@ On the left
 
 On the right
 
+```{r, echo=FALSE}
+plot(mtcars)
+```
+
+
 ]
 
 ---
