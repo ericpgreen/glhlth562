@@ -62,5 +62,8 @@ It's important that you read the chapters AND run the code as you go. If you rea
 
 ## TidyTuesday
 
-Drops Sundays
+US Polling Places 2012-2020!
 
+<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:7152652582946000896" height="614" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+
+[Here's the template to use](https://github.com/ericpgreen/glhlth562/blob/main/materials/tidytuesday/tidytues_template.Rmd). Submit your Rmd file to Sakai by 10pm Sunday.
