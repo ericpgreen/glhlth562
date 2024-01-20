@@ -1,0 +1,40 @@
+---
+format: 
+  revealjs:
+    multiplex: true
+    theme: [custom.scss]
+    slide-number: c/t
+    incremental: true
+    progress: true
+---
+
+<!--
+
+Content inspired by many contributors, but especially the second edition of R for Data Science, https://r4ds.hadley.nz/, CC BY-NC-ND 3.0. 
+
+Great join animations from tidyexplain, https://www.garrickadenbuie.com/project/tidyexplain/
+
+-->
+
+## 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+![](../logo.png){width=100%}
+:::
+::: {.column width="50%"}
+
+<br>
+
+<center>
+
+[**Data Visualization**]{style="color:#1f9ac9; font-size:250%;"}
+
+<br>
+
+[The grammar of graphics and ggplot2 API]{style=font-size:120%;"}
+</center>
+:::
+::::
