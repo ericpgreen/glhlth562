@@ -1,0 +1,13 @@
+name: week012
+title:
+username: epg
+account: epg
+server: learn.themethodsection.com
+hostUrl: https://learn.themethodsection.com/__api__
+appId: 84
+bundleId: 419
+url: http://learn.themethodsection.com/duke/590-week1/
+when: 1641924718.35249
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: 562hex.R

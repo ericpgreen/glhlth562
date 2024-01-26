@@ -1,0 +1,46 @@
+---
+title: "I do serious stuff too"
+description: |
+  I can teach you about tables
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Check out this new package
+
+Tables are a pain, but `gtsummary` makes it a breeze. Start by installing the package.
+
+```{r, echo=TRUE, eval=FALSE}
+  install.packages("gtsummary")
+  install.packages("gt")
+```
+
+Table \@ref(tab:atable) shows a basic example of a summary table:
+
+
+<!--
+
+no one will know
+
+-->
+
+
+```{r atable, echo=TRUE}
+library(gtsummary)
+library(gt)
+
+trial %>% 
+  select(age, grade, response, trt) %>%
+  tbl_summary(
+    by = trt, # split table by group
+    missing = "no" # don't list missing data separately
+  ) %>%
+  add_n() %>% # add column with total number of non-missing observations
+  add_p() %>% # test for a difference between groups
+  modify_header(label = "**Variable**") %>% # update the column header
+  bold_labels() %>%
+  modify_caption("**Patient Characteristics** (N = {N})")
+```
+

@@ -1,0 +1,12 @@
+name: week01
+title: week01
+username: epg
+account: epg
+server: learn.themethodsection.com
+hostUrl: https://learn.themethodsection.com/__api__
+appId: 83
+bundleId: 416
+url: http://learn.themethodsection.com/content/83/
+when: 1641923031.40006
+asMultiple: FALSE
+asStatic: FALSE

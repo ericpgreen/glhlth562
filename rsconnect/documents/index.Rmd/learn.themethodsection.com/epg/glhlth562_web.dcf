@@ -1,0 +1,13 @@
+name: glhlth562_web
+title: glhlth562_web
+username: epg
+account: epg
+server: learn.themethodsection.com
+hostUrl: https://learn.themethodsection.com/__api__
+appId: 85
+bundleId: 420
+url: http://learn.themethodsection.com/content/85/
+when: 1641925027.61593
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: 562hex.R|materials

@@ -1,0 +1,14 @@
+name: glhlth562site
+title: glhlth562site
+username: epg
+account: epg
+server: learn.themethodsection.com
+hostUrl: https://learn.themethodsection.com/__api__
+appId: 86
+bundleId: 437
+url: http://learn.themethodsection.com/duke/562/
+when: 1644103586.92219
+lastSyncTime: 1644103586.9222
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: 562hex.R|images/.DS_Store|materials

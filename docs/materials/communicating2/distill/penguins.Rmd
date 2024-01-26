@@ -1,0 +1,32 @@
+---
+title: "Stuff about penguins"
+description: |
+  Not all penguins are the same
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Penguins
+
+Did you know that penguins come in different shapes and sizes?
+
+```{r}
+  library(palmerpenguins)
+  library(tidyverse)
+```
+
+Figure \@ref(fig:flips) is really nice when you think about it.
+
+```{r flips, fig.cap="Gentoo penguins have big flippers"}
+  ggplot(data = penguins, aes(x = species, y = flipper_length_mm)) +
+    geom_boxplot(aes(color = species), width = 0.3, show.legend = FALSE) +
+    geom_jitter(aes(color = species), alpha = 0.5, show.legend = FALSE, 
+                position = position_jitter(width = 0.2, seed = 0)) +
+    scale_color_manual(values = c("darkorange","purple","cyan4")) +
+    theme_minimal() +
+    labs(x = "Species",
+         y = "Flipper length (mm)")
+```
+
