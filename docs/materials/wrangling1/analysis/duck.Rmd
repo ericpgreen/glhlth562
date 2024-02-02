@@ -32,7 +32,7 @@ You don't get the same answer because knitting a Rmd is a self-contained action 
 
 The `ducks.csv` file is located in `wrangling1/data/ducks.csv`. Based on the working directory, R will find `read_csv("data/ducks.csv")` if you run it in the Console. But it will fail when you knit this document. Try it.
 
-```{r duck1, eval=FALSE}
+```{r duck1, eval=TRUE}
   read_csv("data/ducks.csv")
 ```
 
