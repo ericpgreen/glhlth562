@@ -19,6 +19,8 @@ navbar:
           href: week03.html
         - text: "Week 4"
           href: week04.html
+        - text: "Week 5"
+          href: week05.html
 
 
   right:
