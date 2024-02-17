@@ -13,12 +13,12 @@ output:
   library(emo)
 ```
 
-# Feb 21: Dates and times
+# Feb 20: Dates and times
 
 ## Prepare
 
 * `r emo::ji("down_arrow")`: [Dates and times cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/lubridate.pdf)
-* `r emo::ji("open_book")`: [R4DS Chapter 16](https://r4ds.had.co.nz/dates-and-times.html)
+* `r emo::ji("open_book")`: [R4DS Chapter 17](https://r4ds.hadley.nz/datetimes)
   
 ## During Class
 
@@ -28,13 +28,13 @@ output:
 
 `r emo::ji("tv")`: [Communicating the Value of Data Science | Data Science Hangout | Elaine McVey at the Looma Project](https://youtu.be/IkqItgPSPro)
 
-# Feb 23: Iteration
+# Feb 22: Iteration
 
 ## Prepare
 
 * `r emo::ji("down_arrow")`: [purrr cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/purrr.pdf)
 * `r emo::ji("tv")`: [Using the purrr and broom R packages to easily perform thousands of statistical tests (CC112)](https://www.youtube.com/watch?v=lhst1oc9mKQ)
-* `r emo::ji("open_book")`: [R4DS Chapter 21](https://r4ds.had.co.nz/iteration.html) (recommended but not required: read/skim chapters 17-20)
+* `r emo::ji("open_book")`: [R4DS Chapter 26](https://r4ds.hadley.nz/iteration) (recommended but not required: read/skim chapters 24 and 25)
 
 ## During Class
 
@@ -45,22 +45,4 @@ output:
 `r emo::ji("tv")`: [Expanding R Horizons: Integrating R with Plumber APIs](https://www.rstudio.com/resources/webinars/expanding-r-horizons-integrating-r-with-plumber-apis/)
 
 ## TidyTuesday
-
-You have three options this week: (1) TT Week 8 (2023); (2) Revisit your first or second TT assignment and make it (substantially) better; or (3) BYOD. Please pick one.
-
-### Bob Ross Paintings! (TT Week 8, 2023)
-
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">The <a href="https://twitter.com/R4DScommunity?ref_src=twsrc%5Etfw">@R4DSCommunity</a> welcomes you to week 8 of <a href="https://twitter.com/hashtag/TidyTuesday?src=hash&amp;ref_src=twsrc%5Etfw">#TidyTuesday</a>! We&#39;re exploring Bob Ross Paintings!<br><br>📁 <a href="https://t.co/rUeIHv4vEJ">https://t.co/rUeIHv4vEJ</a><br>📰 <a href="https://t.co/T9dqDdAVCC">https://t.co/T9dqDdAVCC</a><a href="https://twitter.com/hashtag/r4ds?src=hash&amp;ref_src=twsrc%5Etfw">#r4ds</a> <a href="https://twitter.com/hashtag/tidyverse?src=hash&amp;ref_src=twsrc%5Etfw">#tidyverse</a> <a href="https://twitter.com/hashtag/RStats?src=hash&amp;ref_src=twsrc%5Etfw">#RStats</a> <a href="https://twitter.com/hashtag/DataViz?src=hash&amp;ref_src=twsrc%5Etfw">#DataViz</a> <a href="https://t.co/toMq7tBNmt">pic.twitter.com/toMq7tBNmt</a></p>&mdash; Jon Harmon (he/him) (@JonTheGeek) <a href="https://twitter.com/JonTheGeek/status/1627685477741363205?ref_src=twsrc%5Etfw">February 20, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-[Data](https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-02-21/readme.md) / [Template](https://www.dropbox.com/s/i1mf75oja07985u/tidytuesday.zip?dl=1)
-
-### TT, Revisited
-
-You're gaining more skills each week, so why not go back to an early assignment and put your new knowledge to work. If you choose this option we'll expect to see a substantial improvement along with some narrative around what you know now that enabled you to make improvements. This must be more than changing the font, color, etc. The spirit of this option is that you are now able to make the plot you could only imagine or barely approach in one of the early weeks. 
-
-You should also complete the code review portion of the assignment from TT Week 8 tweets.
-
-### BYOD
-
-You can bring your own data for the first part of the assignment (exploration), but please find a community example from TT Week 8 for the second part.
 
