@@ -15,6 +15,7 @@ raw <- read_sheet("https://docs.google.com/spreadsheets/d/1kQ35JKpk3vNaM7ZfFK2DF
     slice(2) %>%
     unlist(use.names = FALSE) %>%
     as_tibble() %>%
+    filter(!is.na(value)) %>%
     mutate(value = stringr::str_remove(value,
                                        "Positive COVID-19 Cases\n"))
 
@@ -22,6 +23,7 @@ raw <- read_sheet("https://docs.google.com/spreadsheets/d/1kQ35JKpk3vNaM7ZfFK2DF
     slice(2) %>%
     unlist(use.names = FALSE) %>%
     as_tibble() %>%
+    filter(!is.na(value)) %>%
     mutate(value = stringr::str_remove(value,
                                        "Positive COVID-19 Cases\n")) %>%
     mutate(value = stringr::str_trim(value, "both"))
@@ -30,6 +32,7 @@ raw <- read_sheet("https://docs.google.com/spreadsheets/d/1kQ35JKpk3vNaM7ZfFK2DF
     slice(2) %>%
     unlist(use.names = FALSE) %>%
     as_tibble() %>%
+    filter(!is.na(value)) %>%
     mutate(value = stringr::str_remove(value,
                                        "Positive COVID-19 Cases\n")) %>%
     mutate(value = stringr::str_trim(value, "both")) %>%
@@ -39,6 +42,7 @@ raw <- read_sheet("https://docs.google.com/spreadsheets/d/1kQ35JKpk3vNaM7ZfFK2DF
     slice(2) %>%
     unlist(use.names = FALSE) %>%
     as_tibble() %>%
+    filter(!is.na(value)) %>%
     mutate(value = stringr::str_remove(value,
                                        "Positive COVID-19 Cases\n")) %>%
     mutate(value = stringr::str_trim(value, "both")) %>%
@@ -60,6 +64,7 @@ raw <- read_sheet("https://docs.google.com/spreadsheets/d/1kQ35JKpk3vNaM7ZfFK2DF
     slice(2) %>%
     unlist(use.names = FALSE) %>%
     as_tibble() %>%
+    filter(!is.na(value)) %>%
     mutate(value = stringr::str_remove(value,
                                        "Positive COVID-19 Cases\n")) %>%
     mutate(value = stringr::str_trim(value, "both")) %>%
@@ -84,6 +89,7 @@ raw <- read_sheet("https://docs.google.com/spreadsheets/d/1kQ35JKpk3vNaM7ZfFK2DF
     slice(2) %>%
     unlist(use.names = FALSE) %>%
     as_tibble() %>%
+    filter(!is.na(value)) %>%
     mutate(value = stringr::str_remove(value,
                                        "Positive COVID-19 Cases\n")) %>%
     mutate(value = stringr::str_trim(value, "both")) %>%

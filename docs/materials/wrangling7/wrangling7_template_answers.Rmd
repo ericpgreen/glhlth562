@@ -1,0 +1,299 @@
+---
+title: "Data Wrangling"
+subtitle: "Dates and Times"
+css: custom_report.css
+output: 
+  bookdown::html_document2:
+    toc: true
+    toc_float: true
+    toc_depth: 1
+    code_folding: show
+    theme: default
+    highlight: tango
+    fig_captions: no
+    number_sections: false
+---
+
+```{r setup, include=FALSE, warning = FALSE, message = FALSE}
+  knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+  options(scipen=999) # turns off scientific notation
+
+# define colors
+  glhlth562_colors <- c(
+    `blue`       = "#1f9ac9",
+    `yellow`     = "#ffd966",
+    `black`      = "#000000",
+    `lightgrey`  = "#D3D3D3",
+    `darkgrey`   = "#444444",
+    `grey`       = "#808080"
+  )
+
+# load packages
+  library(tidyverse)
+  library(lubridate) # not a core tidyverse package so need to load
+```
+
+# Dates and Times
+
+## DECK
+
+### Here's today's date, no time included
+
+**Base R**
+```{r}
+Sys.Date()
+class(Sys.Date())
+```
+
+**Lubridate**
+```{r}
+today()
+class(today())
+```
+
+### Here's the current moment (date+time)
+
+R calls timestamps POSIXct, but tibbles will show `<dttm>`
+
+**Base R**
+```{r}
+Sys.time()
+class(Sys.time())
+```
+
+**Lubridate**
+```{r}
+now()
+class(now())
+```
+
+
+### String dates need to be parsed
+
+Lubridate makes this easy
+
+```{r}
+x <- "January 31st, 2017"
+class(x)
+
+# x + 1 
+# fails at string + number
+```
+
+
+```{r}
+x <- mdy("January 31st, 2017")
+class(x)
+
+x + 1
+# date plus 1 day works
+```
+
+### Building dates/times from components
+
+```{r}
+df <- tribble(
+  ~year, ~month, ~day,
+  2022, 10, 10,
+  2021, 8, 1,
+  2020, 1, 31
+)
+
+df %>% 
+  mutate(myDate = make_date(year, month, day))
+```
+
+### Extracting components from dates/times
+
+```{r}
+df %>% 
+  mutate(myDate = make_date(year, month, day),
+         month_label = month(myDate, label = TRUE))
+```
+
+### Rounding
+
+Create some data
+
+```{r}
+set.seed(8675309)
+onboarding <- tibble(
+  date_onboarded = 
+    sample(seq(ymd('2021-01-01'), 
+               ymd('2021-12-31'), 
+               by="day"), 
+           3000, replace = TRUE),
+  channel = sample(c("WhatsApp", 
+                     "Messenger"), 
+                   3000, 
+                   replace=TRUE)
+)
+
+onboarding
+```
+
+Round down to aggregate by week:
+
+```{r}
+onboarding %>%
+  count(channel, 
+        week = floor_date(date_onboarded, 
+                          "week")
+        )
+```
+
+```{r}
+onboarding %>%
+  count(channel, 
+        week = 
+          floor_date(date_onboarded, 
+                     "week")
+        ) %>% 
+  ggplot(aes(week, n, color=channel)) +
+    geom_step() + theme_bw()
+```
+
+
+### Time spans
+
+Create some data
+
+```{r}
+engagement <- tibble(
+  id = rep(sample(1:3000, 1000, 
+                  replace=FALSE), 3),
+  date_engage = 
+    sample(seq(ymd('2021-01-01'), 
+               ymd('2021-12-31'), 
+               by="day"), 
+           3000, replace = TRUE)) %>%
+  sample_n(1000, replace=FALSE) %>%
+  arrange(id, date_engage) %>%
+  group_by(id) %>%
+  mutate(engage_id = 1:n()) %>% 
+  ungroup()
+
+engagement
+```
+
+How can we calculate duration from first to last engagement?
+
+```{r, eval=FALSE}
+# set eval=TRUE once you get the answer
+
+engagement %>%
+  ____(id) %>%
+  ____(____==1 | ____==n()) %>%
+  mutate(diff = ____ - lag(____)) %>%
+  ____(____, desc(____)) %>%
+  ____(____, .keep_all = TRUE) %>%
+  select(-engage_id)
+
+  engagement %>%
+    group_by(id) %>%
+    filter(engage_id==1 | engage_id==n()) %>%
+    mutate(diff = date_engage - lag(date_engage)) %>%
+    arrange(id, desc(date_engage)) %>%
+    distinct(id, .keep_all = TRUE) %>%
+    select(-engage_id)
+```
+
+### Time zones
+
+```{r}
+Sys.timezone()
+head(OlsonNames())
+```
+
+This is an instant in time.
+
+```{r}
+ymd_hms("2015-06-01 12:00:00", tz = "America/New_York")
+```
+
+This is the same instant in time.
+
+```{r}
+ymd_hms("2015-06-01 18:00:00", tz = "Europe/Copenhagen")
+```
+
+### Watch for dropped time zone info
+
+Some operations strip time zone information and display in your local timezone:
+
+```{r}
+x1 <- ymd_hms("2015-06-01 12:00:00", tz = "America/New_York")
+x2 <- ymd_hms("2015-06-01 18:00:00", tz = "Europe/Copenhagen")
+x3 <- ymd_hms("2015-06-02 04:00:00", tz = "Pacific/Auckland")
+
+x4 <- c(x1, x2, x3)
+x4
+```
+
+### Change display vs change instant
+
+When you want to keep the instant the same but and change the display:
+
+```{r}
+x4
+with_tz(x4, tzone = "Australia/Lord_Howe")
+with_tz(x4, tzone = "Australia/Lord_Howe") - x4
+```
+
+### Change display vs change instant
+
+When you want to change the instant:
+
+```{r}
+x4
+force_tz(x4, tzone = "Africa/Nairobi")
+force_tz(x4, tzone = "Africa/Nairobi") - x4
+```
+
+## PRACTICE
+
+Parse this mixed-format vector with `parse_date_time()`
+
+```{r, eval=FALSE}
+# set eval=TRUE once you get the answer
+
+  x <- c("November 2, 2014", "13 August, 2014")
+  parse_date_time()
+  
+  parse_date_time(x, orders = c("mdy", "dmy"))
+```
+
+Create a new variable called `year_month` in `onboarding` that only includes year and month (e.g., "2021-10"). You could do this with strings, but I want you to use lubridate.
+
+```{r}
+  onboarding
+
+  onboarding %>% 
+    mutate(year_month = format(lubridate::parse_date_time(date_onboarded, 
+                                                          orders = c("Y-m-d")), 
+                               "%Y-%m"))
+```
+
+Create two new variables in `onboarding` called `plus1day` and `plus1month` that add one day and one month, respectively, to `date_onboarded`.
+
+```{r}
+  onboarding %>%
+    mutate(plus1day = date_onboarded + days(1),
+           plus1month = date_onboarded + months(1))
+```
+
+Assign the result of a pipe to an object called `max_engagement` that is equal to the maximum date in `date_engage`.
+
+```{r}
+  max_engagement <- engagement %>%
+    arrange(desc(date_engage)) %>%
+    slice(1) %>%
+    pull(date_engage)
+
+  max_engagement <- engagement %>%
+    summarize(max = max(date_engage)) %>%
+    pull(max)
+```
+
+
+
