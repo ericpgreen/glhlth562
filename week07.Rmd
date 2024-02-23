@@ -13,7 +13,7 @@ output:
   library(emo)
 ```
 
-# Feb 28: Self-assessment
+# Feb 27: Self-assessment
 
 ## Prepare
 
@@ -40,5 +40,5 @@ We'll screen the 2020 film, ["Coded Bias"](https://www.imdb.com/title/tt11394170
 
 ## TidyTuesday
 
-If you do not complete your self-assessment in class, complete it by Sunday.
+If you do not complete your self-assessment in class, complete it by Sunday. Work on your project proposals.
 
