@@ -13,12 +13,12 @@ output:
   library(emo)
 ```
 
-# Mar 7: Models
+# Mar 5: Models
 
 ## Prepare
 
-* `r emo::ji("open_book")`: [R4DS Chapter 22](https://r4ds.had.co.nz/model-intro.html)
-* `r emo::ji("open_book")`: [R4DS Chapter 23](https://r4ds.had.co.nz/model-basics.html)
+* `r emo::ji("open_book")`: [Tidy Modeling with R Chapter 1](https://www.tmwr.org/software-modeling)
+* `r emo::ji("open_book")`: [Tidy Modeling with R Chapter 3](https://www.tmwr.org/base-r)
 
 ## During Class
 
@@ -29,11 +29,10 @@ Deck / Materials
 `r emo::ji("tv")`: [Richard McElreath, Science Before Statistics: Causal Inference](https://youtu.be/KNPYUVmY3NM)
 
 
-# Mar 9: Tidy models introduction, part 1
+# Mar 7: Tidy models introduction, part 1
 
 ## Prepare
 
-* `r emo::ji("open_book")`: [Tidy Modeling with R, CH 3](https://www.tmwr.org/base-r.html)
 * `r emo::ji("open_book")`: [Tidy Modeling with R, CH 4](https://www.tmwr.org/ames.html)
 * `r emo::ji("open_book")`: [Tidy Modeling with R, CH 5](https://www.tmwr.org/splitting.html)
   
