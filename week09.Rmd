@@ -13,7 +13,7 @@ output:
   library(emo)
 ```
 
-# Mar 21: Tidy models introduction, part 2
+# Mar 19: Tidy models introduction, part 2
 
 ## Prepare
 
@@ -28,9 +28,11 @@ output:
 
 ## After Class (Optional)
 
-`r emo::ji("tv")`: Simon Couch, [tidymodels/stacks, Or, In Preparation for Pesto: A Grammar for Stacked Ensemble Modeling](https://www.rstudio.com/resources/rstudioglobal-2021/tidymodelsstacks-or-in-preparation-for-pesto-a-grammar-for-stacked-ensemble-modeling/)
+* `r emo::ji("tv")`: Simon Couch, [tidymodels/stacks, Or, In Preparation for Pesto: A Grammar for Stacked Ensemble Modeling](https://www.rstudio.com/resources/rstudioglobal-2021/tidymodelsstacks-or-in-preparation-for-pesto-a-grammar-for-stacked-ensemble-modeling/)
+* `r emo::ji("tv")`: Julia Silge & Max Kuhn [Good Practices for Applied Machine Learning](https://youtu.be/015rGZe2Lkk?si=JdNRm4EhODD7KjII)
+* `r emo::ji("tv")`: Julia Silge [3 Reasons to Use Tidymodels](https://youtu.be/sv5r7CVAVwo?si=rKxInfAKwK8F-DPR)
 
-# Mar 23: Tidy models introduction, part 3
+# Mar 21: Tidy models introduction, part 3
 
 Wrap up
 

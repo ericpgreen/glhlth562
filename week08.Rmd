@@ -42,8 +42,8 @@ Deck / Materials
 
 ## After Class (Optional)
 
-`r emo::ji("tv")`: Max Kuhn, [What's new in tidymodels?](https://www.rstudio.com/resources/rstudioglobal-2021/whats-new-in-tidymodels/)
-
+* `r emo::ji("tv")`: Julia Silge & Max Kuhn [Good Practices for Applied Machine Learning](https://youtu.be/015rGZe2Lkk?si=JdNRm4EhODD7KjII)
+* `r emo::ji("tv")`: Julia Silge [3 Reasons to Use Tidymodels](https://youtu.be/sv5r7CVAVwo?si=rKxInfAKwK8F-DPR)
 
 ## TidyTuesday
 
