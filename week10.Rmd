@@ -13,28 +13,28 @@ output:
   library(emo)
 ```
 
-# Mar 28: Reproducible workflows and RMarkdown
+# Mar 26: Reproducible workflows and RMarkdown
 
 ## Prepare
 
 * `r emo::ji("open_book")`: [Reproducible Research: A Retrospective
 Roger D. Peng and Stephanie C. Hicks, Annual Review of Public Health 2021 42:1, 79-93](https://www.annualreviews.org/doi/abs/10.1146/annurev-publhealth-012420-105110)
 * `r emo::ji("down_arrow")`: [RMarkdown cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf)
-* `r emo::ji("open_book")`: [R4DS, CH 27](https://r4ds.had.co.nz/r-markdown.html)
-* `r emo::ji("open_book")`: [R4DS, CH 29](https://r4ds.had.co.nz/r-markdown-formats.html)
-* REFERENCE: `r emo::ji("open_book")`: [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/)
+* `r emo::ji("open_book")`: [R4DS, CH 11](https://r4ds.hadley.nz/communication)
+* `r emo::ji("open_book")`: [R4DS, CH 28](https://r4ds.hadley.nz/quarto)
+* `r emo::ji("open_book")`: [R4DS, CH 28](https://r4ds.hadley.nz/quarto-formats)
   
 ## During Class
 
-Materials ([zip](https://www.dropbox.com/s/qlld80bnd8n3rvj/communicating1.zip?dl=1))
+No class (individual project meetings outside of class)
 
 ## After Class (Optional)
 
 * `r emo::ji("tv")`: [How reproducible am I? A retrospective on a year of commercial data science projects in R](https://www.rstudio.com/resources/rstudioglobal-2021/how-reproducible-am-i-a-retrospective-on-a-year-of-commercial-data-science-projects-in-r/)
-* `r emo::ji("tv")`: [Reproducible Reporting](https://www.rstudio.com/resources/webinars/reproducible-reporting/)
+* `r emo::ji("tv")`: [Distill](https://rstudio.github.io/distill/)
 
 
-# Mar 30: Dashboards
+# Mar 28: Dashboards
 
 ## Prepare
 
@@ -42,7 +42,7 @@ Materials ([zip](https://www.dropbox.com/s/qlld80bnd8n3rvj/communicating1.zip?dl
   
 ## During Class
 
-[Deck](https://ericpgreen.github.io/glhlth562/materials/communicating2/communicating2_deck.html) / Materials ([zip](https://www.dropbox.com/s/jnot6io5q77ermi/communicating2.zip?dl=1))
+Asynchronous class, see Ed for video link
 
 ## After Class (Optional)
 
@@ -50,4 +50,4 @@ Materials ([zip](https://www.dropbox.com/s/qlld80bnd8n3rvj/communicating1.zip?dl
 
 ## TidyTuesday
 
-Nothing official, but I strongly encourage you to watch the video on The Office and code along.
+Projects, projects, projects!
