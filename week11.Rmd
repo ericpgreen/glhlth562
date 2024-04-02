@@ -18,7 +18,7 @@ output:
 
 ## Prepare
 
-* `r emo::ji("open_book")`: [RMarkdown: the Definitive Guide, CH 7](https://bookdown.org/yihui/rmarkdown/xaringan.html)
+* `r emo::ji("open_book")`: [Quarto Presentations](https://quarto.org/docs/presentations/)
 
 ## During Class
 
