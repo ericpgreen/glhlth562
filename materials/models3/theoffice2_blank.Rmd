@@ -1,0 +1,265 @@
+---
+title: "The Office 1"
+author: "Your name"
+output: github_document
+---
+
+```{r load-packages, message = FALSE}
+# credit: Modified from Data Science in a Box 
+# credit: Inspired by Alison Hill's Alzheimer's tutorial
+
+  library(tidymodels)
+  library(stringr)
+  library(schrute)
+  library(lubridate)
+```
+
+In this two-part exercise we will use `theoffice` data from the [**schrute**](https://bradlindblad.github.io/schrute/) package to predict IMDB scores for episodes of The Office. In the first part, we'll work together to prepare the data, specify a model, and create a recipe. In the second part, you'll fit and evaluate the model on your own for homework.
+
+```{r}
+  glimpse(theoffice)
+```
+
+Fix `air_date` for later use.
+
+```{r}
+  theoffice <- theoffice %>%
+    mutate(air_date = ymd(as.character(air_date)))
+```
+
+We will
+
+-   engineer features based on episode scripts
+-   train a model
+-   perform cross validation
+-   make predictions
+
+```{r}
+  theoffice %>%
+    distinct(season, episode)
+```
+
+### Exercise 1
+
+Calculate the percentage of lines spoken by Jim, Pam, Michael, and Dwight for each episode of The Office.
+
+```{r lines}
+  # assign to office_lines 
+
+  office_lines <- theoffice %>%
+    group_by(season, episode) %>%
+    mutate(
+      n_lines = n(),
+      lines_jim = sum(character=="Jim") / n_lines,
+      lines_pam = sum(character=="Pam") / n_lines,
+      lines_dwight = sum(character=="Dwight") / n_lines,
+      lines_michael = sum(character=="Michael") / n_lines
+    ) %>%
+    ungroup() %>%
+    select(season, episode, episode_name, contains("lines")) %>%
+    distinct(season, episode, episode_name, .keep_all = TRUE)
+    
+```
+
+### Exercise 2
+
+Identify episodes that touch on Halloween, Valentine's Day, and Christmas.
+
+```{r special-episodes}
+  theoffice <- theoffice %>%
+    mutate(text = tolower(text))
+  
+  # assign to halloween_episodes 
+  halloween_episodes <- theoffice %>%
+    filter(str_detect(text, "halloween")) %>%
+    count(episode_name) %>%
+    filter(n > 1) %>%
+    mutate(halloween = 1) %>%
+    select(-n)
+  
+  valentine_episodes <- theoffice %>%
+    filter(str_detect(text, "valentine")) %>%
+    count(episode_name) %>%
+    filter(n > 1) %>%
+    mutate(valentine = 1) %>%
+    select(-n)
+  
+  christmas_episodes <- theoffice %>%
+    filter(str_detect(text, "christmas")) %>%
+    count(episode_name) %>%
+    filter(n > 1) %>%
+    mutate(christmas = 1) %>%
+    select(-n)
+```
+
+### Exercise 3
+
+Put together a modeling dataset that includes features you've engineered. Also add an indicator variable called `michael` which takes the value `1` if Michael Scott (Steve Carrell) was there, and `0` if not. Note: Michael Scott (Steve Carrell) left the show at the end of Season 7.
+
+```{r office-df}
+  # assign to office_df 
+  office_df <- theoffice %>%
+    select(season, episode, episode_name, imdb_rating, total_votes, air_date) %>%
+    distinct(season, episode, .keep_all = TRUE) %>%
+    left_join(halloween_episodes, by = "episode_name") %>%
+    left_join(valentine_episodes, by = "episode_name") %>%
+    left_join(christmas_episodes, by = "episode_name") %>%
+    replace_na(list(halloween = 0, valentine = 0, christmas = 0)) %>%
+    mutate(michael = case_when(
+        episode_name=="Finale" ~ 1,
+        season > 7 ~ 0,
+        TRUE ~ 1
+      )) %>%
+    mutate(across(halloween:michael, as.factor)) %>%
+    left_join(office_lines, by=c("season", "episode", "episode_name"))
+
+```
+
+### Exercise 4 
+
+Use `initial_split()`, `training()`, and `testing()` to split `office_df` into training (75%) and test (25%) sets.
+ 
+```{r split}
+  set.seed(1122)
+  # assign to office_split
+  # assign to office_train
+  # assign to office_test
+
+  office_split <- initial_split(office_df)
+  office_train <- training(office_split)
+  office_test <- testing(office_split)
+```
+
+### Exercise 5
+
+Specify a linear regression model (`lm` engine). Visit https://www.tidymodels.org/find/parsnip/ and search for the details.
+
+```{r model}
+# linear regression model
+  # assign to linreg_mod 
+
+  linreg_mod <- linear_reg() %>%
+    set_engine("lm") %>%
+    set_mode("regression")
+
+  linreg_mod
+```
+
+### Exercise 6
+
+Create a recipe that updates the role of `episode_name` to not be a predictor, removes `air_date` as a predictor, turn all nominal into dummy (except for `episode_name`), and removes all zero variance predictors. Visit https://recipes.tidymodels.org/reference/index.html to find the correct `step_()` functions.
+
+```{r recipe}
+  # assign to rec 
+
+  rec <- recipe(imdb_rating ~ ., data = office_train) %>%
+    update_role(episode_name, new_role = "id") %>%
+    step_rm(air_date) %>%
+    step_dummy(all_nominal(), -episode_name) %>%
+    step_zv(all_predictors())
+
+  rec
+    
+```
+
+### Exercise 7
+
+Build a workflow for fitting the linear regression specified earlier and using the recipe you developed to preprocess the data.
+
+```{r workflow}
+  # assign to linreg_wflow 
+
+  linreg_wflow <- workflow() %>%
+    add_model(linreg_mod) %>%
+    add_recipe(rec)
+
+  linreg_wflow
+```
+
+### Exercise 8 
+
+Use `vfold_cv()` to split the data (which one??) into 10 folds.
+
+```{r vfold}
+  # assign to folds 
+  
+  folds <- vfold_cv(office_train, v = 5)
+  
+  folds
+```
+
+### Exercise 9
+
+Use `fit_resamples()` and `collect_metrics()` with your `linreg_wflow` to perform 5-fold cross validation on the training data. 
+
+```{r fit}
+  # assign to linreg_results 
+
+  linreg_results <- linreg_wflow %>%
+    fit_resamples(folds)
+
+  linreg_results
+```
+
+We'll look at [root mean square error](https://www.tmwr.org/performance.html) (RMSE). When comparing models, you could select the one that minimizes RMSE.
+
+### Exercise 10
+
+1. Create a new parsnip random forest model called `rforest_mod` which will learn an ensemble of classification trees from the training data. Use the `ranger` engine.
+2. Create a workflow object called `rforest_wflow` that uses this model and the recipe you created earlier.
+3. Leave `tune()` empty for the `mtry` and `min_n` hyperparameters. This will tell tidymodels to search for the optimal combination of values to improve predictions. 
+
+```{r rrf}
+# create the model
+#install.packages("ranger")
+  # assign to rforest_mod 
+
+  rforest_mod <- rand_forest(mtry = tune(),
+                             min_n = tune()) %>%
+    set_engine("ranger") %>%
+    set_mode("regression")
+
+# create a workflow
+  # assign to rforest_wflow 
+
+  
+# fit the model to the training data
+  # assign to rforest_results 
+```
+
+### Exercise 11
+
+Inspect `linreg_results` and `linreg_results`. Which model performed the best? (remember, you want the model that minimizes error, so lower is better)
+
+```{r, eval=FALSE}
+  linreg_results %>% collect_metrics()
+
+# remember with the random forest model you let tidymodels try different 
+# combinations of the hyperparameters mtry and min_n
+# the top result will be the best of all combinations
+  rforest_results %>%  
+    collect_metrics() %>% 
+    filter(.metric=="rmse") %>%
+    arrange(mean)
+```
+
+Use `select_best()`, `finalize_workflow()`, and `last_fit()` to take the best combination of hyper-parameters from the best model and use them to predict the test set.
+
+```{r test, eval=FALSE}
+  office_best <- rforest_results %>% 
+    select_best(metric = "rmse")
+
+  office_best # leave this so it prints
+
+  last_workflow <- rforest_wflow %>%
+    finalize_workflow(office_best) 
+  
+  last_workflow # leave this so it prints
+  
+  last_results <- last_workflow %>% 
+    last_fit(split = office_split) %>%  # this uses the test set in the split
+    collect_metrics()
+  
+  last_results # leave this so it prints
+```
+

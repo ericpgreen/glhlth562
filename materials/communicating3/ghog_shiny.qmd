@@ -1,0 +1,111 @@
+---
+title: "Groundhogs"
+format: dashboard
+server: shiny
+---
+
+```{r}
+#| context: setup
+
+library(tidyverse)
+library(feb2)
+```
+
+# {.sidebar}
+
+```{r}
+checkboxGroupInput("status", label = h3("Pick Prognosticators"), 
+                   choices = list("Creature" = "Creature", 
+                                  "Human Mascot" = "Human Mascot", 
+                                  "Inanimate" = "Inanimate"),
+                   selected = "Creature")
+
+sliderInput("years", "Minimum prediction years:", 
+            min = 1, max = 10, value = 5)
+```
+
+```{r}
+#| context: server
+
+ghog_data <- reactive({
+  
+  predictions %>%
+    # join data
+    select(prognosticator_name, year, prediction) %>%
+    right_join(select(filter(prognosticators, 
+                             prognosticator_status %in% input$status),
+                      prognosticator_name, prognosticator_city,
+                      prognosticator_status),
+               by = "prognosticator_name") %>%
+    left_join(class_def1, by = c("prognosticator_city", "year")) %>%
+    filter(complete.cases(.)) %>%
+    # construct outcome
+    mutate(result = case_when(
+      prediction == class ~ "Correct",
+      TRUE ~ "Incorrect"
+    )) %>%
+    # count results by year and status
+    group_by(year, prognosticator_status, result) %>%
+    count() %>%
+    ungroup() %>%
+    complete(year, prognosticator_status, result, 
+             fill = list(n=0)) %>%
+    # count total predictions made by year and status
+    group_by(year, prognosticator_status) %>%
+    mutate(n_predictions_status = sum(n)) %>%
+    ungroup() %>%
+    # remove years if either status had <5 predictions
+    group_by(year) %>%
+    mutate(min = min(n_predictions_status)) %>%
+    ungroup() %>%
+    filter(min >= input$years) %>%
+    # calculate percent by year, status, and result
+    mutate(prop_year_status = n/n_predictions_status) %>%
+    # limit to correct predictions
+    filter(result=="Correct") %>%
+    # plot
+    select(year, prognosticator_status, prop_year_status)
+})
+
+output$data <- renderTable({
+  ghog_data()
+})
+
+
+output$plot <- renderPlot({
+  
+  p <- ggplot(
+    ghog_data(), 
+    aes(x = year, y = prop_year_status)) +
+    geom_point() +
+    geom_smooth() +
+    facet_wrap(~ prognosticator_status) +
+    scale_y_continuous(labels = scales::percent_format(),
+                       limits = c(0, 1)) +
+    labs(x=NULL, y=NULL,
+         title = str_wrap("Inanimate creatures are becoming better prognosticators over time", 100),
+         subtitle = "Comparing yearly prediction accuracy among real and fake prognosticators",
+         caption = str_wrap("Source: Countdown to Groundhog Day and U.S. National Ocean and Atmospheric Administration. Limited to years with at least 5 predictions per group.", 100)) +
+    theme_bw() + 
+    theme(plot.title.position = "plot",
+          plot.title = element_text(face="bold"))
+  
+  
+  p
+  
+})
+
+```
+
+
+# Data
+
+```{r}
+tableOutput('data')
+```
+
+# Plot
+
+```{r}
+plotOutput('plot')
+```

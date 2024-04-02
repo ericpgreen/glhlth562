@@ -209,7 +209,7 @@ We'll look at [root mean square error](https://www.tmwr.org/performance.html) (R
 
 ### Exercise 11
 
-Inspect `linreg_results` and `linreg_results`. Which model (`xxxxxx`) performed the best? (remember, you want the model that minimizes error, so lower is better)
+Inspect `linreg_results` and `rforest_results`. Which model (`xxxxxx`) performed the best? (remember, you want the model that minimizes error, so lower is better)
 
 ```{r}
   linreg_results %>% collect_metrics()
