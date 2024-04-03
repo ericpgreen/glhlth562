@@ -2354,7 +2354,7 @@ Content
 </table>
 <h3 id="presentation">Presentation</h3>
 <p>5 minutes maximum, and each team member should say something substantial. You can either present live during your slot or pre-record and submit your video to be played during the workshop.</p>
-<p>Prepare a slide deck using <code>xaringan</code>. There isn’t a limit to how many slides you can use, just a time limit (5 minutes total). If you work with a partner, each person should have a chance to speak during the presentation. Your presentation should not just be an account of everything you tried (“then we did this, then we did this, etc.”), instead it should convey what choices you made, and why, and what you found.</p>
+<p>Prepare a slide deck using Quarto. There isn’t a limit to how many slides you can use, just a time limit (5 minutes total). If you work with a partner, each person should have a chance to speak during the presentation. Your presentation should not just be an account of everything you tried (“then we did this, then we did this, etc.”), instead it should convey what choices you made, and why, and what you found.</p>
 <p>Before you finalize your presentation, make sure your chunks are turned off with <code>echo = FALSE</code>.</p>
 <p>Presentations will take place during the last two sessions of the semester. You will watch presentations from other teams in your workshop and provide feedback in the form of peer evaluations. The presentation line-up will be generated randomly and posted on April 5.</p>
 <p>The grading scheme for the presentation is as follows:</p>
@@ -2406,10 +2406,9 @@ Content
 <p>You may prepare a zip file of your project files or give us access to your Github repository (if you use one):</p>
 <ul>
 <li><code>final.Rproj</code></li>
-<li><code>README.Rmd</code> + <code>README.md</code>: Your executive summary (<a href="https://rmarkdown.rstudio.com/docs/reference/github_document.html">github flavored markdown</a>)</li>
+<li><code>README.qmd</code> + <code>README.md</code>: Your executive summary (<code>format: gfm</code>)</li>
 <li><code>/data</code>: Your dataset in CSV or RDS format and your data dictionary</li>
-<li><code>/deck</code>: Your slide deck (Rmd + html)</li>
-<li><code>/proposal</code>: Your project proposal (Rmd + html)</li>
+<li><code>/deck</code>: Your slide deck (qmd + html)</li>
 </ul>
 <p>Style and format does count for this assignment, so please take the time to make sure everything looks good and your data and code are properly formatted. Your files must run without error. Remember, any local images you use must be included in your directory.</p>
 <h2 id="tips">Tips</h2>
