@@ -13,6 +13,8 @@ https://www.emilyburchfield.org/courses/eds/making_maps_in_r
 
 "Geocomputation with R" (GWR) by Lovelace, Nowosad, and Muenchow
 https://r.geocompx.org/
+
+[ATTACHING CHIRPS PRECIPITATION DATA TO DHS SURVEYS](https://tech.popdata.org/dhs-research-hub/posts/2024-02-04-dhs-chirps/) by Roberts and Gunther
 -->
 
 ## Credits
@@ -37,7 +39,22 @@ suppressPackageStartupMessages({
   #library(spDataLarge)
   library(leaflet)
   library(terra)
+  library(stars)
+  library(chirps)
+  library(usethis)
+  library(ggspatial)
 })
+```
+
+We need to get some data:
+
+```{r}
+#| eval: false
+
+# run this manually once
+
+# Burkina Faso boundary shapefile from https://www.idhsdata.org/idhs/gis.shtml
+usethis::use_course(url = "https://github.com/ericpgreen/glhlth562/raw/main/materials/mapping/geo_bf2003_2010.zip", destdir = getwd())
 ```
 
 ## Basic Concepts
@@ -113,8 +130,158 @@ ggplot() +
   theme(legend.position = "none")
 ```
 
+## Working with Rasters
 
+[`terra`](https://rspatial.github.io/terra/) and `stars` have become the go-to packages for working with raster data in R. To introduce you to raster data, we'll jump into a [tutorial](https://tech.popdata.org/dhs-research-hub/posts/2024-02-04-dhs-chirps/) on working with rainfall data from ClimateSERV. We'll use the [`chirps`](https://docs.ropensci.org/chirps/) package to get some rainfall data for Burkina Faso, using a country shapefile as a mask to tell the API which raster cells we want (the ones that fall inside Burkina Faso).
+
+```{r}
+# load shapefile of Burkina Faso boarders
+bf_borders <- st_read(
+  here::here("geo_bf2003_2010", "geo_bf2003_2010.shp"),
+  quiet = TRUE
+)
+
+# Get CHIRPS data from 2001-2010 for Burkina Faso 
+bf_precip <- get_chirps(
+  vect(bf_borders),
+  dates = c("2001-07-19", "2001-07-21"),
+  server = "CHC"
+)
+
+bf_precip <- mask(bf_precip, bf_borders, touches = FALSE)
+```
+
+`bf_precip` is a `SpatRaster` object from the `terra` package containing the raster stack of precipitation data for Burkina Faso from three days in 2001 (using the full time series in their tutorial would take too long to download).
+
+```{r}
+bf_precip
+```
+
+> This raster layer contains 114 rows and 158 columns of pixels. The value in each pixel represents the rainfall (in millimeters) for an area 0.05 degrees longitude by 0.05 degrees latitude (shown in the resolution field).
+
+Let's plot the rainfall on July 19, 2001. To do this we'll extract the raster for this day and plot with `ggplot()` and some functions from the `ggspatial` package (always multiple ways to do something!).
+
+```{r}
+# Create map of rainfall for single day
+precip_day <- bf_precip[["chirps-v2.0.2001.07.19"]]
+
+ggplot() +
+  ggspatial::layer_spatial(
+    precip_day, 
+    alpha = if_else(values(precip_day) == 0, 0, 0.8), 
+    na.rm = TRUE
+  ) +
+  ggspatial::layer_spatial(bf_borders, fill = NA, color = "#888888") +
+  #ggspatial::layer_spatial(bf_gps,  fill = NA, size = 2, alpha = 0.4) +
+  labs(
+    title = "Burkina Faso Rainfall: July 19, 2001",
+    subtitle = "CHIRPS precipitation data",
+    fill = "Rainfall total (mm)",
+    caption = "Source: DHS Program and Climate Hazards Center InfraRed Precipitation with Station (CHIRPS)"
+  ) +
+  ggspatial::annotation_scale(
+    aes(style = "ticks", location = "br"), 
+    text_col = "#999999",
+    line_col = "#999999"
+  ) +
+  scale_fill_gradient(low = "white", high = "#00263A", na.value = NA) +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  guides(
+    fill = guide_colorbar(
+      title.position = "top",
+      title.hjust = 0.5,
+      label.hjust = 0.5,
+      barwidth = 15,
+      barheight = 0.5,
+      ticks.colour = "white",
+      frame.colour = "#999999"
+    )
+  )
+```
+
+`terra` makes it easy to do raster math. Here we'll calculate the mean rainfall for these three days.
+
+::: {.aside}
+If you are following their tutorial, I commented out the line adding DHS cluster coordinates because to get this data you need to register with the DHS program.
+:::
+
+```{r}
+bf_precip_mean <- mean(bf_precip)
+bf_precip_mean
+```
+
+And plot
+
+```{r}
+ggplot() +
+  ggspatial::layer_spatial(bf_precip_mean, alpha = 0.8, na.rm = TRUE) +
+  ggspatial::layer_spatial(bf_borders, alpha = 0) +
+  labs(
+    title = "Burkina Faso Average Rainfall: July 19-21, 2001",
+    subtitle = "CHIRPS precipitation data",
+    fill = "3-day average rainfall (mm/day)",
+    caption = "Source: Climate Hazards Center InfraRed Precipitation with Station (CHIRPS)"
+  ) +
+  ggspatial::annotation_scale(
+    aes(style = "ticks", location = "br"), 
+    text_col = "#999999",
+    line_col = "#999999"
+  ) +
+  scale_fill_gradient(low = "#FAEFD1", high = "#00263A", na.value = NA) +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  guides(
+    fill = guide_colorbar(
+      title.position = "top",
+      title.hjust = 0.5,
+      label.hjust = 0.5,
+      barwidth = 15,
+      barheight = 0.5,
+      ticks.colour = "white",
+      frame.colour = "#999999"
+    )
+  )
+```
+Check out the [rest of the tutorial](https://tech.popdata.org/dhs-research-hub/posts/2024-02-04-dhs-chirps/) a more depth tour.
 
 ## `sf` Package
 
+Just as you can wrangle tibbles to filter and join records, you can also manipulate simple features with `sf` functions.
+
+```{r}
+nc <- st_read(system.file("shape/nc.shp", package="sf"))
+plot(nc)
+```
+
+First, if we wanted to drop the geometry and just work with the non-geographic attributes:
+
+```{r}
+nc %>% 
+  select(NWBIR74) %>%
+  st_drop_geometry() 
+```
+We can subset geographies of interest by looking for features that intersect Ashe county (including Ashe).
+
+```{r}
+ashe <- nc %>%
+  filter(NAME == "Ashe")
+
+nc %>% 
+  filter(lengths(st_intersects(., ashe)) > 0) %>%
+  plot()
+```
+
+These transformation functions play nicely with tidyverse code you know and love.
+
+```{r}
+nc %>% 
+  mutate(ashe_group = if_else(lengths(st_intersects(., ashe)) > 0, 
+                              "Ashe+", 
+                              "Rest")) %>%
+  group_by(ashe_group) %>% 
+  summarize(sid = sum(SID74),
+            births = sum(BIR74),
+            sid_births = sid/births)
+```
 
