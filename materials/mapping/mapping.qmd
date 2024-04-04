@@ -1,0 +1,120 @@
+---
+title: "Mapping in R"
+format: 
+  html:
+    toc: true
+---
+
+<!--
+Based on:
+
+Dr. Emily Burchfield's guide
+https://www.emilyburchfield.org/courses/eds/making_maps_in_r
+
+"Geocomputation with R" (GWR) by Lovelace, Nowosad, and Muenchow
+https://r.geocompx.org/
+-->
+
+## Credits
+
+This material is based on Dr. Emily Burchfield's [excellent guide to mapping in R](https://www.emilyburchfield.org/courses/eds/making_maps_in_r) and the book [*Geocomputation with R*](https://r.geocompx.org/) by Lovelace, Nowosad, and Muenchow.
+
+## Setup
+
+There is not a single mapping package for R that will suit all of your needs. We'll review several useful packages today. Start by installing any packages you don't have yet.
+
+```{r}
+# if you already have these packages, try loading them outside the suppress
+# function to see if there are any key messages like update suggestions
+
+# install.packages("spDataLarge", repos = "https://geocompr.r-universe.dev")
+
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(sf)
+  library(tmap)
+  library(spData)
+  #library(spDataLarge)
+  library(leaflet)
+  library(terra)
+})
+```
+
+## Basic Concepts
+
+### Vector and Raster
+
+There are two main types of spatial data: vector and raster. Vector data includes points (a pin on a map), lines (a road), and polygons (a country shape). Raster data divides some surface into equal-sized cells and displays information contained in each cell (think satellite imagery, weather maps).
+
+### Simple Features
+
+> Simple features is an open standard developed and endorsed by the Open Geospatial Consortium (OGC), a not-for-profit organization whose activities we will revisit in a later chapter (in Section 8.2). Simple features is a hierarchical data model that represents a wide range of geometry types. Of 18 geometry types supported by the specification, only 7 are used in the vast majority of geographic research; these core geometry types are fully supported by the R package sf (Pebesma 2018). -GWR 
+
+The [`sf`](https://r-spatial.github.io/sf/) package implements the simple features (or simple feature access) standards. Simple features is a ISO standard (19125-1:2004) describing how spatial properties of objects are represented in computers. A feature can be anything from a single point to a set of polygons (see @fig-sf). Every `sf` object has a geometry column that describes where the feature exists on Earth. The `sf` package is comprehensive, plays nicely with the tidyverse, and is the basis of several mapping packages. 
+
+![Simple features supported by sf, image from [*Geocomputation with R*](https://r.geocompx.org/spatial-class).](https://r.geocompx.org/figures/sf-classes.png){#fig-sf}
+
+Let's take a look at the `world` dataset included with the `spData` package:
+
+```{r}
+glimpse(world)
+class(world)
+```
+
+You can see that `world` is a sf dataframe with non-geographic country-level attributes and a final column that contains the geography information for plotting country polygons.
+
+## Base R
+
+We can do a lot with base R, starting with a simple call to `plot()` which plots every variable in `world`:
+
+```{r}
+plot(world)
+```
+
+We can add layers to a base plot with the `add = TRUE` parameter.
+
+```{r}
+# create asia as a union of countries in asia
+asia <- world %>%
+  filter(continent == "Asia") %>%
+  st_union()
+```
+
+```{r}
+plot(world["pop"], reset = FALSE)
+plot(asia, add = TRUE, col = "red")
+```
+## `ggplot()`
+
+Some folks will plot maps exclusively with base R. They are not my people 😂 You're much more likely to find me using `ggplot2`. You can wrangle and plot a sf dataframe in familiar ways.
+
+```{r}
+world %>%
+  mutate(asia = case_when(
+    continent == "Asia" ~ 1,
+    TRUE ~ 0
+  )) %>%
+  ggplot(aes(fill=asia)) +
+    geom_sf() +
+    theme_minimal() +
+    theme(legend.position = "none") 
+```
+`ggplot2` also makes it easy to add different spatial features as layers. Here we start with the world and add a point for Duke.
+
+```{r}
+duke <- st_sfc(st_point(c(-78.939133, 36.001465)), crs = "EPSG:4326")
+duke
+
+# here I'm not starting with the data and piping, but I could have
+ggplot() +
+  geom_sf(data = world) +
+  geom_sf(data = duke, color = "#003087") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+
+
+## `sf` Package
+
+
